@@ -10,13 +10,11 @@ export type Props = {
   password: string,
   confirmPassword: string,
   role: Role,
-  error: {
-    firstNameErr: string, 
-    lastNameErr: string,
-    emailErr: string,
-    passErr: string,
-    confirmPassErr: string
-  }
+  firstNameErr: string, 
+  lastNameErr: string,
+  emailErr: string,
+  passErr: string,
+  confirmPassErr: string
 }
 
 class Signup extends React.Component<{}, Props> {
@@ -30,13 +28,11 @@ class Signup extends React.Component<{}, Props> {
       password: '',
       confirmPassword: '',
       role: 'secondary',
-      error: {
-        firstNameErr: '', 
-        lastNameErr: '',
-        emailErr: '',
-        passErr: '',
-        confirmPassErr: ''
-      }
+      firstNameErr: '', 
+      lastNameErr: '',
+      emailErr: '',
+      passErr: '',
+      confirmPassErr: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -53,7 +49,9 @@ class Signup extends React.Component<{}, Props> {
 
   formValidation = () => {
     if (this.state.firstName.length < 3) {
-
+      this.setState({
+        firstNameErr: 'Name must be at least 3 characters long.'
+      })
     }
   }
 
