@@ -13,3 +13,4 @@ Technology Used:
 ## Tasks
     Completed   Task
     ---         ---
+    01.23       Background CSS, Skeleton header
