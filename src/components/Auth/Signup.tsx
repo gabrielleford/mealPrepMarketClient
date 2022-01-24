@@ -1,7 +1,7 @@
 import React from 'react';
 import APIURL from '../helpers/environments';
 import { AuthContainer, AuthForm, AuthInput, AuthLabel, AuthSubmit, AuthWrapper, RoleBtn } from './AuthElements';
-import { signupValidation } from '../helpers/FormValidation';
+// import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation
 
@@ -106,7 +106,7 @@ class Signup extends React.Component<{}, Props> {
               <AuthInput type='password' name='password' value={this.state.password} onChange={this.handleChange}/><AuthLabel htmlFor='lastName'>Confirm Password</AuthLabel>
               <AuthInput type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}/>
               <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn>
-              <AuthSubmit>Submit</AuthSubmit>
+              <AuthSubmit type='submit'>Submit</AuthSubmit>
             </AuthForm>
           </AuthWrapper>
         </AuthContainer>
