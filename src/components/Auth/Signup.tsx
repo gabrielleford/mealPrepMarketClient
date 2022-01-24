@@ -1,5 +1,8 @@
 import React from 'react';
 import { AuthContainer, AuthForm, AuthInput, AuthLabel, AuthSubmit, AuthWrapper, RoleBtn } from './AuthElements';
+import { signupValidation } from '../helpers/FormValidation';
+
+//TODO: Need to set up form validation
 
 type Role = 'primary' | 'secondary';
 
@@ -10,10 +13,12 @@ export type Props = {
   password: string,
   confirmPassword: string,
   role: Role,
-  firstNameErr: string, 
+  firstNameErr: string,
   lastNameErr: string,
   emailErr: string,
+  emailRegex: RegExp,
   passErr: string,
+  passRegex: RegExp,
   confirmPassErr: string
 }
 
@@ -28,16 +33,17 @@ class Signup extends React.Component<{}, Props> {
       password: '',
       confirmPassword: '',
       role: 'secondary',
-      firstNameErr: '', 
+      firstNameErr: '',
       lastNameErr: '',
       emailErr: '',
+      emailRegex: /()/,
       passErr: '',
+      passRegex: /()/,
       confirmPassErr: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.changeRole = this.changeRole.bind(this);
-    this.formValidation = this.formValidation.bind(this);
   }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,14 +51,7 @@ class Signup extends React.Component<{}, Props> {
       ...this.state,
       [e.target.name]: e.target.value
     })
-  }
-
-  formValidation = () => {
-    if (this.state.firstName.length < 3) {
-      this.setState({
-        firstNameErr: 'Name must be at least 3 characters long.'
-      })
-    }
+    signupValidation(this.state)
   }
 
   changeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
