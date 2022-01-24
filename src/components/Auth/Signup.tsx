@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environments';
 import { AuthContainer, AuthForm, AuthInput, AuthLabel, AuthSubmit, AuthWrapper, RoleBtn } from './AuthElements';
 import { signupValidation } from '../helpers/FormValidation';
 
@@ -51,7 +52,7 @@ class Signup extends React.Component<{}, Props> {
       ...this.state,
       [e.target.name]: e.target.value
     })
-    signupValidation(this.state)
+    // signupValidation(this.state)
   }
 
   changeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,16 +68,33 @@ class Signup extends React.Component<{}, Props> {
     }
   }
 
-  registerUser = (e: React.FormEvent<HTMLFormElement>) => {
+  registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    await fetch(`${APIURL}/user/register`, {
+      method: "POST",
+      body: JSON.stringify({
+        user: {
+          role: this.state.role,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          password: this.state.password,
+        }
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res => res.json())
+    .then(json => console.log(json))
   }
 
   render(): React.ReactNode {
       return (
         <AuthContainer>
           <AuthWrapper>
-            <AuthForm>
+            <AuthForm onSubmit={this.registerUser}>
             <h1>Signup</h1>
               <AuthLabel htmlFor='firstName'>First Name</AuthLabel>
               <AuthInput type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange} />
