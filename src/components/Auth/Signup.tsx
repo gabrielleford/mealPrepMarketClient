@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import APIURL from '../helpers/environments';
-import { AuthContainer, AuthForm, AuthInput, AuthLabel, AuthSubmit, AuthWrapper, RoleBtn } from './AuthElements';
+import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn } from './AuthElements';
 // import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation
+//TODO: Finish styling
 
 type Role = 'primary' | 'secondary';
 
@@ -20,7 +22,8 @@ export type Props = {
   emailRegex: RegExp,
   passErr: string,
   passRegex: RegExp,
-  confirmPassErr: string
+  confirmPassErr: string,
+  responseCode: number,
 }
 
 class Signup extends React.Component<{}, Props> {
@@ -40,7 +43,8 @@ class Signup extends React.Component<{}, Props> {
       emailRegex: /()/,
       passErr: '',
       passRegex: /()/,
-      confirmPassErr: ''
+      confirmPassErr: '',
+      responseCode: 0,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -86,30 +90,39 @@ class Signup extends React.Component<{}, Props> {
         "Content-Type": "application/json",
       },
     })
-    .then(res => res.json())
-    .then(json => console.log(json))
+    .then(res => {
+      this.setState({
+        responseCode: res.status
+      })
+      res.json()
+    })
+    .then(json => {
+      console.log(json)
+    })
   }
 
   render(): React.ReactNode {
       return (
-        <AuthContainer>
-          <AuthWrapper>
-            <AuthForm onSubmit={this.registerUser}>
+        <SignupContainer>
+          <SignupWrapper>
+            <SignupForm onSubmit={this.registerUser}>
             <h1>Signup</h1>
-              <AuthLabel htmlFor='firstName'>First Name</AuthLabel>
-              <AuthInput type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange} />
-              <AuthLabel htmlFor='lastName'>Last Name</AuthLabel>
-              <AuthInput type='text' name='lastName' value={this.state.lastName} onChange={this.handleChange}/>
-              <AuthLabel htmlFor='email'>Email</AuthLabel>
-              <AuthInput type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
-              <AuthLabel htmlFor='password'>Password</AuthLabel>
-              <AuthInput type='password' name='password' value={this.state.password} onChange={this.handleChange}/><AuthLabel htmlFor='lastName'>Confirm Password</AuthLabel>
-              <AuthInput type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}/>
+              <SignupLabel htmlFor='firstName'>First Name</SignupLabel>
+              <SignupInput type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange} />
+              <SignupLabel htmlFor='lastName'>Last Name</SignupLabel>
+              <SignupInput type='text' name='lastName' value={this.state.lastName} onChange={this.handleChange}/>
+              <SignupLabel htmlFor='email'>Email</SignupLabel>
+              <SignupInput type='text' name='email' value={this.state.email} onChange={this.handleChange}/>
+              <SignupLabel htmlFor='password'>Password</SignupLabel>
+              <SignupInput type='password' name='password' value={this.state.password} onChange={this.handleChange}/><SignupLabel htmlFor='lastName'>Confirm Password</SignupLabel>
+              <SignupInput type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}/>
               <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn>
-              <AuthSubmit type='submit'>Submit</AuthSubmit>
-            </AuthForm>
-          </AuthWrapper>
-        </AuthContainer>
+              <SignupSubmit type='submit'>Submit</SignupSubmit>
+            </SignupForm>
+            <Link to='/login'>Already a member? Login!</Link>
+            {this.state.responseCode === 201 && <Navigate to='/' replace={true} />}
+          </SignupWrapper>
+        </SignupContainer>
       )
   }
 }

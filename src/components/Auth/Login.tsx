@@ -1,10 +1,12 @@
 import React from 'react';
+import { Navigate} from 'react-router-dom';
 import APIURL from '../helpers/environments';
-import {AuthContainer, AuthForm, AuthInput, AuthLabel, AuthSubmit, AuthWrapper} from './AuthElements';
+import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
-type LoginProps = {
+export type LoginProps = {
   email: string,
-  password: string
+  password: string,
+  responseCode: number,
 }
 
 class Login extends React.Component<{}, LoginProps> {
@@ -13,7 +15,8 @@ class Login extends React.Component<{}, LoginProps> {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      responseCode: 0,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,23 +44,35 @@ class Login extends React.Component<{}, LoginProps> {
         "Content-Type": "application/json",
       },
     })
-    .then(res => res.json())
-    .then(json => console.log(json))
+    .then(res => {
+      console.log(res);
+      res.json()
+      this.setState({
+        responseCode: res.status
+      })
+    })
+    .then(json => {
+      console.log(json)
+    })
   }
   
   render(): React.ReactNode {
       return (
-        <AuthContainer>
-          <AuthWrapper>
-            <AuthForm onSubmit={this.loginUser}>
-              <AuthLabel>Email</AuthLabel>
-              <AuthInput type='email' name='email' value={this.state.email} onChange={this.handleChange}/>
-              <AuthLabel>Password</AuthLabel>
-              <AuthInput type='password' name='password' value={this.state.password} onChange={this.handleChange} />
-              <AuthSubmit type='submit'>Login</AuthSubmit>
-            </AuthForm>
-          </AuthWrapper>
-        </AuthContainer>
+        <LoginContainer>
+          <LoginWrapper>
+            <LoginH1>Login</LoginH1>
+            <LoginForm onSubmit={this.loginUser}>
+              <LoginLabel>Email</LoginLabel>
+              <LoginInput type='email' name='email' value={this.state.email} onChange={this.handleChange}/>
+              <LoginLabel>Password</LoginLabel>
+              <LoginInput type='password' name='password' value={this.state.password} onChange={this.handleChange} />
+              <LoginSubmit type='submit'>Login</LoginSubmit>
+            </LoginForm>
+            <LoginP>New to Meal Prep Market?</LoginP>
+            <LoginRoute to='/register'>Sign up here!</LoginRoute>
+          </LoginWrapper>
+          {this.state.responseCode === 201 && <Navigate to='/' replace={true} />}
+        </LoginContainer>
       )
   }
 }
