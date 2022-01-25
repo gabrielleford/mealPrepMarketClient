@@ -1,8 +1,16 @@
 import React from "react";
+import { AppProps } from "../../App";
 import { Link } from "react-router-dom";
 import { Header } from "./NavbarElements";
 
-class Navbar extends React.Component {
+export type NavbarProps = {
+  isLoggedIn: AppProps['isLoggedIn'],
+  name: AppProps['name']
+  clearToken: AppProps['clearToken'],
+  setSessionToken: AppProps['setSessionToken']
+}
+
+class Navbar extends React.Component<NavbarProps> {
   render(): React.ReactNode {
     return (
       <Header>
