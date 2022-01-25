@@ -14,3 +14,7 @@ Technology Used:
     Completed   Task
     ---         ---
     01.23       Background CSS, Skeleton header
+    
+    01.24       Login & sign up funtionality, login style, login/signup routing
+    
+    01.25       Most of sign up styling
