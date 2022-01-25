@@ -24,7 +24,7 @@ export type Props = {
   passErr: string,
   passRegex: RegExp,
   confirmPassErr: string,
-  responseCode: number,
+  user: string,
   sessionToken: AppProps['sessionToken']
   updateToken: AppProps['updateToken']
   setSessionToken: AppProps['setSessionToken']
@@ -52,7 +52,7 @@ class Signup extends React.Component<{
       passErr: '',
       passRegex: /()/,
       confirmPassErr: '',
-      responseCode: 0,
+      user: '',
       sessionToken: this.props.sessionToken,
       setSessionToken: this.props.setSessionToken,
       updateToken: this.props.updateToken,
@@ -67,7 +67,6 @@ class Signup extends React.Component<{
       ...this.state,
       [e.target.name]: e.target.value
     })
-    // signupValidation(this.state)
   }
 
   changeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -101,17 +100,12 @@ class Signup extends React.Component<{
         "Content-Type": "application/json",
       },
     })
-    .then(res => {
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
       this.setState({
-        responseCode: res.status
+        user: json.user.id
       })
-      res.json()
-    })
-    .then(data => {
-      console.log(data)
-      if (this.state.responseCode === 201) {
-        <Navigate to='/' replace={true} />
-      }
     })
   }
 

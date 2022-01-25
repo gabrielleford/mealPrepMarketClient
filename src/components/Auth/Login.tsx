@@ -4,7 +4,7 @@ import { AppProps, SetSessionToken as SetToken} from '../../App';
 import APIURL from '../helpers/environments';
 import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
-//TODO: Need to set up form validation
+//TODO: Need to set up form validation & make responsive
 
 export type SetSessionToken = {
   setSessionToken: SetToken
@@ -14,7 +14,7 @@ export type LoginProps = {
   email: string,
   password: string,
   loginErr: string,
-  responseCode: number,
+  user: string,
   sessionToken: AppProps['sessionToken']
   updateToken: AppProps['updateToken']
   setSessionToken: AppProps['setSessionToken']
@@ -32,13 +32,14 @@ class Login extends React.Component<{
       email: '',
       password: '',
       loginErr: '',
-      responseCode: 0,
+      user: '',
       sessionToken: this.props.sessionToken,
       setSessionToken: this.props.setSessionToken,
       updateToken: this.props.updateToken,
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.loginUser = this.loginUser.bind(this);
   }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ class Login extends React.Component<{
     })
   }
 
+  // ** FETCH ** //
   loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -63,18 +65,12 @@ class Login extends React.Component<{
         "Content-Type": "application/json",
       },
     })
-    .then(res => {
-      console.log(res);
-      res.json()
-      this.setState({
-        responseCode: res.status
-      })
-    })
+    .then(res => res.json())
     .then(json => {
       console.log(json)
-      if (this.state.responseCode === 201) {
-        <Navigate to='/' replace={true} />
-      }
+      this.setState({
+        user: json.user.id
+      })
     })
   }
   

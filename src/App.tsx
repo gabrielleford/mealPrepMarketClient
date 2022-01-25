@@ -69,7 +69,6 @@ const App = () => {
     localStorage.clear();
     setSessionToken('');
     setIsLoggedIn(false);
-    <Navigate to='/' replace={true} />
   }
 
   return (
