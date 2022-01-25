@@ -16,7 +16,8 @@ class Navbar extends React.Component<{
   userName:AppProps['userName'], 
   sessionToken:AppProps['sessionToken'], 
   clearToken:AppProps['clearToken'], 
-  setSessionToken: AppProps['setSessionToken']}, NavbarProps> {
+  setSessionToken: AppProps['setSessionToken']
+}, NavbarProps> {
   constructor(props: NavbarProps) {
     super(props)
 
@@ -32,9 +33,11 @@ class Navbar extends React.Component<{
   render(): React.ReactNode {
     return (
       <Header>
-        <h1>Debug: </h1>
-        <Link to='/home'>Landing</Link>
+        <h1>Debug:</h1>
+        {/* <p>Session Token: {this.state.sessionToken}</p> */}
+        <Link to='/'>Landing</Link>
         <Link to='/login'>Login</Link>
+        <Link to='/create'>Create Post</Link>
       </Header>
     )
   }

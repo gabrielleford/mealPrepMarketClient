@@ -6,10 +6,6 @@ import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, Logi
 
 //TODO: Need to set up form validation & make responsive
 
-export type SetSessionToken = {
-  setSessionToken: SetToken
-}
-
 export type LoginProps = {
   email: string,
   password: string,

@@ -72,6 +72,8 @@ export const LoginSubmit = styled.button`
   box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
   padding: 7px 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     color: #05386b;
@@ -153,7 +155,7 @@ export const SignupInput = styled.input`
 
 // * Labels * //
 export const SignupLabel = styled.label`
-  margin-bottom: -2.8vh;
+  margin-bottom: -2.5vh;
   color: #05386b;
 `
 
@@ -168,6 +170,7 @@ export const SignupSubmit = styled.button`
   box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
   padding: 7.5px 0;
+  cursor: pointer;
   transition: all 0.3s ease-in-out;
 
   &:hover {

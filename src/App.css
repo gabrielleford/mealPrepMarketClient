@@ -17,6 +17,8 @@ html {
   scroll-behavior: smooth;
 }
 
+
+/* TODO: Fix size of background */
 body {
   font-family: 'Open Sans', sans-serif;
   background: url('./assets/mealPrepMarketBackgroundDesktop.png') center center;

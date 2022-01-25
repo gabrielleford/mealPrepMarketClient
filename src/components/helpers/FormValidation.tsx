@@ -1,4 +1,4 @@
-import { Props as SignupProps } from '../Auth/Signup'
+import { Props as SignupProps } from '../auth/Signup'
 
 export type Props = {
   firstName: SignupProps['firstName'],

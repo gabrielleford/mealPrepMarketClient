@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import Login from './components/Auth/Login';
-import Signup from './components/Auth/Signup';
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
+import CreatePost from './components/createPost/CreatePost';
 
 export type SetSessionToken = {
   setSessionToken: (sessionToken: string) => void
@@ -84,7 +85,7 @@ const App = () => {
 
 
         <Routes>
-          <Route path='/home' element={
+          <Route path='/' element={
             <Landing 
             fetchData={fetchData}
             sessionToken={sessionToken}
@@ -98,11 +99,16 @@ const App = () => {
             setSessionToken={setSessionToken}
             />} 
           />
-          <Route path='login' element={
+          <Route path='/login' element={
             <Login 
             updateToken={updateToken}
             sessionToken={sessionToken}
             setSessionToken={setSessionToken}
+            />} 
+          />
+
+          <Route path='/create' element={
+              <CreatePost 
             />} 
           />
         </Routes>
