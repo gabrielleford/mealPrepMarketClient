@@ -67,11 +67,13 @@ class Login extends React.Component<{
     })
     .then(res => res.json())
     .then(json => {
-      console.log(json)
+      console.log(json);
+      this.props.updateToken(json.sessionToken);
       this.setState({
         user: json.user.id
-      })
+      });
     })
+    .catch(error => console.log(error))
   }
   
   render(): React.ReactNode {
@@ -89,6 +91,7 @@ class Login extends React.Component<{
             <LoginP>New to Meal Prep Market?</LoginP>
             <LoginRoute to='/register'>Sign up here!</LoginRoute>
           </LoginWrapper>
+          {this.state.user !== '' && <Navigate to='/' replace={true}/>}
         </LoginContainer>
       )
   }
