@@ -1,24 +1,37 @@
 import React from 'react';
 import { Navigate} from 'react-router-dom';
+import { AppProps, SetSessionToken as SetToken} from '../../App';
 import APIURL from '../helpers/environments';
 import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
 //TODO: Need to set up form validation
 
+export type SetSessionToken = {
+  setSessionToken: SetToken
+}
+
 export type LoginProps = {
   email: string,
   password: string,
+  loginErr: string,
   responseCode: number,
+  sessionToken: AppProps['sessionToken']
+  updateToken: AppProps['updateToken']
+  setSessionToken: AppProps['setSessionToken']
 }
 
-class Login extends React.Component<{}, LoginProps> {
+class Login extends React.Component<{sessionToken: string | null, updateToken: (newToken: string) => void, setSessionToken: (sessionToken: string | null) => void}, LoginProps> {
   constructor(props: LoginProps) {
     super(props)
 
     this.state = {
       email: '',
       password: '',
+      loginErr: '',
       responseCode: 0,
+      sessionToken: '',
+      setSessionToken: (sessionToken: string | null) => {},
+      updateToken: (newToken: string) => {},
     }
 
     this.handleChange = this.handleChange.bind(this);

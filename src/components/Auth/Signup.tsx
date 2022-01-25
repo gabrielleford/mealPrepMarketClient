@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import APIURL from '../helpers/environments';
+import { AppProps } from '../../App';
 import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn, SignupRoute, SignupP, SignupH1 } from './AuthElements';
 // import { signupValidation } from '../helpers/FormValidation';
 
@@ -24,9 +25,12 @@ export type Props = {
   passRegex: RegExp,
   confirmPassErr: string,
   responseCode: number,
+  sessionToken: AppProps['sessionToken']
+  updateToken: AppProps['updateToken']
+  setSessionToken: AppProps['setSessionToken']
 }
 
-class Signup extends React.Component<{}, Props> {
+class Signup extends React.Component<{sessionToken: string | null, updateToken: (newToken: string) => void, setSessionToken: (sessionToken: string | null) => void}, Props> {
   constructor(props: Props) {
     super(props)
 
@@ -45,6 +49,9 @@ class Signup extends React.Component<{}, Props> {
       passRegex: /()/,
       confirmPassErr: '',
       responseCode: 0,
+      sessionToken: '',
+      setSessionToken: (sessionToken: string | null) => {},
+      updateToken: (newToken: string) => {},
     }
 
     this.handleChange = this.handleChange.bind(this);

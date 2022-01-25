@@ -1,7 +1,14 @@
 import React from "react";
+import { AppProps } from "../../App";
 import {  } from './LandingElements'
 
-class Landing extends React.Component {
+export type LandingProps = {
+  sessionToken: AppProps['sessionToken'],
+  isLoggedIn: AppProps['isLoggedIn'],
+  fetchData: AppProps['fetchData']
+}
+
+class Landing extends React.Component<LandingProps> {
 
   render(): React.ReactNode {
       return (
