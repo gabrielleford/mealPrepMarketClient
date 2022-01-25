@@ -30,7 +30,7 @@ export type Props = {
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Signup extends React.Component<{sessionToken: string | null, updateToken: (newToken: string) => void, setSessionToken: (sessionToken: string | null) => void}, Props> {
+class Signup extends React.Component<{sessionToken: AppProps['sessionToken'], updateToken: AppProps['updateToken'], setSessionToken: AppProps['setSessionToken']}, Props> {
   constructor(props: Props) {
     super(props)
 
@@ -49,9 +49,9 @@ class Signup extends React.Component<{sessionToken: string | null, updateToken: 
       passRegex: /()/,
       confirmPassErr: '',
       responseCode: 0,
-      sessionToken: '',
-      setSessionToken: (sessionToken: string | null) => {},
-      updateToken: (newToken: string) => {},
+      sessionToken: this.props.sessionToken,
+      setSessionToken: this.props.setSessionToken,
+      updateToken: this.props.updateToken,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -103,8 +103,11 @@ class Signup extends React.Component<{sessionToken: string | null, updateToken: 
       })
       res.json()
     })
-    .then(json => {
-      console.log(json)
+    .then(data => {
+      console.log(data)
+      if (this.state.responseCode === 201) {
+        <Navigate to='/' replace={true} />
+      }
     })
   }
 
@@ -128,7 +131,6 @@ class Signup extends React.Component<{sessionToken: string | null, updateToken: 
             </SignupForm>
             <SignupP>Already a member?</SignupP>
             <SignupRoute to='/login'>Login here!</SignupRoute>
-            {this.state.responseCode === 201 && <Navigate to='/' replace={true} />}
           </SignupWrapper>
         </SignupContainer>
       )

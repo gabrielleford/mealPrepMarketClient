@@ -15,7 +15,7 @@ export type AppProps = {
   isLoggedIn: boolean,
   sessionToken: string | null,
   userID: string | null,
-  name: string | null
+  userName: string | null
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -27,7 +27,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [userID, setUserID] = useState<string | null>('');
-  const [name, setName] = useState<string | null>('');
+  const [userName, setName] = useState<string | null>('');
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -76,7 +76,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <Navbar clearToken={clearToken} setSessionToken={setSessionToken} isLoggedIn={isLoggedIn} name={name}/>
+        <Navbar clearToken={clearToken} setSessionToken={setSessionToken} sessionToken={sessionToken} isLoggedIn={isLoggedIn} userName={userName}/>
 
 
         <Routes>

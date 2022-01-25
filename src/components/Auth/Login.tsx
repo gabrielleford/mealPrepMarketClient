@@ -20,7 +20,7 @@ export type LoginProps = {
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Login extends React.Component<{sessionToken: string | null, updateToken: (newToken: string) => void, setSessionToken: (sessionToken: string | null) => void}, LoginProps> {
+class Login extends React.Component<{sessionToken: AppProps['sessionToken'], updateToken: AppProps['updateToken'], setSessionToken: AppProps['setSessionToken']}, LoginProps> {
   constructor(props: LoginProps) {
     super(props)
 
@@ -29,9 +29,9 @@ class Login extends React.Component<{sessionToken: string | null, updateToken: (
       password: '',
       loginErr: '',
       responseCode: 0,
-      sessionToken: '',
-      setSessionToken: (sessionToken: string | null) => {},
-      updateToken: (newToken: string) => {},
+      sessionToken: this.props.sessionToken,
+      setSessionToken: this.props.setSessionToken,
+      updateToken: this.props.updateToken,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -68,6 +68,9 @@ class Login extends React.Component<{sessionToken: string | null, updateToken: (
     })
     .then(json => {
       console.log(json)
+      if (this.state.responseCode === 201) {
+        <Navigate to='/' replace={true} />
+      }
     })
   }
   
@@ -86,7 +89,6 @@ class Login extends React.Component<{sessionToken: string | null, updateToken: (
             <LoginP>New to Meal Prep Market?</LoginP>
             <LoginRoute to='/register'>Sign up here!</LoginRoute>
           </LoginWrapper>
-          {this.state.responseCode === 201 && <Navigate to='/' replace={true} />}
         </LoginContainer>
       )
   }

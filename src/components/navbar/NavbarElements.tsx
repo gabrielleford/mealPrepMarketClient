@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-
+// ** Heading ** //
 export const Header = styled.header`
   max-height: 180px;
   height: 130px;
