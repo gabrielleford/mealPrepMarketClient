@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import Landing from './components/landing/Landing';
@@ -28,7 +28,6 @@ const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [userID, setUserID] = useState<string | null>('');
   const [userName, setName] = useState<string | null>('');
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     if (localStorage.getItem('Authorization')) {
@@ -70,35 +69,41 @@ const App = () => {
     localStorage.clear();
     setSessionToken('');
     setIsLoggedIn(false);
-    navigate('/');
+    <Navigate to='/' replace={true} />
   }
 
   return (
     <>
       <Router>
-        <Navbar clearToken={clearToken} setSessionToken={setSessionToken} sessionToken={sessionToken} isLoggedIn={isLoggedIn} userName={userName}/>
+        <Navbar 
+          clearToken={clearToken} 
+          setSessionToken={setSessionToken} 
+          sessionToken={sessionToken} 
+          isLoggedIn={isLoggedIn} 
+          userName={userName}
+        />
 
 
         <Routes>
           <Route path='/home' element={
             <Landing 
-              fetchData={fetchData}
-              sessionToken={sessionToken}
-              isLoggedIn={isLoggedIn}
+            fetchData={fetchData}
+            sessionToken={sessionToken}
+            isLoggedIn={isLoggedIn}
             />} 
           />
           <Route path='/register' element={
-              <Signup
-                updateToken={updateToken}
-                sessionToken={sessionToken}
-                setSessionToken={setSessionToken}
+            <Signup
+            updateToken={updateToken}
+            sessionToken={sessionToken}
+            setSessionToken={setSessionToken}
             />} 
           />
           <Route path='login' element={
-              <Login 
-                updateToken={updateToken}
-                sessionToken={sessionToken}
-                setSessionToken={setSessionToken}
+            <Login 
+            updateToken={updateToken}
+            sessionToken={sessionToken}
+            setSessionToken={setSessionToken}
             />} 
           />
         </Routes>
@@ -108,3 +113,13 @@ const App = () => {
 }
 
 export default App;
+//nav
+// 
+
+//landing
+
+
+//register
+
+
+//login

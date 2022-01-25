@@ -30,7 +30,11 @@ export type Props = {
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Signup extends React.Component<{sessionToken: AppProps['sessionToken'], updateToken: AppProps['updateToken'], setSessionToken: AppProps['setSessionToken']}, Props> {
+class Signup extends React.Component<{
+  sessionToken: AppProps['sessionToken'], 
+  updateToken: AppProps['updateToken'], 
+  setSessionToken: AppProps['setSessionToken']}, Props> {
+
   constructor(props: Props) {
     super(props)
 

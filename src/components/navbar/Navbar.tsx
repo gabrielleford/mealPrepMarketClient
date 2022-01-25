@@ -11,7 +11,12 @@ export type NavbarProps = {
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Navbar extends React.Component<{isLoggedIn:AppProps['isLoggedIn'], userName:AppProps['userName'], sessionToken:AppProps['sessionToken'], clearToken:AppProps['clearToken'], setSessionToken: AppProps['setSessionToken'] }, NavbarProps> {
+class Navbar extends React.Component<{
+  isLoggedIn:AppProps['isLoggedIn'], 
+  userName:AppProps['userName'], 
+  sessionToken:AppProps['sessionToken'], 
+  clearToken:AppProps['clearToken'], 
+  setSessionToken: AppProps['setSessionToken']}, NavbarProps> {
   constructor(props: NavbarProps) {
     super(props)
 
@@ -35,4 +40,4 @@ class Navbar extends React.Component<{isLoggedIn:AppProps['isLoggedIn'], userNam
   }
 }
 
-export default Navbar;
+export default Navbar; 

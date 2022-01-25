@@ -19,4 +19,4 @@ class Landing extends React.Component<LandingProps> {
   }
 }
 
-export default Landing
+export default Landing;
