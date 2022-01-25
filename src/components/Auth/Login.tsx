@@ -3,6 +3,8 @@ import { Navigate} from 'react-router-dom';
 import APIURL from '../helpers/environments';
 import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
+//TODO: Need to set up form validation
+
 export type LoginProps = {
   email: string,
   password: string,

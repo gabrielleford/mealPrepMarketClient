@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import APIURL from '../helpers/environments';
-import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn } from './AuthElements';
+import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn, SignupRoute, SignupP, SignupH1 } from './AuthElements';
 // import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation
@@ -105,8 +105,8 @@ class Signup extends React.Component<{}, Props> {
       return (
         <SignupContainer>
           <SignupWrapper>
+            <SignupH1>Sign Up</SignupH1>
             <SignupForm onSubmit={this.registerUser}>
-            <h1>Signup</h1>
               <SignupLabel htmlFor='firstName'>First Name</SignupLabel>
               <SignupInput type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange} />
               <SignupLabel htmlFor='lastName'>Last Name</SignupLabel>
@@ -119,7 +119,8 @@ class Signup extends React.Component<{}, Props> {
               <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn>
               <SignupSubmit type='submit'>Submit</SignupSubmit>
             </SignupForm>
-            <Link to='/login'>Already a member? Login!</Link>
+            <SignupP>Already a member?</SignupP>
+            <SignupRoute to='/login'>Login here!</SignupRoute>
             {this.state.responseCode === 201 && <Navigate to='/' replace={true} />}
           </SignupWrapper>
         </SignupContainer>

@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-//** LOGIN STYLE ** //
+//TODO: Style meal prep button & responsiveness
 
+//-------------------------------------------//
+
+
+//            ** LOGIN STYLE **             //
+
+
+//------------------------------------------//
 // * Main div * //
 export const LoginContainer = styled.div`
   padding: 48px 0;
@@ -21,7 +28,7 @@ export const LoginWrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 50vh;
-  margin: auto auto 8vh auto;
+  margin: auto;
   border-radius: 7px;
   padding: 30px 0 20px 0px;
   background: #edf5e1;
@@ -62,8 +69,15 @@ export const LoginSubmit = styled.button`
   background: #05386b;
   border: none;
   border-radius: 4px;
+  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
   padding: 7px 0;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  }
 `
 
 // * New to Meal Prep Market? * // 
@@ -86,28 +100,31 @@ export const LoginRoute = styled(Link)`
   }
 `
 
-// ** SIGN UP STYLE ** //
+//-------------------------------------------//
 
+
+//           ** SIGN UP STYLE **            //
+
+
+//------------------------------------------//
 // * Main Div * //
 export const SignupContainer = styled.div`
-  padding: 48px 0;
+  padding: 20vh 0;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 2000px;
   height: 100vh;
   transition: all 0.3s ease-in-out;
-  border: solid 2px red;
 `
 
 // * Wrapper * //
 export const SignupWrapper = styled.div`
-  width: 25%;
+  width: 35vw;
   display: grid;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: auto auto 8vh auto;
+  margin: auto;
   border-radius: 7px;
   padding: 30px 0 20px 0px;
   background: #edf5e1;
@@ -125,7 +142,7 @@ export const SignupH1 = styled.h1`
 export const SignupForm = styled.form`
   display: grid;
   justify-content: center;
-  grid-gap: 3vh;
+  grid-gap: 2.5vh;
 `
 
 // * Input * //
@@ -136,23 +153,31 @@ export const SignupInput = styled.input`
 
 // * Labels * //
 export const SignupLabel = styled.label`
-  margin-bottom: -5vh;
+  margin-bottom: -2.8vh;
   color: #05386b;
 `
 
 // * Submit Button * //
 export const SignupSubmit = styled.button`
-  width: 50%;
+  width: 57%;
   margin: -1.5vh auto 0 auto;
   color: #edf5e1;
   background: #05386b;
   border: none;
   border-radius: 4px;
+  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
-  padding: 7px 0;
+  padding: 7.5px 0;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  }
 `
 
-// * New to Meal Prep Market? * // 
+// * Already have an account? * // 
 export const SignupP = styled.p`
   text-align: center;
   transition: all 0.3s ease-in-out;
@@ -162,7 +187,7 @@ export const SignupP = styled.p`
   }
 `
 
-// * Sign up Here * //
+// * Login Here * //
 export const SignupRoute = styled(Link)`
   text-align: center;
   margin-top: -2.7vh;
