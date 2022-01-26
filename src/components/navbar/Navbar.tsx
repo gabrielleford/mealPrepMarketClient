@@ -30,10 +30,6 @@ class Navbar extends React.Component<{
     }
   }
 
-  componentDidMount(){
-    console.log(this.props.sessionToken);
-  }
-
   render(): React.ReactNode {
     return (
       <Header>

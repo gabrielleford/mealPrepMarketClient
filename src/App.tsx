@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
-import CreateListing from './components/createPost/CreateListing';
+import CreateListing from './components/createListing/CreateListing';
 
 export type SetSessionToken = {
   setSessionToken: (sessionToken: string) => void
@@ -43,16 +43,19 @@ const App = () => {
           }
         })
         .then(res => {
-          if (res.status === 200) {
+          if (res.status == 200) {
             setIsLoggedIn(true)
-          } else {
-            setIsLoggedIn(false);
-            return res.json();
           }
+          else setIsLoggedIn(false);
+          return res.json()
         })
         .then(res => {
-          // setUserID(res.userId);
-          // setName(`${res.firstName} ${res.lastName}`);
+          console.log(res);
+          setUserID(res.id);
+          setName(`${res.firstName} ${res.lastName}`);
+        })
+        .then(() => {
+          console.log(userName, userID);
         })
         .catch(error => console.log(error))
       }
