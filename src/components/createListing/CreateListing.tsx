@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateWrapper, PreviewSrc } from "./CreateListingElements";
@@ -18,6 +18,7 @@ export type CreateProps = {
   tags: string,
   reader: FileReader,
   responseCode: number,
+  listingID: string,
   isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken']
 }
@@ -40,6 +41,7 @@ class CreatePost extends React.Component<{
       tags: '',
       reader: new FileReader(),
       responseCode: 0,
+      listingID: '',
       isLoggedIn: this.props.isLoggedIn,
       sessionToken: this.props.sessionToken
     }

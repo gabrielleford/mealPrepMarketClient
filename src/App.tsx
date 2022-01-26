@@ -7,6 +7,7 @@ import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
 import CreateListing from './components/createListing/CreateListing';
+import ListingById from './components/listingById/ListingById';
 
 export type SetSessionToken = {
   setSessionToken: (sessionToken: string) => void
@@ -61,6 +62,8 @@ const App = () => {
       }
     } else {
       setIsLoggedIn(false);
+      setUserID('');
+      setName('');
     }
   }
 
@@ -119,6 +122,16 @@ const App = () => {
               sessionToken={sessionToken}
               isLoggedIn={isLoggedIn}
             />} 
+          />
+
+          <Route path='/listing/:id' element={
+            <ListingById
+              userID={userID}
+              isLoggedIn={isLoggedIn}
+              sessionToken={sessionToken}
+              userName={userName}
+              fetchData={fetchData}
+            />}
           />
         </Routes>
       </Router>
