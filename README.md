@@ -20,3 +20,4 @@ Technology Used:
     01.25       Most of sign up styling, pass in props to login/signup & navbar
     01.25       Create listing fetch & some styling, logout reroute
     01.25       Fixed check token fetch
+    01.25       Started listing by id
