@@ -64,11 +64,11 @@ class CreatePost extends React.Component<{}, CreateProps> {
     }
   }
 
-  previewImg = (file: any) => {
+  previewImg = (prvwFile: any) => {
       console.log('hitting this second piece logic')
-    if (typeof file !== 'string' && file) {
+    if (typeof prvwFile !== 'string' && prvwFile) {
       this.setState({
-        stringPrvwSrc: Buffer.from(file).toString()
+        stringPrvwSrc: Buffer.from(prvwFile).toString()
       })
       console.log(this.state.stringPrvwSrc)
     }
