@@ -18,3 +18,4 @@ Technology Used:
     01.24       Login & sign up funtionality, login style, login/signup routing
     
     01.25       Most of sign up styling, pass in props to login/signup & navbar
+    01.25       Create listing fetch & some styling, logout reroute
