@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Login from './components/auth/Login';
@@ -6,7 +6,7 @@ import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
-import CreatePost from './components/createPost/CreatePost';
+import CreateListing from './components/createPost/CreateListing';
 
 export type SetSessionToken = {
   setSessionToken: (sessionToken: string) => void
@@ -51,8 +51,8 @@ const App = () => {
           }
         })
         .then(res => {
-          setUserID(res.userId);
-          setName(`${res.firstName} ${res.lastName}`);
+          // setUserID(res.userId);
+          // setName(`${res.firstName} ${res.lastName}`);
         })
         .catch(error => console.log(error))
       }
@@ -71,6 +71,10 @@ const App = () => {
     setSessionToken('');
     setIsLoggedIn(false);
   }
+
+  useEffect(() => {
+    fetchData()
+  }, [sessionToken])
 
   return (
     <>
@@ -108,7 +112,9 @@ const App = () => {
           />
 
           <Route path='/create' element={
-              <CreatePost 
+            <CreateListing 
+              sessionToken={sessionToken}
+              isLoggedIn={isLoggedIn}
             />} 
           />
         </Routes>
@@ -118,13 +124,3 @@ const App = () => {
 }
 
 export default App;
-//nav
-// 
-
-//landing
-
-
-//register
-
-
-//login

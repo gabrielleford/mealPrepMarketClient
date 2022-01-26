@@ -30,14 +30,17 @@ class Navbar extends React.Component<{
     }
   }
 
+  componentDidMount(){
+    console.log(this.props.sessionToken);
+  }
+
   render(): React.ReactNode {
     return (
       <Header>
-        <h1>Debug:</h1>
-        {/* <p>Session Token: {this.state.sessionToken}</p> */}
         <Link to='/'>Landing</Link>
         <Link to='/login'>Login</Link>
         <Link to='/create'>Create Post</Link>
+        {this.props.isLoggedIn && <button onClick={this.props.clearToken}>Logout</button>}
       </Header>
     )
   }
