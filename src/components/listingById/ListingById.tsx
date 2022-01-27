@@ -1,9 +1,7 @@
-import { rmSync } from "fs";
 import React from "react";
 import { AppProps } from "../../App";
-import { CreateProps } from "../createListing/CreateListing";
 import APIURL from "../helpers/environments";
-import { ListingCard, ListingContainer, ListingDescription, ListingH1, ListingPrice, ListingTag, ListingTagContainer, ListingWrapper } from "./ListingElements";
+import { ListingContainer, ListingDescription, ListingH1, ListingImage, ListingPrice, ListingTag, ListingTagContainer, ListingUser, ListingWrapper } from "./ListingElements";
 
 export type ListingProps = {
   userID: AppProps['userID'],
@@ -74,14 +72,14 @@ class ListingById extends React.Component<{
       return (
         <ListingContainer>
           <ListingWrapper>
-            <ListingCard>
-              <ListingH1>{this.state.title}</ListingH1> 
-              <ListingDescription>{this.state.description}</ListingDescription>
-              <ListingPrice>{this.state.price}</ListingPrice>
-              <ListingTagContainer>
-                {/* <ListingTag>Tag</ListingTag> */}
-              </ListingTagContainer>
-            </ListingCard>
+            <ListingH1>{this.state.title}</ListingH1>
+            <ListingUser>Prepared by {}</ListingUser>
+            <ListingImage src="https://via.placeholder.com/400x250" alt={this.state.title}/>
+            <ListingDescription>{this.state.description}</ListingDescription>
+            <ListingTagContainer>
+              {/* <ListingTag>Tag</ListingTag> */}
+            </ListingTagContainer>
+            <ListingPrice>{this.state.price}</ListingPrice>
           </ListingWrapper>
         </ListingContainer>
       )

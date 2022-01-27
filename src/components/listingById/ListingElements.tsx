@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 // ** Main Div ** //
 export const ListingContainer = styled.div`
-  padding: 20vh 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,40 +16,48 @@ export const ListingWrapper = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
-  margin: auto;
+  margin: 23vh auto auto auto;
   border-radius: 7px;
   padding: 30px 0 20px 0px;
   background: #edf5e1;
 `
 
-// ** Listing ** //
-export const ListingCard = styled.div`
-  
-`
-
 // ** Listing Title ** //
 export const ListingH1 = styled.h1`
-  
+  font-weight: 400;
+  text-align: center;
+  color: #05386b;
+  margin-top: -1vh;
+  margin-bottom: -4vh;
 `
 
 // ** Listing Owner ** //
-export const ListingUser = styled.h3`
-  
+export const ListingUser = styled.h4`
+  font-weight: 300;
+  text-align: center;
+  color: #05386b;
 `
 
 // ** Listing Image ** //
-// export const ListingImage = styled.img`
-  
-// `
+export const ListingImage = styled.img`
+  border-radius: 10px 10px 0 0;
+  height: 250px;
+  width: 400px;
+  margin-top: -3vh;
+`
 
 // ** Listing Description ** //
 export const ListingDescription = styled.p`
-  
+  background: #05386b;
+  padding: 20px 35px;
+  margin-top: -1vh;
+  border-radius: 0 0 10px 10px;
+  color: #edf5e1;
 `
 
 // ** Listing Price ** //
 export const ListingPrice = styled.p`
-  
+  margin-top: -1vh;
 `
 
 
@@ -79,4 +86,17 @@ export const ListingInput = styled.input`
   
 `
 
+// ** Pickup Button ** //
+export const Pickup = styled.button`
+  
+`
 
+// ** Delivery Button ** //
+export const Delivery = styled.button`
+  
+`
+
+// ** Submit order/Add to cart ** //
+export const SubmitOrder = styled.button`
+  
+`
