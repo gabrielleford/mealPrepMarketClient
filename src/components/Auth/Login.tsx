@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate} from 'react-router-dom';
-import { AppProps, SetSessionToken as SetToken} from '../../App';
+import { AppProps } from '../../App';
 import APIURL from '../helpers/environments';
 import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
@@ -11,9 +11,10 @@ export type LoginProps = {
   password: string,
   loginErr: string,
   user: string,
-  sessionToken: AppProps['sessionToken']
-  updateToken: AppProps['updateToken']
-  setSessionToken: AppProps['setSessionToken']
+  sessionToken: AppProps['sessionToken'],
+  updateToken: AppProps['updateToken'],
+  setSessionToken: AppProps['setSessionToken'],
+  _isMounted: boolean,
 }
 
 class Login extends React.Component<{
@@ -32,6 +33,7 @@ class Login extends React.Component<{
       sessionToken: this.props.sessionToken,
       setSessionToken: this.props.setSessionToken,
       updateToken: this.props.updateToken,
+      _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -64,15 +66,27 @@ class Login extends React.Component<{
     .then(res => res.json())
     .then(json => {
       console.log(json);
-      this.props.updateToken(json.sessionToken);
-      this.props.setSessionToken(json.sessionToken)
-      this.setState({
+      this.state._isMounted && this.props.updateToken(json.sessionToken);
+      this.state._isMounted && this.props.setSessionToken(json.sessionToken)
+      this.state._isMounted && this.setState({
         user: json.user.id
       });
     })
     .catch(error => console.log(error))
   }
   
+  componentDidMount() {
+    this.setState({
+      _isMounted: true
+    })
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      _isMounted: false
+    })
+  }
+
   render(): React.ReactNode {
       return (
         <LoginContainer>

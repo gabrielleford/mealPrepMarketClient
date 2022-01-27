@@ -7,21 +7,20 @@ import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
 import CreateListing, { CreateProps } from './components/createListing/CreateListing';
-import ListingById from './components/listingById/ListingById';
-
-export type SetSessionToken = {
-  setSessionToken: (sessionToken: string) => void
-}
+import ListingById, { ListingProps } from './components/listingById/ListingById';
+import ListingEdit from './components/listingById/ListingEdit';
 
 export type AppProps = {
   isLoggedIn: boolean,
   sessionToken: string | null,
   userID: string | null,
   userName: string | null,
+  listingEdit: boolean,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
+  setListingEdit: (listingEdit: boolean) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -29,6 +28,7 @@ const App: React.FunctionComponent = () => {
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [userID, setUserID] = useState<string | null>('');
   const [userName, setName] = useState<string | null>('');
+  const [listingEdit, setListingEdit] = useState<boolean>(false);
 
   const fetchData = async ():Promise<void> => {
     if (localStorage.getItem('Authorization')) {
@@ -36,7 +36,7 @@ const App: React.FunctionComponent = () => {
 
       if(sessionToken !== '') {
         await fetch(`${APIURL}/user/checkToken`, {
-          method: 'Post',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${sessionToken}`
@@ -51,7 +51,7 @@ const App: React.FunctionComponent = () => {
         })
         .then(res => {
           console.log(res);
-          setUserID(res.id);
+          setUserID(res.userId);
           setName(`${res.firstName} ${res.lastName}`);
         })
         .then(() => {
@@ -130,7 +130,19 @@ const App: React.FunctionComponent = () => {
               sessionToken={sessionToken}
               userName={userName}
               fetchData={fetchData}
+              listingEdit={listingEdit}
+              setListingEdit={setListingEdit}
             />}
+          />
+
+          <Route path='/listing/edit/:id' element={
+            <ListingEdit
+              isLoggedIn={isLoggedIn}
+              sessionToken={sessionToken}
+              listingEdit={listingEdit}
+              setListingEdit={setListingEdit}
+            />
+          }
           />
         </Routes>
       </Router>

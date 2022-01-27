@@ -43,6 +43,10 @@ export const CreateInput = styled.input`
   border: thin solid #05386b;
 `
 
+export const CreateTextarea = styled.textarea`
+  
+`
+
 export const CreateLabel = styled.label`
   margin-bottom: -2.6vh;
   color: #05386b;

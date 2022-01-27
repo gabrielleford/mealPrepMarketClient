@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateWrapper } from "./CreateListingElements";
+import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateTextarea, CreateWrapper } from "./CreateListingElements";
 
 //TODO: Make component that runs preview image source & conditionally renders that component
 //TODO: Style for responsiveness
@@ -17,10 +17,10 @@ export type CreateProps = {
   price: number,
   tags: string,
   reader: FileReader,
-  responseCode: number,
   listingID: string,
   isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken'],
+  _isMounted: boolean,
 }
 
 class CreatePost extends React.Component<{
@@ -40,10 +40,10 @@ class CreatePost extends React.Component<{
       price: 0,
       tags: '',
       reader: new FileReader(),
-      responseCode: 0,
       listingID: '',
       isLoggedIn: this.props.isLoggedIn,
       sessionToken: this.props.sessionToken,
+      _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -51,7 +51,7 @@ class CreatePost extends React.Component<{
     // this.previewImg = this.previewImg.bind(this);
   }
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value
@@ -116,14 +116,11 @@ class CreatePost extends React.Component<{
       })
     })
     .then(res => {
-      this.setState({
-        responseCode: res.status
-      });
       return res.json();
     })
     .then(res => {
       console.log(res);
-      this.setState({
+      this.state._isMounted && this.setState({
         listingID: res.listing.id
       })
     })
@@ -132,12 +129,21 @@ class CreatePost extends React.Component<{
 
   componentDidMount(){
     console.log(this.state.listingID)
+    this.setState({
+      _isMounted: true,
+    })
   }
 
   componentDidUpdate(prevProps: any, prevState: any){
     if(this.state.listingID !== prevState.listingID ) {
       console.log(this.state.listingID);
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      _isMounted: false
+    })
   }
   
   render(): React.ReactNode {
@@ -152,7 +158,7 @@ class CreatePost extends React.Component<{
             <CreateLabel>Title</CreateLabel>
             <CreateInput type='text' name="title" onChange={this.handleChange} />
             <CreateLabel>Description</CreateLabel>
-            <CreateInput type='text' name="description" onChange={this.handleChange} />
+            <CreateTextarea name="description" onChange={this.handleChange} />
             <CreateLabel>Price</CreateLabel>
             <CreateInput type='text' name="price" onChange={this.handleChange} />
             <CreateLabel>Tags</CreateLabel>

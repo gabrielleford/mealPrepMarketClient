@@ -73,7 +73,9 @@ export const ListingTag = styled.img`
 
 // ** Listing Form ** //
 export const ListingForm = styled.form`
-  
+  display: grid;
+  justify-content: center;
+  grid-gap: 2.5vh;
 `
 
 // ** Listing Label ** //
@@ -83,6 +85,20 @@ export const ListingLabel = styled.label`
 
 // ** Listing Input ** //
 export const ListingInput = styled.input`
+  
+`
+
+// ** Listing Textarea ** //
+export const ListingTextarea = styled.textarea`
+  font-family: 'Open Sans', sans-serif;
+`
+
+// ** Quantity Selection ** //
+export const QuantitySelect = styled.select`
+  
+`
+// ** Quantity Options ** //
+export const QuantityOption = styled.option`
   
 `
 
@@ -99,4 +115,25 @@ export const Delivery = styled.button`
 // ** Submit order/Add to cart ** //
 export const SubmitOrder = styled.button`
   
+`
+
+// ** Edit/Delete Listing ** //
+export const EditDelete = styled.button`
+  width: 80%;
+  margin: -0.5vh auto 0 auto;
+  color: #edf5e1;
+  background: #05386b;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
+  font-size: 1.1rem;
+  padding: 7.5px 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  }
 `

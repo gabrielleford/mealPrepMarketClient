@@ -25,9 +25,10 @@ export type Props = {
   passRegex: RegExp,
   confirmPassErr: string,
   user: string,
-  sessionToken: AppProps['sessionToken']
-  updateToken: AppProps['updateToken']
-  setSessionToken: AppProps['setSessionToken']
+  sessionToken: AppProps['sessionToken'],
+  updateToken: AppProps['updateToken'],
+  setSessionToken: AppProps['setSessionToken'],
+  _isMounted: boolean
 }
 
 class Signup extends React.Component<{
@@ -56,6 +57,7 @@ class Signup extends React.Component<{
       sessionToken: this.props.sessionToken,
       setSessionToken: this.props.setSessionToken,
       updateToken: this.props.updateToken,
+      _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -103,12 +105,24 @@ class Signup extends React.Component<{
     .then(res => res.json())
     .then(json => {
       console.log(json);
-      this.setState({
+      this.state._isMounted && this.setState({
         user: json.user.id
       });
-      this.props.updateToken(json.sessionToken);
+      this.state._isMounted && this.props.updateToken(json.sessionToken);
     })
     .catch(error => console.log(error))
+  }
+
+  componentDidMount() {
+    this.setState({
+      _isMounted: true
+    })
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      _isMounted: false
+    })
   }
 
   render(): React.ReactNode {
