@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateWrapper, PreviewSrc } from "./CreateListingElements";
+import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateWrapper } from "./CreateListingElements";
 
 //TODO: Make component that runs preview image source & conditionally renders that component
 //TODO: Style for responsiveness
@@ -20,12 +20,12 @@ export type CreateProps = {
   responseCode: number,
   listingID: string,
   isLoggedIn: AppProps['isLoggedIn'],
-  sessionToken: AppProps['sessionToken']
+  sessionToken: AppProps['sessionToken'],
 }
 
 class CreatePost extends React.Component<{
   sessionToken: AppProps['sessionToken'],
-  isLoggedIn: AppProps['isLoggedIn']
+  isLoggedIn: AppProps['isLoggedIn'],
 }, CreateProps> {
   constructor(props: CreateProps) {
     super(props)
@@ -43,7 +43,7 @@ class CreatePost extends React.Component<{
       responseCode: 0,
       listingID: '',
       isLoggedIn: this.props.isLoggedIn,
-      sessionToken: this.props.sessionToken
+      sessionToken: this.props.sessionToken,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -96,7 +96,7 @@ class CreatePost extends React.Component<{
   //   }
   // }
 
-  postListing = async (e: React.FormEvent<HTMLFormElement>) => {
+  postListing = async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault();
 
     await fetch(`${APIURL}/listing/create`, {
@@ -115,9 +115,29 @@ class CreatePost extends React.Component<{
         authorization: `Bearer ${this.props.sessionToken}`
       })
     })
-    .then(res => this.setState({
-      responseCode: res.status
-    }))
+    .then(res => {
+      this.setState({
+        responseCode: res.status
+      });
+      return res.json();
+    })
+    .then(res => {
+      console.log(res);
+      this.setState({
+        listingID: res.listing.id
+      })
+    })
+    .catch((error) => console.log(error))
+  }
+
+  componentDidMount(){
+    console.log(this.state.listingID)
+  }
+
+  componentDidUpdate(prevProps: any, prevState: any){
+    if(this.state.listingID !== prevState.listingID ) {
+      console.log(this.state.listingID);
+    }
   }
   
   render(): React.ReactNode {
@@ -140,7 +160,7 @@ class CreatePost extends React.Component<{
             <CreatePostButton>Create Post</CreatePostButton>
           </CreateForm>
         </CreateWrapper>
-        {this.state.responseCode === 201 ? <Navigate to='/' replace={true} /> : !this.props.isLoggedIn ? <Navigate to='/' replace={true} /> : ''}
+        {this.state.listingID ? <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> : !this.props.isLoggedIn ? <Navigate to='/' replace={true} /> : ''}
       </CreateContainer>
     )
   }

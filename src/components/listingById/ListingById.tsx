@@ -1,6 +1,9 @@
+import { rmSync } from "fs";
 import React from "react";
 import { AppProps } from "../../App";
-import { ListingCard, ListingContainer, ListingDescription, ListingH1, ListingImage, ListingPrice, ListingTag, ListingTagContainer, ListingWrapper } from "./ListingElements";
+import { CreateProps } from "../createListing/CreateListing";
+import APIURL from "../helpers/environments";
+import { ListingCard, ListingContainer, ListingDescription, ListingH1, ListingPrice, ListingTag, ListingTagContainer, ListingWrapper } from "./ListingElements";
 
 export type ListingProps = {
   userID: AppProps['userID'],
@@ -8,6 +11,12 @@ export type ListingProps = {
   isLoggedIn: AppProps['isLoggedIn'],
   userName: AppProps['userName'],
   fetchData: AppProps['fetchData'],
+  listingID: string,
+  title: string,
+  description: string,
+  image: string,
+  price: number,
+  tag: string,
 }
 
 class ListingById extends React.Component<{
@@ -15,7 +24,7 @@ class ListingById extends React.Component<{
   sessionToken: AppProps['sessionToken'],
   isLoggedIn: AppProps['isLoggedIn'],
   userName: AppProps['userName'],
-  fetchData: AppProps['fetchData']
+  fetchData: AppProps['fetchData'],
 }, ListingProps> {
   constructor(props: ListingProps) {
     super(props)
@@ -25,12 +34,40 @@ class ListingById extends React.Component<{
       sessionToken: this.props.sessionToken,
       isLoggedIn: this.props.isLoggedIn,
       userName: this.props.userName,
-      fetchData: this.props.fetchData
+      fetchData: this.props.fetchData,
+      listingID: window.location.pathname.slice(9, 45),
+      title: '',
+      description: '',
+      image: '',
+      price: 0,
+      tag: '',
     }
   }
 
-  componentDidMount() {
+  fetchListing = async ():Promise<void> => {
+    await fetch(`${APIURL}/listing/${this.state.listingID}`,{
+      method: "GET",
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      this.setState({
+        title: res.title,
+        description: res.description,
+        image: res.image,
+        price: res.price,
+        tag: res.tag,
+      })
+    })
+  }
 
+  componentDidMount() {
+    console.log(this.state.listingID);
+    this.props.fetchData();
+    this.fetchListing();
   }
 
   render(): React.ReactNode {
@@ -38,12 +75,11 @@ class ListingById extends React.Component<{
         <ListingContainer>
           <ListingWrapper>
             <ListingCard>
-              <ListingH1>Title</ListingH1>
-              <ListingImage />
-              <ListingDescription>Description</ListingDescription>
-              <ListingPrice>Price</ListingPrice>
+              <ListingH1>{this.state.title}</ListingH1> 
+              <ListingDescription>{this.state.description}</ListingDescription>
+              <ListingPrice>{this.state.price}</ListingPrice>
               <ListingTagContainer>
-                <ListingTag>Tag</ListingTag>
+                {/* <ListingTag>Tag</ListingTag> */}
               </ListingTagContainer>
             </ListingCard>
           </ListingWrapper>

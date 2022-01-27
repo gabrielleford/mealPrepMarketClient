@@ -6,7 +6,7 @@ import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
-import CreateListing from './components/createListing/CreateListing';
+import CreateListing, { CreateProps } from './components/createListing/CreateListing';
 import ListingById from './components/listingById/ListingById';
 
 export type SetSessionToken = {
@@ -17,21 +17,20 @@ export type AppProps = {
   isLoggedIn: boolean,
   sessionToken: string | null,
   userID: string | null,
-  userName: string | null
+  userName: string | null,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
-  fetchData: () => Promise<void>
+  fetchData: () => Promise<void>,
 }
 
-
-const App = () => {
+const App: React.FunctionComponent = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [userID, setUserID] = useState<string | null>('');
   const [userName, setName] = useState<string | null>('');
 
-  const fetchData = async () => {
+  const fetchData = async ():Promise<void> => {
     if (localStorage.getItem('Authorization')) {
       setSessionToken(localStorage.getItem('Authorization'));
 
