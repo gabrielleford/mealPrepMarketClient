@@ -6,8 +6,8 @@ import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
 import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
-import CreateListing, { CreateProps } from './components/createListing/CreateListing';
-import ListingById, { ListingProps } from './components/listingById/ListingById';
+import CreateListing from './components/createListing/CreateListing';
+import ListingById from './components/listingById/ListingById';
 import ListingEdit from './components/listingById/ListingEdit';
 
 export type AppProps = {
@@ -16,11 +16,13 @@ export type AppProps = {
   userID: string | null,
   userName: string | null,
   listingEdit: boolean,
+  what: string,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
   setListingEdit: (listingEdit: boolean) => void,
+  setWhat: (what: string) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -29,6 +31,7 @@ const App: React.FunctionComponent = () => {
   const [userID, setUserID] = useState<string | null>('');
   const [userName, setName] = useState<string | null>('');
   const [listingEdit, setListingEdit] = useState<boolean>(false);
+  const [what, setWhat] = useState<string>('');
 
   const fetchData = async ():Promise<void> => {
     if (localStorage.getItem('Authorization')) {
@@ -132,6 +135,8 @@ const App: React.FunctionComponent = () => {
               fetchData={fetchData}
               listingEdit={listingEdit}
               setListingEdit={setListingEdit}
+              what={what}
+              setWhat={setWhat}
             />}
           />
 
@@ -141,6 +146,7 @@ const App: React.FunctionComponent = () => {
               sessionToken={sessionToken}
               listingEdit={listingEdit}
               setListingEdit={setListingEdit}
+              what={what}
             />
           }
           />

@@ -1,18 +1,23 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { reduceEachTrailingCommentRange } from "typescript";
-import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { Delivery, EditDelete, ListingContainer, ListingDescription, ListingForm, ListingH1, ListingImage, ListingLabel, ListingPrice, ListingTag, ListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect } from "./ListingElements";
+import { Navigate } from "react-router-dom";
+import { AppProps } from "../../App";
+import { ButtonDiv, Delivery, EditDelete, ListingContainer, ListingDescription, ListingForm, ListingH1, ListingImage, ListingLabel, ListingPrice, ListingTag, ListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect } from "./ListingElements";
+import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 
-export type ListingProps = {
+type ListingProps = {
   userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
   isLoggedIn: AppProps['isLoggedIn'],
   userName: AppProps['userName'],
   listingEdit: AppProps['listingEdit'],
+  what: AppProps['what'],
   fetchData: AppProps['fetchData'],
   setListingEdit: AppProps['setListingEdit'],
+  setWhat: AppProps['setWhat'],
+}
+
+export type ListingState = {
   listingID: string,
   title: string,
   description: string,
@@ -21,27 +26,16 @@ export type ListingProps = {
   tag: string,
   ownerID: string,
   ownerName: string,
+  delete: boolean,
+  confirmDelete: () => void;
   _isMounted: boolean,
 }
 
-class ListingById extends React.Component<{
-  userID: AppProps['userID'],
-  sessionToken: AppProps['sessionToken'],
-  isLoggedIn: AppProps['isLoggedIn'],
-  userName: AppProps['userName'],
-  listingEdit: AppProps['listingEdit'],
-  fetchData: AppProps['fetchData'],
-  setListingEdit: AppProps['setListingEdit'],
-}, ListingProps> {
+class ListingById extends React.Component<ListingProps, ListingState> {
   constructor(props: ListingProps) {
     super(props)
 
     this.state = {
-      userID: this.props.userID,
-      sessionToken: this.props.sessionToken,
-      isLoggedIn: this.props.isLoggedIn,
-      userName: this.props.userName,
-      fetchData: this.props.fetchData,
       listingID: window.location.pathname.slice(9, 45),
       title: '',
       description: '',
@@ -50,8 +44,12 @@ class ListingById extends React.Component<{
       tag: '',
       ownerID: '',
       ownerName: '',
-      listingEdit: this.props.listingEdit,
-      setListingEdit: this.props.setListingEdit,
+      delete: false,
+      confirmDelete: () => {
+        this.setState({
+        delete: !this.state.delete,
+        })
+      },
       _isMounted: false,
     }
   }
@@ -78,6 +76,7 @@ class ListingById extends React.Component<{
         ownerID: res.userId,
         ownerName: `${res.user.firstName} ${res.user.lastName}`
       })
+      this.props.setWhat('listing');
     })
   }
 
@@ -105,19 +104,25 @@ class ListingById extends React.Component<{
   render(): React.ReactNode {
       return (
         <ListingContainer>
+          {this.state.delete && 
+            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} confirmDelete={this.state.confirmDelete} />}
           <ListingWrapper>
             <ListingH1>{this.state.title}</ListingH1>
-            <ListingUser>Prepared by {this.state.ownerName}</ListingUser>
-            <ListingImage src="https://via.placeholder.com/400x250" alt={this.state.title}/>
+            {this.state.ownerID === this.props.userID ? '' : 
+              <ListingUser>Prepared by {this.state.ownerName}</ListingUser>
+            }
+            <ListingImage listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title}/>
             <ListingDescription>{this.state.description}</ListingDescription>
             <ListingTagContainer>
               {/* <ListingTag>Tag</ListingTag> */}
             </ListingTagContainer>
-            <ListingPrice>{this.state.price}</ListingPrice>
+            <ListingPrice>${this.state.price} USD</ListingPrice>
             {this.state.ownerID === this.props.userID ? 
             <>
-              <EditDelete onClick={this.editListing}>Edit</EditDelete>
-              <EditDelete>Delete</EditDelete>
+              <ButtonDiv>
+                <EditDelete onClick={this.editListing}>Edit</EditDelete>
+                <EditDelete onClick={this.state.confirmDelete}>Delete</EditDelete>
+              </ButtonDiv>
             </> :
             <ListingForm>
               <ListingLabel>Quantity</ListingLabel>

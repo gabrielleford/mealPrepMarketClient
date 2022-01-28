@@ -2,12 +2,12 @@ import React, { ChangeEvent } from "react";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreatePostButton, CreateTextarea, CreateWrapper } from "./CreateListingElements";
+import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper } from "./CreateListingElements";
 
 //TODO: Make component that runs preview image source & conditionally renders that component
 //TODO: Style for responsiveness
 
-export type CreateProps = {
+type CreateState = {
   title: string,
   image: string,
   previewSrc: string | ArrayBuffer | null,
@@ -18,15 +18,15 @@ export type CreateProps = {
   tags: string,
   reader: FileReader,
   listingID: string,
-  isLoggedIn: AppProps['isLoggedIn'],
-  sessionToken: AppProps['sessionToken'],
   _isMounted: boolean,
 }
 
-class CreatePost extends React.Component<{
-  sessionToken: AppProps['sessionToken'],
+type CreateProps = {
   isLoggedIn: AppProps['isLoggedIn'],
-}, CreateProps> {
+  sessionToken: AppProps['sessionToken'],
+}
+
+class CreateListing extends React.Component<CreateProps, CreateState> {
   constructor(props: CreateProps) {
     super(props)
 
@@ -41,8 +41,6 @@ class CreatePost extends React.Component<{
       tags: '',
       reader: new FileReader(),
       listingID: '',
-      isLoggedIn: this.props.isLoggedIn,
-      sessionToken: this.props.sessionToken,
       _isMounted: false,
     }
 
@@ -163,7 +161,7 @@ class CreatePost extends React.Component<{
             <CreateInput type='text' name="price" onChange={this.handleChange} />
             <CreateLabel>Tags</CreateLabel>
             <CreateInput type='text' name="tags" onChange={this.handleChange} />
-            <CreatePostButton>Create Post</CreatePostButton>
+            <CreateListingButton>Create Listing</CreateListingButton>
           </CreateForm>
         </CreateWrapper>
         {this.state.listingID ? <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> : !this.props.isLoggedIn ? <Navigate to='/' replace={true} /> : ''}
@@ -172,4 +170,4 @@ class CreatePost extends React.Component<{
   }
 }
 
-export default CreatePost;
+export default CreateListing;

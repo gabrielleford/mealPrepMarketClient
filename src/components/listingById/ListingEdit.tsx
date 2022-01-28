@@ -1,12 +1,10 @@
 import React from "react";
 import APIURL from '../helpers/environments'
 import { AppProps } from "../../App";
-import { EditDelete, ListingContainer, ListingForm, ListingImage, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
+import { ButtonDiv, EditDelete, ListingContainer, ListingForm, ListingH1, ListingImage, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
 import { Navigate } from "react-router-dom";
 
-export type EditProps = {
-  isLoggedIn: AppProps['isLoggedIn'],
-  sessionToken: AppProps['sessionToken'],
+type EditState = {
   listingID: string,
   title: string,
   description: string,
@@ -14,23 +12,22 @@ export type EditProps = {
   price: 0,
   tag: string,
   responseCode: number,
-  listingEdit: AppProps['listingEdit'],
-  setListingEdit: AppProps['setListingEdit'],
   _isMounted: boolean,
 }
 
-class ListingEdit extends React.Component<{
+export type EditProps = {
   isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken'],
   listingEdit: AppProps['listingEdit'],
+  what: AppProps['what'],
   setListingEdit: AppProps['setListingEdit'],
-}, EditProps> {
+}
+
+class ListingEdit extends React.Component<EditProps, EditState> {
   constructor(props: EditProps) {
     super(props)
 
     this.state = {
-      isLoggedIn: this.props.isLoggedIn,
-      sessionToken: this.props.sessionToken,
       listingID: window.location.pathname.slice(14, 50),
       title: '',
       description: '',
@@ -38,8 +35,6 @@ class ListingEdit extends React.Component<{
       price: 0,
       tag: '',
       responseCode: 0,
-      listingEdit: this.props.listingEdit,
-      setListingEdit: this.props.setListingEdit,
       _isMounted: false,
     }
 
@@ -63,7 +58,7 @@ class ListingEdit extends React.Component<{
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      this.setState({
+      this.state._isMounted && this.setState({
         title: res.title,
         description: res.description,
         image: res.image,
@@ -99,12 +94,10 @@ class ListingEdit extends React.Component<{
   }
 
   componentDidMount() {
-    console.log(this.props.listingEdit);
-    console.log('edit listing');
     this.setState({
       _isMounted: true
     })
-    this.state._isMounted && this.fetchListing();
+    this.fetchListing();
   }
 
   componentDidUpdate() {
@@ -123,8 +116,9 @@ class ListingEdit extends React.Component<{
     return (
       <ListingContainer>
         <ListingWrapper>
+          <ListingH1>Edit Listing</ListingH1>
           <ListingForm onSubmit={this.updateListing}>
-            <ListingImage src="https://via.placeholder.com/400x250" alt={this.state.title} />
+            <ListingImage listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title} />
             <ListingLabel>Title</ListingLabel>
             <ListingInput name='title' value={this.state.title} onChange={this.handleChange} />
             <ListingLabel>Description</ListingLabel>
@@ -133,8 +127,10 @@ class ListingEdit extends React.Component<{
             <ListingInput name='price' value={this.state.price} onChange={this.handleChange} />
             <ListingLabel>Tags</ListingLabel>
             <ListingInput name='tag' value={this.state.tag} onChange={this.handleChange} />
+            <ButtonDiv>
             <EditDelete type="submit">Save</EditDelete>
             <EditDelete>Delete</EditDelete>
+            </ButtonDiv>
           </ListingForm>    
         </ListingWrapper>
         {!this.props.listingEdit && <Navigate to={`/listing/${this.state.listingID}`} replace={true} />}

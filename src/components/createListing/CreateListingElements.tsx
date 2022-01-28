@@ -44,7 +44,8 @@ export const CreateInput = styled.input`
 `
 
 export const CreateTextarea = styled.textarea`
-  
+  border-radius: 4px;
+  border: thin solid #05386b;
 `
 
 export const CreateLabel = styled.label`
@@ -56,7 +57,7 @@ export const PreviewSrc = styled.img`
   
 `
 
-export const CreatePostButton = styled.button`
+export const CreateListingButton = styled.button`
   width: 80%;
   margin: -0.5vh auto 0 auto;
   color: #edf5e1;
