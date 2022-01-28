@@ -1,6 +1,6 @@
 # Meal Prep Market
 
-Server for Meal Prep Market app. Users can sign up to sell their meal prep services or as a customer interested in purchasing prepped meals.
+Client for Meal Prep Market app. Users can sign up to sell their meal prep services or as a customer interested in purchasing prepped meals.
 
 Technology Used:
               React, TypeScript, HTML 5, CSS 3
@@ -21,3 +21,11 @@ Technology Used:
     01.25       Create listing fetch & some styling, logout reroute
     01.25       Fixed check token fetch
     01.25       Started listing by id
+
+    01.26       Finished listing by id & started liting edit
+    
+    01.27       Finished listing edit & created delete/confirm delete modal
+    01.27       Styled delete modal & added gifs to it
+    01.27       Fixed states and props and added lifecycle methods
+    
+    01.28       Finished delete listing
