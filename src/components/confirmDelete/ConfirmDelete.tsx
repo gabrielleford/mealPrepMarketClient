@@ -137,7 +137,7 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
             <Gif src={this.state.gif} alt='Gif' />
           <DeleteP>This is <strong>irreversible</strong>.</DeleteP>
           <ButtonDiv>
-            <DeleteButton onClick={this.delete}>Yes</DeleteButton>
+            <DeleteButton onClick={this.delete}>Delete</DeleteButton>
             <CancelButton onClick={() => this.props.setDelete(false)}>Cancel</CancelButton>
           </ButtonDiv>
         </ConfirmDeleteDiv>

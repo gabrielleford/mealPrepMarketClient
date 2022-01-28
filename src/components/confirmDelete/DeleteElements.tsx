@@ -46,10 +46,39 @@ export const DeleteP = styled.p`
 
 // ** Confirm Delete Button ** //
 export const DeleteButton = styled.button`
-  
+  width: 15%;
+  text-align: center;
+  color: #05386b;
+  background: #5cdb95;
+  border: none;
+  border-radius: 4px;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: #8ee4af;
+    transform: scale(1.1)
+  }
 `
 
 // ** Cancel Button ** //
 export const CancelButton = styled.button`
-  
+  width: 15%;
+  text-align: center;
+  padding: 3px 0;
+  color: #05386b;
+  background: #5cdb95;
+  border: none;
+  border-radius: 4px;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: #8ee4af;
+    transform: scale(1.1)
+  }
 `
