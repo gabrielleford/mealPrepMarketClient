@@ -3,7 +3,7 @@ import styled from "styled-components";
 // ** Delete Container ** //
 export const DeleteContainer = styled.div`
   position: absolute;
-  top: 17%;
+  top: 16%;
   left: 0;
   width:100%;
   height: 100vh;

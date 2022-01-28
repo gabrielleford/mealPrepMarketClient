@@ -10,11 +10,13 @@ type ListingProps = {
   sessionToken: AppProps['sessionToken'],
   isLoggedIn: AppProps['isLoggedIn'],
   userName: AppProps['userName'],
-  listingEdit: AppProps['listingEdit'],
   what: AppProps['what'],
+  listingEdit: AppProps['listingEdit'],
+  dlt: AppProps['dlt'],
   fetchData: AppProps['fetchData'],
-  setListingEdit: AppProps['setListingEdit'],
   setWhat: AppProps['setWhat'],
+  setListingEdit: AppProps['setListingEdit'],
+  setDelete: AppProps['setDelete'],
 }
 
 export type ListingState = {
@@ -26,8 +28,6 @@ export type ListingState = {
   tag: string,
   ownerID: string,
   ownerName: string,
-  delete: boolean,
-  confirmDelete: () => void;
   _isMounted: boolean,
 }
 
@@ -44,20 +44,11 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       tag: '',
       ownerID: '',
       ownerName: '',
-      delete: false,
-      confirmDelete: () => {
-        this.setState({
-        delete: !this.state.delete,
-        })
-      },
       _isMounted: false,
     }
   }
 
   fetchListing = async ():Promise<void> => {
-    console.log(this.props.userID);
-    console.log(this.props.userName);
-
     await fetch(`${APIURL}/listing/${this.state.listingID}`,{
       method: "GET",
       headers: new Headers({
@@ -66,7 +57,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res);
       this.state._isMounted && this.setState({
         title: res.title,
         description: res.description,
@@ -81,31 +71,30 @@ class ListingById extends React.Component<ListingProps, ListingState> {
   }
 
   editListing = () => {
-    this.props.setListingEdit(true);
-    console.log('button clicked')
+    this.props.setListingEdit(!this.props.listingEdit);
   }
 
   componentDidMount() {
-    console.log(this.state.listingID);
     this.setState({
       _isMounted: true
     })
     this.state._isMounted && this.props.fetchData();
     this.fetchListing();
-    console.log(this.props.listingEdit);
   }
 
   componentWillUnmount() {
     this.setState({
       _isMounted: false
     })
+    this.props.setDelete(false);
   }
 
   render(): React.ReactNode {
       return (
         <ListingContainer>
-          {this.state.delete && 
-            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} confirmDelete={this.state.confirmDelete} />}
+          {this.props.dlt && 
+            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
+          }
           <ListingWrapper>
             <ListingH1>{this.state.title}</ListingH1>
             {this.state.ownerID === this.props.userID ? '' : 
@@ -121,7 +110,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             <>
               <ButtonDiv>
                 <EditDelete onClick={this.editListing}>Edit</EditDelete>
-                <EditDelete onClick={this.state.confirmDelete}>Delete</EditDelete>
+                <EditDelete onClick={() => this.props.setDelete(true)}>Delete</EditDelete>
               </ButtonDiv>
             </> :
             <ListingForm>

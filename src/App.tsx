@@ -17,12 +17,14 @@ export type AppProps = {
   userName: string | null,
   listingEdit: boolean,
   what: string,
+  dlt: boolean,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
   setListingEdit: (listingEdit: boolean) => void,
   setWhat: (what: string) => void,
+  setDelete: (del: boolean) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -32,6 +34,7 @@ const App: React.FunctionComponent = () => {
   const [userName, setName] = useState<string | null>('');
   const [listingEdit, setListingEdit] = useState<boolean>(false);
   const [what, setWhat] = useState<string>('');
+  const [dlt, setDelete] = useState<boolean>(false);
 
   const fetchData = async ():Promise<void> => {
     if (localStorage.getItem('Authorization')) {
@@ -42,7 +45,7 @@ const App: React.FunctionComponent = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionToken}`
+            authorization: `Bearer ${sessionToken}`
           }
         })
         .then(res => {
@@ -53,12 +56,8 @@ const App: React.FunctionComponent = () => {
           return res.json()
         })
         .then(res => {
-          console.log(res);
           setUserID(res.userId);
           setName(`${res.firstName} ${res.lastName}`);
-        })
-        .then(() => {
-          console.log(userName, userID);
         })
         .catch(error => console.log(error))
       }
@@ -82,7 +81,7 @@ const App: React.FunctionComponent = () => {
 
   useEffect(() => {
     fetchData()
-  }, [sessionToken])
+  })
 
   return (
     <>
@@ -94,7 +93,6 @@ const App: React.FunctionComponent = () => {
           isLoggedIn={isLoggedIn} 
           userName={userName}
         />
-
 
         <Routes>
           <Route path='/' element={
@@ -132,11 +130,13 @@ const App: React.FunctionComponent = () => {
               isLoggedIn={isLoggedIn}
               sessionToken={sessionToken}
               userName={userName}
-              fetchData={fetchData}
               listingEdit={listingEdit}
-              setListingEdit={setListingEdit}
               what={what}
+              dlt={dlt}
+              setListingEdit={setListingEdit}
+              fetchData={fetchData}
               setWhat={setWhat}
+              setDelete={setDelete}
             />}
           />
 
@@ -145,8 +145,11 @@ const App: React.FunctionComponent = () => {
               isLoggedIn={isLoggedIn}
               sessionToken={sessionToken}
               listingEdit={listingEdit}
-              setListingEdit={setListingEdit}
               what={what}
+              dlt={dlt}
+              setListingEdit={setListingEdit}
+              setWhat={setWhat}
+              setDelete={setDelete}
             />
           }
           />

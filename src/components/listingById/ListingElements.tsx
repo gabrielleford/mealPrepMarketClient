@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AppProps } from "../../App";
+import { AppProps } from '../../App'
 
 type Props = {
   listingEdit: AppProps['listingEdit'],

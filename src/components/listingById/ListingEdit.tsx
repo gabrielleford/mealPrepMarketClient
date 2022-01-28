@@ -1,10 +1,11 @@
 import React from "react";
 import APIURL from '../helpers/environments'
+import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { AppProps } from "../../App";
 import { ButtonDiv, EditDelete, ListingContainer, ListingForm, ListingH1, ListingImage, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
 import { Navigate } from "react-router-dom";
 
-type EditState = {
+export type EditState = {
   listingID: string,
   title: string,
   description: string,
@@ -18,9 +19,12 @@ type EditState = {
 export type EditProps = {
   isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken'],
-  listingEdit: AppProps['listingEdit'],
   what: AppProps['what'],
+  listingEdit: AppProps['listingEdit'],
+  dlt: AppProps['dlt'],
+  setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
+  setDelete: AppProps['setDelete'],
 }
 
 class ListingEdit extends React.Component<EditProps, EditState> {
@@ -36,7 +40,8 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       tag: '',
       responseCode: 0,
       _isMounted: false,
-    }
+      }
+    
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -57,7 +62,6 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res);
       this.state._isMounted && this.setState({
         title: res.title,
         description: res.description,
@@ -73,7 +77,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       method: 'PUT',
       body: JSON.stringify({
         title: this.state.title,
-        desription: this.state.description,
+        description: this.state.description,
         price: this.state.price,
         tag: this.state.tag,
       }),
@@ -83,13 +87,15 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       })
     })
     .then(res => {
-      this.setState({
+      this.state._isMounted && this.setState({
         responseCode: res.status
       })
       return res.json()
     })
     .then(res => {
-      console.log(res);
+      if (this.state.responseCode === 200) {
+        this.props.setListingEdit(!this.props.listingEdit);
+      }
     })
   }
 
@@ -98,12 +104,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       _isMounted: true
     })
     this.fetchListing();
-  }
-
-  componentDidUpdate() {
-    if (this.state.responseCode === 200) {
-      this.props.setListingEdit(false);
-    }
+    this.props.setWhat('listing');
   }
 
   componentWillUnmount() {
@@ -115,6 +116,9 @@ class ListingEdit extends React.Component<EditProps, EditState> {
   render(): React.ReactNode {
     return (
       <ListingContainer>
+        {this.props.dlt && 
+          <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
+        }
         <ListingWrapper>
           <ListingH1>Edit Listing</ListingH1>
           <ListingForm onSubmit={this.updateListing}>
@@ -128,10 +132,12 @@ class ListingEdit extends React.Component<EditProps, EditState> {
             <ListingLabel>Tags</ListingLabel>
             <ListingInput name='tag' value={this.state.tag} onChange={this.handleChange} />
             <ButtonDiv>
-            <EditDelete type="submit">Save</EditDelete>
-            <EditDelete>Delete</EditDelete>
+              <EditDelete type="submit">Save</EditDelete>  
+              <EditDelete onClick={(e) => {
+                e.preventDefault() 
+                this.props.setDelete(true)}}>Delete</EditDelete>
             </ButtonDiv>
-          </ListingForm>    
+          </ListingForm>
         </ListingWrapper>
         {!this.props.listingEdit && <Navigate to={`/listing/${this.state.listingID}`} replace={true} />}
       </ListingContainer>
