@@ -1,33 +1,30 @@
 import styled from "styled-components";
 
 
-export const Header = styled.header`
-  max-height: 300px;
-  height: 180px;
-  width: 100%;
-  background: #8EE4AF;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px 40px;
-  border-bottom: 7px solid #edf5e1;
-  transition: all .5s ease-in-out;
+export const LandingContainer = styled.div`
+  
+`
 
-  @media screen and (max-width: 1215px) {
-    height: 160px;
-  }
+export const LandingWrapper = styled.div`
+  
+`
 
-  @media screen and (max-width: 1032px) {
-    height: 140px;
-  }
+export const LandingCard = styled.div`
 
-  @media screen and (max-width: 768px) {
-    height: 120px;
-  }
+`
 
-  @media screen and (max-width: 480px) {
-    height: 120px;
-  }
+export const LandingH1 = styled.h1`
+  
+`
+
+export const LandingImg = styled.img`
+  
+`
+
+export const LandingTag = styled.img`
+  
+`
+
+export const LandingPrice = styled.p`
+  
 `
