@@ -2,7 +2,7 @@ import React from "react";
 import APIURL from '../helpers/environments'
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { AppProps } from "../../App";
-import { ButtonDiv, EditDelete, ListingContainer, ListingForm, ListingH1, ListingImage, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
+import { ButtonDiv, EditDelete, ListingContainer, ListingForm, IndivListingH1, IndivListingImg, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
 import { Navigate } from "react-router-dom";
 
 export type EditState = {
@@ -120,9 +120,9 @@ class ListingEdit extends React.Component<EditProps, EditState> {
           <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
         }
         <ListingWrapper>
-          <ListingH1>Edit Listing</ListingH1>
+          <IndivListingH1>Edit Listing</IndivListingH1>
           <ListingForm onSubmit={this.updateListing}>
-            <ListingImage listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title} />
+            <IndivListingImg listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title} />
             <ListingLabel>Title</ListingLabel>
             <ListingInput name='title' value={this.state.title} onChange={this.handleChange} />
             <ListingLabel>Description</ListingLabel>

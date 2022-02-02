@@ -9,6 +9,7 @@ import APIURL from './components/helpers/environments';
 import CreateListing from './components/createListing/CreateListing';
 import ListingById from './components/listingById/ListingById';
 import ListingEdit from './components/listingById/ListingEdit';
+import UserProfile from './components/userProfile/UserProfile';
 
 export type AppProps = {
   isLoggedIn: boolean,
@@ -116,14 +117,12 @@ const App: React.FunctionComponent = () => {
             setSessionToken={setSessionToken}
             />} 
           />
-
           <Route path='/create' element={
             <CreateListing 
               sessionToken={sessionToken}
               isLoggedIn={isLoggedIn}
             />} 
           />
-
           <Route path='/listing/:id' element={
             <ListingById
               userID={userID}
@@ -139,7 +138,6 @@ const App: React.FunctionComponent = () => {
               setDelete={setDelete}
             />}
           />
-
           <Route path='/listing/edit/:id' element={
             <ListingEdit
               isLoggedIn={isLoggedIn}
@@ -150,8 +148,12 @@ const App: React.FunctionComponent = () => {
               setListingEdit={setListingEdit}
               setWhat={setWhat}
               setDelete={setDelete}
-            />
-          }
+            />}
+          />
+          <Route path='/profile/:id' element={
+            <UserProfile
+              userID={userID}
+            />}
           />
         </Routes>
       </Router>

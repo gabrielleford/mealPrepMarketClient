@@ -1,21 +1,19 @@
 import React from "react";
-import { LandingState } from "./Landing";
-import { ListingCard, ListingH1, ListingImg, ListingPrice, ListingTagContainer, ListingTag } from "../ReusableElements";
 import { Navigate } from "react-router-dom";
+import { ListingCard, ListingCards, ListingH1, ListingImg, ListingPrice, ListingTag, ListingTagContainer } from "../ReusableElements";
+import { UserState } from "./UserProfile";
 
-//TODO: Style & add routing to listing based on id
-
-type MapState = {
+type UserMapState = {
   divClicked: boolean,
   _isMounted: boolean,
 }
 
-type MapProps = {
-  results: LandingState['results'],
+type UserMapProps = {
+  listings: UserState['listings'],
 }
 
-class LandingMap extends React.Component<MapProps, MapState> {
-  constructor(props: MapProps) {
+class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
+  constructor(props: UserMapProps) {
     super(props)
 
     this.state = {
@@ -24,24 +22,6 @@ class LandingMap extends React.Component<MapProps, MapState> {
     }
 
     this.mapListings = this.mapListings.bind(this);
-  }
-
-  mapListings = () => {
-    return (
-      this.state._isMounted && this.props.results.map((listing): JSX.Element => {
-        return (
-          <ListingCard key={listing.id} onClick={() => this.setState({divClicked: true})}>
-            <ListingH1>{listing.title}</ListingH1>
-            <ListingImg src="https://via.placeholder.com/200x150" />
-            <ListingPrice>{listing.price}</ListingPrice>
-            <ListingTagContainer>
-            {/* <ListingTag src=""/> */}
-            </ListingTagContainer>
-            {this.state.divClicked && <Navigate to={`/listing/${listing.id}`} replace={true} />}
-          </ListingCard>
-        )
-      })
-    )
   }
 
   componentDidMount() {
@@ -53,16 +33,34 @@ class LandingMap extends React.Component<MapProps, MapState> {
   componentWillUnmount() {
     this.setState({
       _isMounted: false,
-    });
+    })
+  }
+
+  mapListings = () => {
+    return(
+      this.state._isMounted && this.props.listings.map((listing):JSX.Element => {
+        return(
+          <ListingCard key={listing.id} onClick={() => this.setState({divClicked: true})}>
+            <ListingH1>{listing.title}</ListingH1>
+            <ListingImg src="https://via.placeholder.com/200x150" />
+            <ListingPrice>{listing.price}</ListingPrice>
+            <ListingTagContainer>
+              {/* <ListingTag /> */}
+            </ListingTagContainer>
+            {this.state.divClicked && <Navigate to={`/listing/${listing.id}`} replace={true} />}
+          </ListingCard>
+        )
+      })
+    )
   }
 
   render(): React.ReactNode {
     return (
       <>
-        {this.props.results && this.mapListings()}
+        {this.props.listings && this.mapListings()}
       </>
     )
   }
 }
 
-export default LandingMap;
+export default UserProfileMap;

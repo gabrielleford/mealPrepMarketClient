@@ -1,11 +1,13 @@
 import React from "react";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
+import { ListingCards } from "../ReusableElements";
 import { LandingContainer, LandingWrapper } from './LandingElements'
 import LandingMap from "./LandingMap";
 
 export type LandingState = {
   results: {
+    id: string,
     title: string,
     image: string,
     price: number,
@@ -26,6 +28,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
 
     this.state = {
       results: [{
+        id: '',
         title: '',
         image: '',
         price: 0,
@@ -68,7 +71,9 @@ class Landing extends React.Component<LandingProps, LandingState> {
     return (
       <LandingContainer>
         <LandingWrapper>
-          {this.state.results && <LandingMap results={this.state.results} />}
+          <ListingCards>
+            {this.state.results && <LandingMap results={this.state.results} />}
+          </ListingCards>
         </LandingWrapper>
       </LandingContainer>
     )

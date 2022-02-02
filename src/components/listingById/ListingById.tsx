@@ -2,7 +2,7 @@ import React from "react";
 import APIURL from "../helpers/environments";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ButtonDiv, Delivery, EditDelete, ListingContainer, ListingDescription, ListingForm, ListingH1, ListingImage, ListingLabel, ListingPrice, ListingTag, ListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect } from "./ListingElements";
+import { ButtonDiv, Delivery, EditDelete, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 
 type ListingProps = {
@@ -28,6 +28,7 @@ export type ListingState = {
   tag: string,
   ownerID: string,
   ownerName: string,
+  userClicked: boolean,
   _isMounted: boolean,
 }
 
@@ -44,6 +45,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       tag: '',
       ownerID: '',
       ownerName: '',
+      userClicked: false,
       _isMounted: false,
     }
   }
@@ -96,16 +98,21 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
           }
           <ListingWrapper>
-            <ListingH1>{this.state.title}</ListingH1>
-            {this.state.ownerID === this.props.userID ? '' : 
-              <ListingUser>Prepared by {this.state.ownerName}</ListingUser>
+            <IndivListingH1>{this.state.title}</IndivListingH1>
+            {this.state.ownerID === this.props.userID ? '' :
+              <ListingUserDiv>
+                <PreppedBy>Prepared by </PreppedBy>
+                <ListingUser onClick={() => this.setState({userClicked: true})}>
+                  {this.state.ownerName}
+                </ListingUser>
+              </ListingUserDiv>
             }
-            <ListingImage listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title}/>
-            <ListingDescription>{this.state.description}</ListingDescription>
-            <ListingTagContainer>
-              {/* <ListingTag>Tag</ListingTag> */}
-            </ListingTagContainer>
-            <ListingPrice>${this.state.price} USD</ListingPrice>
+            <IndivListingImg listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title}/>
+            <IndivListingDescription>{this.state.description}</IndivListingDescription>
+            <IndivListingTagContainer>
+              {/* <IndivListingTag /> */}
+            </IndivListingTagContainer>
+            <IndivListingPrice>${this.state.price} USD</IndivListingPrice>
             {this.state.ownerID === this.props.userID ? 
             <>
               <ButtonDiv>
@@ -126,7 +133,11 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             </ListingForm>
           }
           </ListingWrapper>
-          {this.props.listingEdit && <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/>}
+          {this.props.listingEdit ? 
+          <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/> : 
+          this.state.userClicked ? 
+          <Navigate to={`/profile/${this.state.ownerID}`} replace={true} /> : ''
+          }
         </ListingContainer>
       )
   }

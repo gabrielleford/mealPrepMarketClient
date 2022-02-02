@@ -28,7 +28,7 @@ export const ListingWrapper = styled.div`
 `
 
 // ** Listing Title ** //
-export const ListingH1 = styled.h1`
+export const IndivListingH1 = styled.h1`
   font-weight: 400;
   text-align: center;
   color: #05386b;
@@ -36,15 +36,28 @@ export const ListingH1 = styled.h1`
   margin-bottom: -4vh;
 `
 
-// ** Listing Owner ** //
-export const ListingUser = styled.h4`
+// ** Listing Owner Div ** //
+export const ListingUserDiv = styled.div`
+  
+`
+
+// ** Prepped by ** //
+export const PreppedBy = styled.h4`
   font-weight: 300;
   text-align: center;
   color: #05386b;
 `
 
+// ** Listing Owner ** //
+export const ListingUser = styled.h4`
+  font-weight: 300;
+  text-align: center;
+  color: #05386b;
+  cursor: pointer;
+`
+
 // ** Listing Image ** //
-export const ListingImage = styled.img`
+export const IndivListingImg = styled.img`
   border-radius: ${(props:Props) => props.listingEdit ? '10px' : '10px 10px 0 0'};
   height: 250px;
   width: 400px;
@@ -52,7 +65,7 @@ export const ListingImage = styled.img`
 `
 
 // ** Listing Description ** //
-export const ListingDescription = styled.p`
+export const IndivListingDescription = styled.p`
   background: #05386b;
   padding: 20px 35px;
   margin-top: -1vh;
@@ -61,19 +74,19 @@ export const ListingDescription = styled.p`
 `
 
 // ** Listing Price ** //
-export const ListingPrice = styled.p`
+export const IndivListingPrice = styled.p`
   margin-top: -1vh;
   text-align: center;
 `
 
 
 // ** Listing Tag Container ** //
-export const ListingTagContainer = styled.div`
+export const IndivListingTagContainer = styled.div`
   
 `
 
 // ** Listing Tags ** //
-export const ListingTag = styled.img`
+export const IndivListingTag = styled.img`
   
 `
 
