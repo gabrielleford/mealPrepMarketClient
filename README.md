@@ -31,3 +31,4 @@ Technology Used:
     01.28       Finished delete listing
     
     02.01       Landing fetch, landing map
+    02.01       Reusable elements, user profile fetch & listings map for user profile
