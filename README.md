@@ -29,7 +29,7 @@ Technology Used:
     01.27       Styled delete modal & added gifs to it
     01.27       Fixed states and props and added lifecycle methods
     
-    01.28       Finished delete listing
+    01.28       Finished delete listing, started landing fetch
     
     02.01       Landing fetch, landing map
     02.01       Reusable elements, user profile fetch & listings map for user profile
