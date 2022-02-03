@@ -22,7 +22,6 @@ type CreateState = {
 }
 
 type CreateProps = {
-  isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken'],
 }
 
@@ -94,7 +93,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   //   }
   // }
 
-  postListing = async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  postListing = async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
 
     await fetch(`${APIURL}/listing/create`, {
@@ -132,7 +131,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     })
   }
 
-  componentDidUpdate(prevProps: any, prevState: any){
+  componentDidUpdate(prevProps:Readonly<CreateProps>, prevState:Readonly<CreateState>){
     if(this.state.listingID !== prevState.listingID ) {
       console.log(this.state.listingID);
     }
@@ -164,7 +163,11 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
             <CreateListingButton>Create Listing</CreateListingButton>
           </CreateForm>
         </CreateWrapper>
-        {this.state.listingID ? <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> : !this.props.isLoggedIn ? <Navigate to='/' replace={true} /> : ''}
+        {this.state.listingID ? 
+        <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> : 
+        !localStorage.getItem('Authorization') ? 
+        <Navigate to='/' replace={true} /> : ''
+        }
       </CreateContainer>
     )
   }

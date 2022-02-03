@@ -2,13 +2,13 @@ import React from "react";
 import APIURL from "../helpers/environments";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ButtonDiv, Delivery, EditDelete, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy } from "./ListingElements";
+import { ButtonDiv, Delivery, EditDelete, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
+import { GetStarted } from "../ReusableElements";
 
 type ListingProps = {
   userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
-  isLoggedIn: AppProps['isLoggedIn'],
   userName: AppProps['userName'],
   what: AppProps['what'],
   listingEdit: AppProps['listingEdit'],
@@ -28,6 +28,10 @@ export type ListingState = {
   tag: string,
   ownerID: string,
   ownerName: string,
+  quantity: number,
+  fulfillmentMethod: string,
+  responseCode: number,
+  getStarted: boolean,
   userClicked: boolean,
   _isMounted: boolean,
 }
@@ -45,9 +49,16 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       tag: '',
       ownerID: '',
       ownerName: '',
+      quantity: 1,
+      fulfillmentMethod: 'pickup',
+      responseCode: 0,
+      getStarted: false,
       userClicked: false,
       _isMounted: false,
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.setFulfillment = this.setFulfillment.bind(this);
   }
 
   fetchListing = async ():Promise<void> => {
@@ -68,19 +79,69 @@ class ListingById extends React.Component<ListingProps, ListingState> {
         ownerID: res.userId,
         ownerName: `${res.user.firstName} ${res.user.lastName}`
       })
-      this.props.setWhat('listing');
+      this.state._isMounted && this.props.setWhat('listing');
+      console.log(res.id);
     })
+    .catch(error => console.log(error))
+  }
+
+  handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    this.setState({
+      quantity: +e.target.value
+    })
+  }
+
+  placeOrder = async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+    e.preventDefault();
+
+    await fetch(`${APIURL}/order/${this.state.listingID}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        order: {
+          quantity: this.state.quantity,
+          fulfillmentMethod: this.state.fulfillmentMethod,
+        }
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${this.props.sessionToken}`
+      })
+    })
+    .then(res => {
+      this.state._isMounted && this.setState({
+        responseCode: res.status
+      })
+      return res.json()
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(error => console.log(error))
   }
 
   editListing = () => {
     this.props.setListingEdit(!this.props.listingEdit);
   }
 
+  setFulfillment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (this.state.fulfillmentMethod === 'delivery'){
+      this.setState({
+        fulfillmentMethod: 'pickup' 
+      })
+    } else {
+      this.setState({
+        fulfillmentMethod: 'delivery'
+      })
+    }
+  }
+
   componentDidMount() {
     this.setState({
       _isMounted: true
     })
-    this.state._isMounted && this.props.fetchData();
+    this.props.fetchData();
     this.fetchListing();
   }
 
@@ -119,24 +180,35 @@ class ListingById extends React.Component<ListingProps, ListingState> {
                 <EditDelete onClick={this.editListing}>Edit</EditDelete>
                 <EditDelete onClick={() => this.props.setDelete(true)}>Delete</EditDelete>
               </ButtonDiv>
-            </> :
-            <ListingForm>
+            </> : localStorage.getItem('Authorization') ?
+            <ListingForm onSubmit={this.placeOrder}>
               <ListingLabel>Quantity</ListingLabel>
-              <QuantitySelect name='quantity'>
+              <QuantitySelect name='quantity' onChange={this.handleChange}>
                 <QuantityOption value={1}>1</QuantityOption>
                 <QuantityOption value={2}>2</QuantityOption>
                 <QuantityOption value={3}>3</QuantityOption>
                 <QuantityOption value={4}>4</QuantityOption>
               </QuantitySelect>
-              <Pickup>Pickup</Pickup>
-              <Delivery>Delivery</Delivery>
-            </ListingForm>
+              <ButtonDiv>
+                <Pickup onClick={this.setFulfillment}>Pickup</Pickup>
+                <Delivery onClick={this.setFulfillment}>Delivery</Delivery>
+              </ButtonDiv>
+              <SubmitOrder type="submit">Place Order</SubmitOrder>
+            </ListingForm> :
+            <>
+            <Para>Interested in ordering?</Para>
+            <GetStarted onClick={() => this.setState({getStarted: true})}>Get Started!</GetStarted>
+            </>
           }
           </ListingWrapper>
           {this.props.listingEdit ? 
           <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/> : 
           this.state.userClicked ? 
-          <Navigate to={`/profile/${this.state.ownerID}`} replace={true} /> : ''
+          <Navigate to={`/profile/${this.state.ownerID}`} replace={true} /> : 
+          this.state.responseCode === 201 ?
+          <Navigate to={`/orders/${this.props.userID}`} replace={true} /> : 
+          this.state.getStarted ?
+          <Navigate to={'/login'} replace={true} /> : ''
           }
         </ListingContainer>
       )

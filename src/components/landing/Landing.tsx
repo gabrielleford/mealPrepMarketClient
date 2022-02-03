@@ -1,5 +1,4 @@
 import React from "react";
-import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import { ListingCards } from "../ReusableElements";
 import { LandingContainer, LandingWrapper } from './LandingElements'
@@ -16,14 +15,8 @@ export type LandingState = {
   _isMounted: boolean,
 }
 
-export type LandingProps = {
-  sessionToken: AppProps['sessionToken'],
-  isLoggedIn: AppProps['isLoggedIn'],
-  fetchData: AppProps['fetchData']
-}
-
-class Landing extends React.Component<LandingProps, LandingState> {
-  constructor(props: LandingProps) {
+class Landing extends React.Component<{}, LandingState> {
+  constructor(props: {}) {
     super(props)
 
     this.state = {

@@ -1,9 +1,10 @@
 import React from "react";
-import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
+import { AppProps } from "../../App";
 import { ListingCards } from "../ReusableElements";
 import { ProfileContainer, ProfileDescrip, ProfilePic, ProfileWrapper, UserInfo, UserName } from "./UserProfileElements";
 import UserProfileMap from "./UserProfileMap";
+import { Navigate } from "react-router-dom";
 
 export type UserState = {
   profileOwner: string,
@@ -88,6 +89,7 @@ componentWillUnmount() {
             <UserProfileMap listings={this.state.listings}/>
           </ListingCards>
         </ProfileWrapper>
+        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </ProfileContainer>
     )
   }

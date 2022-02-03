@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import { ListingState } from "../listingById/ListingById";
-import { EditState } from "../listingById/ListingEdit";
 import { ButtonDiv } from "../listingById/ListingElements";
 import { CancelButton, ConfirmDeleteDiv, DeleteButton, DeleteContainer, DeleteH1, DeleteP, Gif} from "./DeleteElements";
 
@@ -141,7 +140,11 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
             <CancelButton onClick={() => this.props.setDelete(false)}>Cancel</CancelButton>
           </ButtonDiv>
         </ConfirmDeleteDiv>
-        {this.state.deleted && <Navigate to='/' replace={true} /> }
+        {this.state.deleted ? 
+        <Navigate to='/' replace={true} /> :
+        !localStorage.getItem('Authorization') ?
+        <Navigate to='/' replace={true} /> : ''
+        }
       </DeleteContainer>
     )
   }

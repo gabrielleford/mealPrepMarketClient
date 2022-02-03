@@ -180,3 +180,8 @@ export const EditDelete = styled.button`
     box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
   }
 `
+
+// ** Get Started P ** //
+export const Para = styled.p`
+  
+`

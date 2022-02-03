@@ -17,7 +17,6 @@ export type EditState = {
 }
 
 export type EditProps = {
-  isLoggedIn: AppProps['isLoggedIn'],
   sessionToken: AppProps['sessionToken'],
   what: AppProps['what'],
   listingEdit: AppProps['listingEdit'],

@@ -10,6 +10,8 @@ import CreateListing from './components/createListing/CreateListing';
 import ListingById from './components/listingById/ListingById';
 import ListingEdit from './components/listingById/ListingEdit';
 import UserProfile from './components/userProfile/UserProfile';
+import Orders from './components/orders/Orders';
+import Fulfillment from './components/orders/Fulfillment';
 
 export type AppProps = {
   isLoggedIn: boolean,
@@ -50,7 +52,7 @@ const App: React.FunctionComponent = () => {
           }
         })
         .then(res => {
-          if (res.status == 200) {
+          if (res.status === 200) {
             setIsLoggedIn(true)
           }
           else setIsLoggedIn(false);
@@ -98,9 +100,6 @@ const App: React.FunctionComponent = () => {
         <Routes>
           <Route path='/' element={
             <Landing 
-            fetchData={fetchData}
-            sessionToken={sessionToken}
-            isLoggedIn={isLoggedIn}
             />} 
           />
           <Route path='/register' element={
@@ -120,13 +119,11 @@ const App: React.FunctionComponent = () => {
           <Route path='/create' element={
             <CreateListing 
               sessionToken={sessionToken}
-              isLoggedIn={isLoggedIn}
             />} 
           />
           <Route path='/listing/:id' element={
             <ListingById
               userID={userID}
-              isLoggedIn={isLoggedIn}
               sessionToken={sessionToken}
               userName={userName}
               listingEdit={listingEdit}
@@ -140,7 +137,6 @@ const App: React.FunctionComponent = () => {
           />
           <Route path='/listing/edit/:id' element={
             <ListingEdit
-              isLoggedIn={isLoggedIn}
               sessionToken={sessionToken}
               listingEdit={listingEdit}
               what={what}
@@ -153,6 +149,19 @@ const App: React.FunctionComponent = () => {
           <Route path='/profile/:id' element={
             <UserProfile
               userID={userID}
+            />}
+          />
+          <Route path='/orders/:id' element={
+            <Orders
+              userID={userID}
+              sessionToken={sessionToken}
+            />}
+          />
+          <Route path='/fulfillment/:id' element={
+            <Fulfillment
+              userID={userID}
+              sessionToken={sessionToken}
+              fetchData={fetchData}
             />}
           />
         </Routes>
