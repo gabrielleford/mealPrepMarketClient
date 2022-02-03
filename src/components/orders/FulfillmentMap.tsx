@@ -4,7 +4,7 @@ import { FulfillProps, FulfillState } from "./Fulfillment";
 import { OrderInfo, OrderP } from "./OrdersElements";
 
 type FulfillMapProps = {
-  orderedListing: FulfillState['orderedListing'],
+  orders: FulfillState['orders'],
 }
 
 type FulfillMapState = {
@@ -20,28 +20,32 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
     }
   }
 
-  // mapOrders = () => {
-  //   return(
-  //     this.state._isMounted && this.props.listings.map((listing) => {
-  //       if (listing.orders) {
-  //         this.setState({
-  //           orderedListing: [...listing.orders]
-  //         })
-  //       }
-  //     })
-  //   )
-  // }
+  mapOrders = () => {
+    return (
+      this.state._isMounted && this.props.orders.map((order):JSX.Element => {
+        return (
+          <ListingCard key={order.id}>
+            <ListingH1>{order.listing.title}</ListingH1>
+            <OrderP>Customer: {order.user.firstName} {order.user.lastName}</OrderP>
+            <OrderP>Quantity: {order.quantity}</OrderP>
+            <OrderP>Pickup or Delivery: {order.fulfillmentMethod}</OrderP>
+            <OrderP>Total: {order.quantity * order.listing.price}</OrderP>
+          </ListingCard>
+        )
+      })
+    )
+  }
 
   componentDidMount() {
     this.setState({
       _isMounted: true,
     })
-    console.log(this.props.orderedListing)
+    console.log(this.props.orders)
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillMapProps>) {
-    if (this.props.orderedListing !== prevProps.orderedListing) {
-      console.log(this.props.orderedListing);
+    if (this.props.orders !== prevProps.orders) {
+      console.log(this.props.orders);
     }
   }
 
@@ -54,7 +58,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
   render(): React.ReactNode {
     return (
       <>
-      {/* {this.mapOrders()} */}
+      {this.mapOrders()}
       </>
     )
   }

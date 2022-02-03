@@ -58,6 +58,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
     this.setState({
       _isMounted: true
     });
+    this.fetchOrders();
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {

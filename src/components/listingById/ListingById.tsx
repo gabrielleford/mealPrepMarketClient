@@ -100,6 +100,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
         order: {
           quantity: this.state.quantity,
           fulfillmentMethod: this.state.fulfillmentMethod,
+          listingOwner: this.state.ownerID,
         }
       }),
       headers: new Headers({

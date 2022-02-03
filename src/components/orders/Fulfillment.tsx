@@ -12,23 +12,21 @@ export type FulfillProps = {
 }
 
 export type FulfillState = {
-  listings: {
+  orders: {
+    fulfillmentMethod: string,
     id: string,
-    title: string,
-    price: number,
-    orders: {
-      id: string,
-      fulfillmentMethod: string,
-      quantity: number,
-      user: {
-        firstName: string,
-        lastName: string,
-      },
-    }[],
+    listing: {
+      title: string,
+      price: number,
+    },
+    listingId: string,
+    quantity: number,
+    user: {
+      firstName: string,
+      lastName: string,
+    },
   }[],
   profileID: string,
-  orderedListing: {listings: {}}[],
-  indivListing: {orders: {}[]}
   _isMounted: boolean,
 }
 
@@ -37,23 +35,21 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     super(props)
 
     this.state = {
-      listings: [{
+      orders: [{
+        fulfillmentMethod: '',
         id: '',
-        title: '',
-        price: 0,
-        orders: [{
-          id: '',
-          fulfillmentMethod: '',
-          quantity: 0,
-          user: {
-            firstName: '',
-            lastName: '',
-          }
-        }]
+        listing: {
+          title: '',
+          price: 0,
+        },
+        listingId: '',
+        quantity: 0,
+        user: {
+          firstName: '',
+          lastName: '',
+        }
       }],
       profileID: window.location.pathname.slice(13, 49),
-      orderedListing: [{listings: {}}],
-      indivListing: {orders: [{}]},
       _isMounted: false,
     }
 
@@ -74,17 +70,9 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        for (let i = 0; i < res.length; i++) {
-          this.setState({
-            indivListing: res[i]
-          })
-          console.log(this.state.indivListing.orders.length >= 1)
-          if (this.state.indivListing.orders.length >= 1) {
-            this.setState({
-              orderedListing: [{listings: {...this.state.indivListing}}]
-            })
-          }
-        }
+        this.setState({
+          orders: [...res]
+        })
       })
       .catch(error => console.log(error))
     }
@@ -94,6 +82,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     this.setState({
       _isMounted: true
     })
+    this.fetchOrders();
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {
@@ -113,7 +102,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
       <OrdersContainer>
         <OrdersWrapper>
           <ListingCards>
-            <FulfillmentMap orderedListing={this.state.orderedListing} />
+            <FulfillmentMap orders={this.state.orders} />
           </ListingCards>
         </OrdersWrapper>
       </OrdersContainer>
