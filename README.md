@@ -33,3 +33,8 @@ Technology Used:
     
     02.01       Landing fetch, landing map
     02.01       Reusable elements, user profile fetch & listings map for user profile
+    
+    02.02       Customer orders page, some styling on landing, routing on logout
+    02.02       Started orders page for primary users
+    
+    02.03       Finished orders page for primary users
