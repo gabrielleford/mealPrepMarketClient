@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import { ListingCards } from "../ReusableElements";
@@ -105,6 +106,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
             <FulfillmentMap orders={this.state.orders} />
           </ListingCards>
         </OrdersWrapper>
+        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </OrdersContainer>
     )
   }

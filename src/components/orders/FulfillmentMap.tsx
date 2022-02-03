@@ -1,6 +1,6 @@
 import React from "react";
 import { ListingCard, ListingH1 } from "../ReusableElements";
-import { FulfillProps, FulfillState } from "./Fulfillment";
+import { FulfillState } from "./Fulfillment";
 import { OrderInfo, OrderP } from "./OrdersElements";
 
 type FulfillMapProps = {
@@ -65,18 +65,3 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 }
 
 export default FulfillmentMap;
-
-// return(
-//   <ListingCard key={orderedListing.id}>
-//   <ListingH1>{orderedListing.title}</ListingH1>
-//   {orderedListing.orders.map((order):JSX.Element => {
-//     return (
-//       <OrderInfo key={order.id}>
-//         <OrderP>Name: {order.user.firstName} {order.user.lastName}</OrderP>
-//         <OrderP>Quantity: {order.quantity}</OrderP>
-//         <OrderP>Total: {order.quantity * listing.price}</OrderP>
-//       </OrderInfo>
-//     )
-//   })}
-// </ListingCard>
-// )
