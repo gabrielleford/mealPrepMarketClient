@@ -21,9 +21,11 @@ export type EditProps = {
   what: AppProps['what'],
   listingEdit: AppProps['listingEdit'],
   dlt: AppProps['dlt'],
+  userID: AppProps['userID'],
   setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
+  clearToken: AppProps['clearToken'],
 }
 
 class ListingEdit extends React.Component<EditProps, EditState> {
@@ -71,7 +73,9 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     })
   }
 
-  updateListing = async ():Promise<void> => {
+  updateListing = async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+    e.preventDefault();
+
     await fetch(`${APIURL}/${this.state.listingID}`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -116,7 +120,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     return (
       <ListingContainer>
         {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
+          <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
         }
         <ListingWrapper>
           <IndivListingH1>Edit Listing</IndivListingH1>

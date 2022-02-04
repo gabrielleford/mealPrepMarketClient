@@ -17,6 +17,7 @@ type ListingProps = {
   setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
+  clearToken: AppProps['clearToken'],
 }
 
 export type ListingState = {
@@ -157,7 +158,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       return (
         <ListingContainer>
           {this.props.dlt && 
-            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} setDelete={this.props.setDelete} />
+            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
           }
           <ListingWrapper>
             <IndivListingH1>{this.state.title}</IndivListingH1>

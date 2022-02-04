@@ -5,28 +5,18 @@ import { Header } from "./NavbarElements";
 
 export type NavbarProps = {
   isLoggedIn: AppProps['isLoggedIn'],
-  userName: AppProps['userName'],
+  userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
   clearToken: AppProps['clearToken'],
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Navbar extends React.Component<{
-  isLoggedIn:AppProps['isLoggedIn'], 
-  userName:AppProps['userName'], 
-  sessionToken:AppProps['sessionToken'], 
-  clearToken:AppProps['clearToken'], 
-  setSessionToken: AppProps['setSessionToken']
-}, NavbarProps> {
+class Navbar extends React.Component<NavbarProps> {
   constructor(props: NavbarProps) {
     super(props)
 
     this.state = {
-      isLoggedIn: this.props.isLoggedIn,
-      userName: this.props.userName,
-      sessionToken: this.props.sessionToken,
-      clearToken: this.props.clearToken,
-      setSessionToken: this.props.setSessionToken,
+
     }
   }
 
@@ -35,8 +25,9 @@ class Navbar extends React.Component<{
       <Header>
         <Link to='/'>Landing</Link>
         <Link to='/login'>Login</Link>
-        <Link to='/create'>Create Post</Link>
-        {this.props.isLoggedIn && <button onClick={this.props.clearToken}>Logout</button>}
+        <Link to='/create'>Create Listing</Link>
+        {localStorage.getItem('Authorization') && <Link to={`/user/${this.props.userID}`}>My Account</Link>}
+        {localStorage.getItem('Authorization') && <button onClick={this.props.clearToken}>Logout</button>}
       </Header>
     )
   }

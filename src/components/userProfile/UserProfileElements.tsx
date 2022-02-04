@@ -23,3 +23,31 @@ export const UserName = styled.h1`
 export const ProfileDescrip = styled.p`
   
 `
+
+export const UserData = styled.div`
+  
+`
+
+export const UserP = styled.p`
+  
+`
+
+export const UpdateForm = styled.form`
+  
+`
+
+export const UpdateLabel = styled.label`
+  
+`
+
+export const UpdateInput = styled.input`
+  
+`
+
+export const UpdateTextarea = styled.textarea`
+  
+`
+
+export const UpdateDeleteBtn = styled.button`
+  
+`

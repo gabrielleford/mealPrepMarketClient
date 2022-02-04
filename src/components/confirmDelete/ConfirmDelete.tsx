@@ -20,9 +20,11 @@ type GifState = {
 
 type DeleteProps = {
   listingID: ListingState['listingID'],
+  userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
   what: AppProps['what'],
   setDelete: AppProps['setDelete'],
+  clearToken: AppProps['clearToken'],
 }
 
 class ConfirmDelete extends React.Component<DeleteProps, GifState> {
@@ -69,7 +71,7 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
         break;
       case 'user':
         this.setState({
-
+          endpoint: `/user/${this.props.userID}`
         })
         break;
       case 'order':
@@ -97,7 +99,9 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     })
     .then(res => {
       console.log(res);
-      if (this.state.responseCode === 200) {
+      if (this.props.what === 'user') {
+        this.props.clearToken();
+      } else if (this.state.responseCode === 200) {
         this.setState({
           deleted: true
         })
@@ -112,7 +116,9 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     });
     this.grabGif();
     this.setWhat();
-    console.log(this.state.number)
+    console.log(this.props.what);
+    console.log(this.props.sessionToken);
+    console.log(this.props.userID);
   }
 
   componentDidUpdate(prevProps:Readonly<DeleteProps>, prevState:Readonly<GifState>) {
