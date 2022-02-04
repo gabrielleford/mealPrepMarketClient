@@ -1,7 +1,8 @@
 import React from "react";
+import { IoMenu} from 'react-icons/io5'
 import { AppProps } from "../../App";
 import accountIcon from '../../assets/user.png';
-import { Account, Header, Icon, Logout, NavItem, NavLink, NavMenu, Title, TitleDiv } from "./NavbarElements";
+import { Account, Header, Icon, Logout, MobileIcon, NavItem, NavLink, NavMenu, Title, TitleDiv } from "./NavbarElements";
 
 export type NavbarProps = {
   isLoggedIn: AppProps['isLoggedIn'],
@@ -12,13 +13,25 @@ export type NavbarProps = {
   setSessionToken: AppProps['setSessionToken']
 }
 
-class Navbar extends React.Component<NavbarProps> {
+export type NavbarState = {
+  isOpen: boolean,
+}
+
+class Navbar extends React.Component<NavbarProps, NavbarState> {
   constructor(props: NavbarProps) {
     super(props)
 
     this.state = {
-
+      isOpen: false,
     }
+
+    this.setOpen = this.setOpen.bind(this);
+  }
+
+  setOpen = () => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
   }
 
   render(): React.ReactNode {
@@ -27,7 +40,10 @@ class Navbar extends React.Component<NavbarProps> {
         <TitleDiv>
           <Title to='/'>Meal Prep Market</Title>
         </TitleDiv>
-        <NavMenu user={this.props.user}>
+        <MobileIcon onClick={this.setOpen} isOpen={this.state.isOpen} user={this.props.user}>
+          <IoMenu />
+        </MobileIcon>
+        <NavMenu isOpen={this.state.isOpen} user={this.props.user}>
           {!localStorage.getItem('Authorization') && 
             <NavItem>
               <NavLink to='/login'>Login or Signup</NavLink>
@@ -54,4 +70,15 @@ class Navbar extends React.Component<NavbarProps> {
   }
 }
 
-export default Navbar; 
+export default Navbar;
+
+/* <MobileMenu isOpen={this.state.isOpen} user={this.props.user}>
+    <MobileLink to='/login'>Login</MobileLink>
+    <MobileLink to='/create'>Create New Listing</MobileLink>
+    <MobileLink to={`http://localhost:3000/user/${this.props.user.id}`}>My Account</MobileLink>
+    <MobileBtn onClick={this.props.clearToken}>Logout</MobileBtn>
+    <CloseMobileIcon onClick={this.setOpen} isOpen={this.state.isOpen} user={this.props.user}>
+      <IoClose />
+    </CloseMobileIcon>
+  </MobileMenu>
+ */

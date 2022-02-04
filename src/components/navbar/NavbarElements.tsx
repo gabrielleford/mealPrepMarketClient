@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AppProps } from "../../App";
+import { NavbarState } from "./Navbar";
 
 type NavProps = {
-  user: AppProps['user']
+  user: AppProps['user'],
+  isOpen: NavbarState['isOpen'],
 }
 
 // ** Heading ** //
@@ -24,33 +26,32 @@ export const Header = styled.header`
 
   @media screen and (max-width: 1407px){
     height: 120px;
-
   }
 
   @media screen and (max-width: 1215px) {
     height: 110px;
-
   }
 
   @media screen and (max-width: 1032px) {
     height: 90px;
-
   }
 
   @media screen and (max-width: 768px) {
     height: 70px;
-
   }
 
   @media screen and (max-width: 480px) {
     height: 70px;
-
   }
 `
 
 // ** Logo/Title ** //
 export const TitleDiv = styled.div`
   margin-left: 2vw;
+
+  @media screen and (max-width: 820px) {
+    margin-left: 0;
+  }
 `
 
 export const Title = styled(Link)`
@@ -58,6 +59,10 @@ export const Title = styled(Link)`
   color: #05386b;
   font-size: 1.9rem;
   letter-spacing: 4px;
+
+  @media screen and (max-width: 820px) {
+    font-size: 1.3rem;
+  }
 `
 
 // ** Buttons/Links ** //
@@ -68,9 +73,34 @@ export const NavMenu = styled.ul<NavProps>`
   align-items: center;
   margin-right: ${props => (props.user.id ? '2vw' : props.user.role === 'primary' ? '1vw' : '2vw')};
   list-style: none;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1407px){
+    width: ${props => (props.user.id ? '25%' : props.user.role === 'primary' ? '35%' : '22%')};
+    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '1.5vw')};
+  }
+
+  @media screen and (max-width: 1215px) {
+    width: ${props => (props.user.id ? '30%' : props.user.role === 'primary' ? '40%' : '27%')};
+    margin-right: ${props => (props.user.id ? '1vw' : props.user.role === 'primary' ? '0' : '1vw')};
+  }
+
+  @media screen and (max-width: 1032px) {
+    width: ${props => (props.user.id ? '35%' : props.user.role === 'primary' ? '45%' : '32%')};
+    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '1.5vw')};
+  }
+
+  @media screen and (max-width: 820px) {
+    display: none;
+  }
 `
 
 export const NavItem = styled.li`
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 
 export const NavLink = styled(Link)`
@@ -80,6 +110,12 @@ export const NavLink = styled(Link)`
   padding: 10px 15px;
   border: solid #05386b 2px;
   border-radius: 28px;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1032px) {
+    padding: 8.5px 12px;
+    font-size: 0.9rem;
+  }
 `
 
 export const Logout = styled.button`
@@ -91,6 +127,21 @@ export const Logout = styled.button`
   border-radius: 28px;
   font-size: 1.05rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media screen and (max-width: 1407px){
+    padding: 9.5px 15px;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 1032px) {
+    padding: 8.5px 12px;
+    font-size: 0.9rem;
+  }
 `
 
 export const Account = styled.a`
@@ -101,8 +152,49 @@ export const Account = styled.a`
   text-decoration: none;
   color: #05386b;
   cursor: pointer;
+
+  @media screen and (max-width: 1407px){
+    font-size: 0.65rem;
+  }
+
+  @media screen and (max-width: 1215px) {
+    font-size: 0.6rem;
+  }
+
+  @media screen and (max-width: 1032px) {
+    font-size: 0.55rem;
+  }
 `
 export const Icon = styled.img`
   width: 45px;
   height: 45px;
+
+  @media screen and (max-width: 1407px){
+    width: 42px;
+    height: 42px;
+  }
+
+  @media screen and (max-width: 1215px) {
+    height: 39px;
+    width: 39px;
+  }
+
+  @media screen and (max-width: 1032px) {
+    height: 36px;
+    width: 36px;
+  }
+`
+
+export const MobileIcon = styled.div<NavProps>`
+  display: none;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+  @media screen and (max-width: 820px) {
+    display: block;
+    margin-top: 0.75vh;
+    font-size: 2rem;
+    color: #05386b;
+    opacity: ${props => (props.isOpen ? '0%' : '100%')}
+  }
 `
