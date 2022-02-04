@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AppProps } from "../../App";
-import { NavbarState } from "./Navbar";
 
 type NavProps = {
   user: AppProps['user'],
-  isOpen: NavbarState['isOpen'],
+  isOpen: AppProps['isOpen'],
 }
 
 // ** Heading ** //
@@ -22,7 +21,7 @@ export const Header = styled.header`
   padding: 20px 40px;
   border-bottom: 7px solid #edf5e1;
   transition: all .5s ease-in-out;
-  z-index: 999;
+  z-index: 100;
 
   @media screen and (max-width: 1407px){
     height: 120px;

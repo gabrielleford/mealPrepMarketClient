@@ -14,6 +14,7 @@ import Orders from './components/orders/Orders';
 import Fulfillment from './components/orders/Fulfillment';
 import EditUser from './components/userProfile/EditUser';
 import UserInfo from './components/userProfile/UserInfo';
+import Sidebar from './components/sidebar/Sidebar';
 
 export type AppProps = {
   isLoggedIn: boolean,
@@ -33,6 +34,7 @@ export type AppProps = {
   userEdit: boolean,
   what: string,
   dlt: boolean,
+  isOpen: boolean,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -41,10 +43,10 @@ export type AppProps = {
   setUserEdit: (userEdit: boolean) => void,
   setWhat: (what: string) => void,
   setDelete: (del: boolean) => void,
+  setIsOpen: (isOpen: boolean) => void,
 }
 
 const App: React.FunctionComponent = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [userID, setUserID] = useState<string | null>('');
   const [userName, setName] = useState<string | null>('');
@@ -52,6 +54,7 @@ const App: React.FunctionComponent = () => {
   const [userEdit, setUserEdit] = useState<boolean>(false);
   const [what, setWhat] = useState<string>('');
   const [dlt, setDelete] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [user, setUser] = useState<{
     id: string,
     firstName: string,
@@ -81,10 +84,6 @@ const App: React.FunctionComponent = () => {
           }
         })
         .then(res => {
-          if (res.status === 200) {
-            setIsLoggedIn(true)
-          }
-          else setIsLoggedIn(false);
           return res.json()
         })
         .then(res => {
@@ -96,7 +95,6 @@ const App: React.FunctionComponent = () => {
         .catch(error => console.log(error))
       }
     } else {
-      setIsLoggedIn(false);
       setUserID('');
       setName('');
       setUser({
@@ -118,7 +116,6 @@ const App: React.FunctionComponent = () => {
   const clearToken = () => {
     localStorage.clear();
     setSessionToken('');
-    setIsLoggedIn(false);
     setDelete(false);
   }
 
@@ -133,9 +130,13 @@ const App: React.FunctionComponent = () => {
           clearToken={clearToken} 
           setSessionToken={setSessionToken} 
           sessionToken={sessionToken} 
-          isLoggedIn={isLoggedIn} 
-          userID={userID}
           user={user}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+        <Sidebar
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
         />
 
         <Routes>

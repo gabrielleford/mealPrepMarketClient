@@ -5,33 +5,21 @@ import accountIcon from '../../assets/user.png';
 import { Account, Header, Icon, Logout, MobileIcon, NavItem, NavLink, NavMenu, Title, TitleDiv } from "./NavbarElements";
 
 export type NavbarProps = {
-  isLoggedIn: AppProps['isLoggedIn'],
-  userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
   user: AppProps['user'],
+  isOpen: AppProps['isOpen'],
   clearToken: AppProps['clearToken'],
-  setSessionToken: AppProps['setSessionToken']
+  setSessionToken: AppProps['setSessionToken'],
+  setIsOpen: AppProps['setIsOpen'],
 }
 
-export type NavbarState = {
-  isOpen: boolean,
-}
-
-class Navbar extends React.Component<NavbarProps, NavbarState> {
+class Navbar extends React.Component<NavbarProps> {
   constructor(props: NavbarProps) {
     super(props)
 
     this.state = {
-      isOpen: false,
+
     }
-
-    this.setOpen = this.setOpen.bind(this);
-  }
-
-  setOpen = () => {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
   }
 
   render(): React.ReactNode {
@@ -40,10 +28,10 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
         <TitleDiv>
           <Title to='/'>Meal Prep Market</Title>
         </TitleDiv>
-        <MobileIcon onClick={this.setOpen} isOpen={this.state.isOpen} user={this.props.user}>
+        <MobileIcon onClick={() => this.props.setIsOpen(!this.props.isOpen)} isOpen={this.props.isOpen} user={this.props.user}>
           <IoMenu />
         </MobileIcon>
-        <NavMenu isOpen={this.state.isOpen} user={this.props.user}>
+        <NavMenu isOpen={this.props.isOpen} user={this.props.user}>
           {!localStorage.getItem('Authorization') && 
             <NavItem>
               <NavLink to='/login'>Login or Signup</NavLink>
