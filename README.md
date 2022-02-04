@@ -39,3 +39,4 @@ Technology Used:
     02.02       Started orders page for primary users
     
     02.03       Finished orders page for primary users
+    02.03       Finished user info update & delete account
