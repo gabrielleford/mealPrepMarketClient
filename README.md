@@ -40,3 +40,5 @@ Technology Used:
     
     02.03       Finished orders page for primary users
     02.03       Finished user info update & delete account
+    
+    02.04       Navbar -> main style set up
