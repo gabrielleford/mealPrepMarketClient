@@ -1,6 +1,7 @@
 # Meal Prep Market
 
-Client for Meal Prep Market app. Users can sign up to sell their meal prep services or as a customer interested in purchasing prepped meals.
+Client for Meal Prep Market app. Users can sign up to sell their meal prep services or as a customer interested in purchasing prepped meals.  
+[Server Repo](https://github.com/gabrielleford/mealPrepMarketServer)
 
 Technology Used:
     
@@ -33,3 +34,8 @@ Technology Used:
     
     02.01       Landing fetch, landing map
     02.01       Reusable elements, user profile fetch & listings map for user profile
+    
+    02.02       Customer orders page, some styling on landing, routing on logout
+    02.02       Started orders page for primary users
+    
+    02.03       Finished orders page for primary users
