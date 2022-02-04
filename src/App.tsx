@@ -135,6 +135,7 @@ const App: React.FunctionComponent = () => {
           sessionToken={sessionToken} 
           isLoggedIn={isLoggedIn} 
           userID={userID}
+          user={user}
         />
 
         <Routes>
