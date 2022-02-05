@@ -58,9 +58,25 @@ export const Title = styled(Link)`
   color: #05386b;
   font-size: 1.9rem;
   letter-spacing: 4px;
+  transition: all 0.5s ease-in-out;
 
   @media screen and (max-width: 820px) {
     font-size: 1.3rem;
+  }
+
+  @media screen and (max-width: 420px) {
+    font-size: 1.15rem;
+    letter-spacing: 3px;
+  }
+
+  @media screen and (max-width: 360px) {
+    font-size: 1rem;
+    letter-spacing: 2.5px;
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
   }
 `
 
@@ -70,23 +86,23 @@ export const NavMenu = styled.ul<NavProps>`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-right: ${props => (props.user.id ? '2vw' : props.user.role === 'primary' ? '1vw' : '2vw')};
+  margin-right: ${props => (props.user.id ? '2vw' : props.user.role === 'primary' ? '1vw' : '0')};
   list-style: none;
   transition: all 0.3s ease-in-out;
 
   @media screen and (max-width: 1407px){
     width: ${props => (props.user.id ? '25%' : props.user.role === 'primary' ? '35%' : '22%')};
-    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '1.5vw')};
+    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 1215px) {
     width: ${props => (props.user.id ? '30%' : props.user.role === 'primary' ? '40%' : '27%')};
-    margin-right: ${props => (props.user.id ? '1vw' : props.user.role === 'primary' ? '0' : '1vw')};
+    margin-right: ${props => (props.user.id ? '1vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 1032px) {
     width: ${props => (props.user.id ? '35%' : props.user.role === 'primary' ? '45%' : '32%')};
-    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '1.5vw')};
+    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 820px) {

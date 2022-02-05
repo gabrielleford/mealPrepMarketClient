@@ -135,8 +135,10 @@ const App: React.FunctionComponent = () => {
           setIsOpen={setIsOpen}
         />
         <Sidebar
+          user={user}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          clearToken={clearToken}
         />
 
         <Routes>
