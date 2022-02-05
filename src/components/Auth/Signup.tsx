@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import APIURL from '../helpers/environments';
 import { AppProps } from '../../App';
-import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn, SignupRoute, SignupP, SignupH1 } from './AuthElements';
+import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn, SignupRoute, SignupP, SignupH1, RoleSwitch, RoleCheck, SwitchDiv, RoleDiv, RoleP } from './AuthElements';
 // import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation
@@ -71,8 +71,7 @@ class Signup extends React.Component<{
     })
   }
 
-  changeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  changeRole = () => {
     if(this.state.role === 'primary') {
       this.setState({
         role: 'secondary'
@@ -140,7 +139,17 @@ class Signup extends React.Component<{
               <SignupLabel htmlFor='password'>Password</SignupLabel>
               <SignupInput type='password' name='password' value={this.state.password} onChange={this.handleChange}/><SignupLabel htmlFor='lastName'>Confirm Password</SignupLabel>
               <SignupInput type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}/>
-              <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn>
+              <RoleDiv>
+                <RoleP>I'm a meal prepper</RoleP>
+                <SwitchDiv>
+                  <RoleCheck id='role' type='checkbox' onChange={this.changeRole}/>
+                  <RoleSwitch htmlFor='role'/>
+                </SwitchDiv>
+              </RoleDiv>
+              {/* <RoleSwitch>
+                <RoleCheck type='checkbox' />
+              </RoleSwitch> */}
+              {/* <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn> */}
               <SignupSubmit type='submit'>Submit</SignupSubmit>
             </SignupForm>
             <SignupP>Already a member?</SignupP>

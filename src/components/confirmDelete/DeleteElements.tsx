@@ -2,23 +2,23 @@ import styled from "styled-components";
 
 // ** Delete Container ** //
 export const DeleteContainer = styled.div`
-  position: absolute;
-  top: 16%;
+  position: fixed;
+  top: 10%;
   left: 0;
   width:100%;
   height: 100vh;
   background: rgba(92, 219, 149, 0.9);
-  z-index: 100;
+  z-index: 99;
 `
 
 // ** Confirm Deletion ** //
 export const ConfirmDeleteDiv = styled.div`
   margin: 10vh auto;
   width: 35%;
-  height: 60vh;
+  max-height: 60vh;
   border-radius: 10px;
   background: #05386b;
-  padding: 20px 0 10px 0;
+  padding: 20px 0 40px 0;
 `
 
 // ** Confirm Delete Header ** //

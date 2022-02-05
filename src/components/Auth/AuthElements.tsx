@@ -27,11 +27,31 @@ export const LoginWrapper = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
-  height: 50vh;
   margin: auto;
   border-radius: 7px;
-  padding: 30px 0 20px 0px;
+  padding: 50px 0;
   background: #edf5e1;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1407px){
+    width: 30%;
+  }
+
+  @media screen and (max-width: 1215px) {
+    width: 35%;
+  }
+
+  @media screen and (max-width: 1032px) {
+    width: 45%
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 65%;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 `
 
 // * Login Header * //
@@ -63,15 +83,16 @@ export const LoginLabel = styled.label`
 
 // * Submit Button * //
 export const LoginSubmit = styled.button`
+  font-family: 'Open Sans', sans-serif;
   width: 50%;
   margin: -1.5vh auto 0 auto;
   color: #edf5e1;
   background: #05386b;
   border: none;
-  border-radius: 4px;
+  border-radius: 7px;
   box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
-  padding: 7px 0;
+  padding: 3px 0 5px 0;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
@@ -86,6 +107,7 @@ export const LoginSubmit = styled.button`
 export const LoginP = styled.p`
   text-align: center;
   transition: all 0.3s ease-in-out;
+  color: #05386b;
 
   @media screen and (max-width: 768px) {
     font-size: 0.85rem;
@@ -95,7 +117,13 @@ export const LoginP = styled.p`
 // * Sign up Here * //
 export const LoginRoute = styled(Link)`
   text-align: center;
-  margin-top: -2.7vh;
+  margin-top: -2.6vh;
+  color: #379683;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+  }
 
   @media screen and (max-width: 768px) {
     font-size: 0.85rem;
@@ -111,13 +139,25 @@ export const LoginRoute = styled(Link)`
 //------------------------------------------//
 // * Main Div * //
 export const SignupContainer = styled.div`
-  padding: 20vh 0;
+  padding: 21vh 0;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 2000px;
   height: 100vh;
   transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1032px) {
+    padding: 17vh 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 15vh 0;
+  }
+
+  @media screen and (max-width: 480px) {
+    padding: 15vh 0;
+  }
 `
 
 // * Wrapper * //
@@ -128,13 +168,35 @@ export const SignupWrapper = styled.div`
   justify-content: center;
   margin: auto;
   border-radius: 7px;
-  padding: 30px 0 20px 0px;
+  padding: 50px 0 30px 0;
   background: #edf5e1;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1407px){
+    width: 35%;
+  }
+
+  @media screen and (max-width: 1215px) {
+    width: 40%;
+  }
+
+  @media screen and (max-width: 1032px) {
+    width: 50%
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 65%;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 `
 
 // * Signup Header * //
 export const SignupH1 = styled.h1`
   font-weight: 400;
+  font-size: 1.7rem;
   text-align: center;
   margin-top: -4vh;
   color: #05386b;
@@ -156,47 +218,50 @@ export const SignupInput = styled.input`
 // * Labels * //
 export const SignupLabel = styled.label`
   margin-bottom: -2.5vh;
+  font-size: 0.85rem;
   color: #05386b;
 `
 
 // * Submit Button * //
 export const SignupSubmit = styled.button`
+  font-family: 'Open Sans', sans-serif;
   width: 57%;
-  margin: -1.5vh auto 0 auto;
+  margin: 0 auto;
   color: #edf5e1;
   background: #05386b;
   border: none;
-  border-radius: 4px;
-  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
-  font-size: 1.1rem;
-  padding: 7.5px 0;
+  border-radius: 7px;
+  box-shadow: 0 0 1px 1px rgba(5, 56, 107, 0.3);
+  font-size: 0.85rem;
+  padding: 3px 0 3px 0;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
   &:hover {
     color: #05386b;
     background: #5cdb95;
-    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+    box-shadow: 0 0 1px 1px rgba(92, 219, 149, 0.3);
   }
 `
 
 // * Already have an account? * // 
 export const SignupP = styled.p`
+  font-size: 0.85rem;
+  margin-top: 1vh;
   text-align: center;
   transition: all 0.3s ease-in-out;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.85rem;
-  }
 `
 
 // * Login Here * //
 export const SignupRoute = styled(Link)`
+  font-size: 0.85rem;
   text-align: center;
-  margin-top: -2.7vh;
+  margin-top: -2.3vh;
+  color: #379683;
+  transition: all 0.3s ease-in-out;
 
-  @media screen and (max-width: 768px) {
-    font-size: 0.85rem;
+  &:hover {
+    color: #05386b;
   }
 `
 
@@ -206,4 +271,67 @@ export const RoleBtn = styled.button`
   background: #05386b;
   border: none;
   border-radius: 4px;
+`
+
+// * Role Switch * //
+export const RoleDiv = styled.div`
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: -2.5vh;
+  margin-bottom: -2vh;
+  margin-left: -2.5vw;
+`
+
+export const RoleP = styled.p`
+  color: #05386b;
+`
+
+export const SwitchDiv = styled.div`
+  position: relative;
+  margin-top: 1.2vh;
+`
+
+export const RoleSwitch = styled.label`
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 16px;
+  border-radius: 22px;
+  background: #bebebe;
+
+  &::after {
+    content: '';
+    display: block;
+    border-radius: 50%;
+    width: 13.5px;
+    height: 13.5px;
+    margin: 1.1px 1.1px 1.1px 1.4px;
+    background: #fff;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+`
+
+export const RoleCheck = styled.input`
+  opacity: 0;
+  z-index: 1;
+  width: 32px;
+  height: 16px;
+  border-radius: 22px;
+  &:checked + ${RoleSwitch} {
+    background: #5cdb95;
+    &::after {
+      content: '';
+      display: block;
+      border-radius: 50%;
+      width: 13.5px;
+      height: 13.5px;
+      margin-left: 17px;
+      transition: 0.3s;
+    }
+  }
 `

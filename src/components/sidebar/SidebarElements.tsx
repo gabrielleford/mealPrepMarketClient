@@ -113,17 +113,14 @@ export const GetStartedH1 = styled.h1`
 
 export const GetStartedP = styled.p`
   margin-top: -2vh;
-  padding: 0 120px;
   transition: all 0.3s ease-in-out;
 
   @media screen and (max-width: 420px) {
     font-size: 0.9rem;
-    padding: 0 40px;
   }
 
   @media screen and (max-width: 280px) {
     font-size: 0.85rem;
-    padding: 0 13px;
   }
 `
 

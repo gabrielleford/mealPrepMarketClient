@@ -47,7 +47,7 @@ class Sidebar extends React.Component<SidebarProps> {
           <GetStartedDiv>
             <GetStartedH1>Making Your Life Easier</GetStartedH1>
             <GetStartedP>
-              Join today to order high quality meals from preppers near you.
+              Join today to order high-quality <br/> meals from preppers near you.
             </GetStartedP>
             <GetStarted to='/login'>Get Started!</GetStarted>
           </GetStartedDiv>
