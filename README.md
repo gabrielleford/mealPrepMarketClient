@@ -43,4 +43,4 @@ Technology Used:
     
     02.04       Navbar -> main style set up, mostly responsive
     02.04       Sidebar -> Set up files for mobile sidebar
-    02.04       Navbar/Sidebar -> responsive
+    02.04       Navbar/Sidebar -> responsive & functional
