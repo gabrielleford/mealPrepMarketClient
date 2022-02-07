@@ -6,11 +6,17 @@ import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, Si
 // import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation
-//TODO: Finish styling
 
 type Role = 'primary' | 'secondary';
 
-export type Props = {
+export type SignupProps = {
+  sessionToken: AppProps['sessionToken'],
+  prevPath: AppProps['prevPath'],
+  updateToken: AppProps['updateToken'],
+  setSessionToken: AppProps['setSessionToken'],
+}
+
+export type SignupState = {
   firstName: string,
   lastName: string,
   email: string,
@@ -25,18 +31,12 @@ export type Props = {
   passRegex: RegExp,
   confirmPassErr: string,
   user: string,
-  sessionToken: AppProps['sessionToken'],
-  updateToken: AppProps['updateToken'],
-  setSessionToken: AppProps['setSessionToken'],
   _isMounted: boolean
 }
 
-class Signup extends React.Component<{
-  sessionToken: AppProps['sessionToken'], 
-  updateToken: AppProps['updateToken'], 
-  setSessionToken: AppProps['setSessionToken']}, Props> {
+class Signup extends React.Component<SignupProps, SignupState> {
 
-  constructor(props: Props) {
+  constructor(props: SignupProps) {
     super(props)
 
     this.state = {
@@ -54,9 +54,6 @@ class Signup extends React.Component<{
       passRegex: /()/,
       confirmPassErr: '',
       user: '',
-      sessionToken: this.props.sessionToken,
-      setSessionToken: this.props.setSessionToken,
-      updateToken: this.props.updateToken,
       _isMounted: false,
     }
 
@@ -146,16 +143,12 @@ class Signup extends React.Component<{
                   <RoleSwitch htmlFor='role'/>
                 </SwitchDiv>
               </RoleDiv>
-              {/* <RoleSwitch>
-                <RoleCheck type='checkbox' />
-              </RoleSwitch> */}
-              {/* <RoleBtn onClick={this.changeRole}>Meal Prepper</RoleBtn> */}
               <SignupSubmit type='submit'>Submit</SignupSubmit>
             </SignupForm>
             <SignupP>Already a member?</SignupP>
             <SignupRoute to='/login'>Login here!</SignupRoute>
           </SignupWrapper>
-          {this.state.user !== '' && <Navigate to='/' replace={true}/>}
+          {this.state.user !== '' && <Navigate to={this.props.prevPath} replace={true}/>}
         </SignupContainer>
       )
   }

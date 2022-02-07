@@ -1,18 +1,18 @@
-import { Props as SignupProps } from '../auth/Signup'
+import { SignupState } from '../auth/Signup'
 
 export type Props = {
-  firstName: SignupProps['firstName'],
-  lastName: SignupProps['lastName'],
-  email: SignupProps['email'],
-  password: SignupProps['password'],
-  confirmPassword: SignupProps['confirmPassword'],
-  firstNameErr: SignupProps['firstNameErr'],
-  lastNameErr: SignupProps['lastNameErr'],
-  emailErr: SignupProps['firstNameErr'],
-  emailRegex: SignupProps['emailRegex'],
-  passErr: SignupProps['firstNameErr'],
-  passRegex: SignupProps['passRegex'],
-  confirmPassErr: SignupProps['firstNameErr']
+  firstName: SignupState['firstName'],
+  lastName: SignupState['lastName'],
+  email: SignupState['email'],
+  password: SignupState['password'],
+  confirmPassword: SignupState['confirmPassword'],
+  firstNameErr: SignupState['firstNameErr'],
+  lastNameErr: SignupState['lastNameErr'],
+  emailErr: SignupState['firstNameErr'],
+  emailRegex: SignupState['emailRegex'],
+  passErr: SignupState['firstNameErr'],
+  passRegex: SignupState['passRegex'],
+  confirmPassErr: SignupState['firstNameErr']
 }
 
 export function signupValidation ({firstName, lastName, email, password, confirmPassword,firstNameErr, lastNameErr, emailErr, emailRegex, passErr, passRegex ,confirmPassErr}:Props) {

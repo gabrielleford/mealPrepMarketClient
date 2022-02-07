@@ -2,9 +2,8 @@ import React from "react";
 import APIURL from "../helpers/environments";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ButtonDiv, Delivery, EditDelete, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para } from "./ListingElements";
+import { ButtonDiv, Delivery, EditDelete, GetStarted, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
-import { GetStarted } from "../ReusableElements";
 
 type ListingProps = {
   userID: AppProps['userID'],
@@ -18,6 +17,7 @@ type ListingProps = {
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
   clearToken: AppProps['clearToken'],
+  setPrevPath: AppProps['setPrevPath'],
 }
 
 export type ListingState = {
@@ -32,7 +32,6 @@ export type ListingState = {
   quantity: number,
   fulfillmentMethod: string,
   responseCode: number,
-  getStarted: boolean,
   userClicked: boolean,
   _isMounted: boolean,
 }
@@ -53,7 +52,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       quantity: 1,
       fulfillmentMethod: 'pickup',
       responseCode: 0,
-      getStarted: false,
       userClicked: false,
       _isMounted: false,
     }
@@ -145,6 +143,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     })
     this.props.fetchData();
     this.fetchListing();
+    this.props.setPrevPath(window.location.pathname);
   }
 
   componentWillUnmount() {
@@ -170,7 +169,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
                 </ListingUser>
               </ListingUserDiv>
             }
-            <IndivListingImg listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title}/>
+            <IndivListingImg listingEdit={this.props.listingEdit} src={this.state.image} alt={this.state.title}/>
             <IndivListingDescription>{this.state.description}</IndivListingDescription>
             <IndivListingTagContainer>
               {/* <IndivListingTag /> */}
@@ -199,7 +198,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             </ListingForm> :
             <>
             <Para>Interested in ordering?</Para>
-            <GetStarted onClick={() => this.setState({getStarted: true})}>Get Started!</GetStarted>
+            <GetStarted to='/login'>Get Started!</GetStarted>
             </>
           }
           </ListingWrapper>
@@ -208,9 +207,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           this.state.userClicked ? 
           <Navigate to={`/profile/${this.state.ownerID}`} replace={true} /> : 
           this.state.responseCode === 201 ?
-          <Navigate to={`/orders/${this.props.userID}`} replace={true} /> : 
-          this.state.getStarted ?
-          <Navigate to={'/login'} replace={true} /> : ''
+          <Navigate to={`/orders/${this.props.userID}`} replace={true} /> : ''
           }
         </ListingContainer>
       )

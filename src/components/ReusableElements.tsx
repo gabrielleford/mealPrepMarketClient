@@ -27,7 +27,3 @@ export const ListingTagContainer = styled.div`
 export const ListingTag = styled.img`
   
 `
-
-export const GetStarted = styled.button`
-  
-`

@@ -4,24 +4,24 @@ import { AppProps } from '../../App';
 import APIURL from '../helpers/environments';
 import {LoginContainer, LoginForm, LoginH1, LoginInput, LoginLabel, LoginP, LoginRoute, LoginSubmit, LoginWrapper} from './AuthElements';
 
-//TODO: Need to set up form validation & make responsive
+//TODO: Need to set up form validation
 
 export type LoginProps = {
+  sessionToken: AppProps['sessionToken'],
+  prevPath: AppProps['prevPath'],
+  updateToken: AppProps['updateToken'],
+  setSessionToken: AppProps['setSessionToken'],
+}
+
+type LoginState = {
   email: string,
   password: string,
   loginErr: string,
   user: string,
-  sessionToken: AppProps['sessionToken'],
-  updateToken: AppProps['updateToken'],
-  setSessionToken: AppProps['setSessionToken'],
   _isMounted: boolean,
 }
 
-class Login extends React.Component<{
-  sessionToken: AppProps['sessionToken'], 
-  updateToken: AppProps['updateToken'], 
-  setSessionToken: AppProps['setSessionToken']
-}, LoginProps> {
+class Login extends React.Component<LoginProps, LoginState> {
   constructor(props: LoginProps) {
     super(props)
 
@@ -30,9 +30,6 @@ class Login extends React.Component<{
       password: '',
       loginErr: '',
       user: '',
-      sessionToken: this.props.sessionToken,
-      setSessionToken: this.props.setSessionToken,
-      updateToken: this.props.updateToken,
       _isMounted: false,
     }
 
@@ -102,7 +99,7 @@ class Login extends React.Component<{
             <LoginP>New to Meal Prep Market?</LoginP>
             <LoginRoute to='/register'>Sign up here!</LoginRoute>
           </LoginWrapper>
-          {this.state.user !== '' && <Navigate to='/' replace={true}/>}
+          {this.state.user !== '' && <Navigate to={this.props.prevPath} replace={true}/>}
         </LoginContainer>
       )
   }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { AppProps } from '../../App'
 
 type Props = {
@@ -11,20 +12,41 @@ export const ListingContainer = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 2000px;
-  height: 100vh;
+  height: fit-content;
   transition: all 0.3s ease-in-out;
 `
 
 // ** Wrapper ** //
 export const ListingWrapper = styled.div`
-  width: 35vw;
+  width: 35%;
   display: grid;
   align-items: center;
   justify-content: center;
-  margin: 20vh auto auto auto;
+  margin: 21vh auto auto auto;
   border-radius: 7px;
   padding: 30px 0 20px 0px;
   background: #edf5e1;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 1215px) {
+    margin: 19vh auto auto auto;
+    width: 45%;
+  }
+
+  @media screen and (max-width: 1032px) {
+    margin: 16vh auto auto auto;
+    width: 55%;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin: 13vh auto auto auto;
+    width: 75%;
+  }
+
+  @media screen and (max-width: 480px) {
+    margin: 13vh auto auto auto;
+    width: 100%;
+  }
 `
 
 // ** Listing Title ** //
@@ -33,12 +55,16 @@ export const IndivListingH1 = styled.h1`
   text-align: center;
   color: #05386b;
   margin-top: -1vh;
-  margin-bottom: -4vh;
+  margin-bottom: -1.6rem;
 `
 
 // ** Listing Owner Div ** //
 export const ListingUserDiv = styled.div`
-  
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -2rem;
 `
 
 // ** Prepped by ** //
@@ -46,22 +72,29 @@ export const PreppedBy = styled.h4`
   font-weight: 300;
   text-align: center;
   color: #05386b;
+  margin-right: 0.5vw;
 `
 
 // ** Listing Owner ** //
 export const ListingUser = styled.h4`
   font-weight: 300;
   text-align: center;
+  text-decoration: underline;
   color: #05386b;
+  margin-left: 0.5vw;
   cursor: pointer;
 `
 
 // ** Listing Image ** //
 export const IndivListingImg = styled.img`
   border-radius: ${(props:Props) => props.listingEdit ? '10px' : '10px 10px 0 0'};
-  height: 250px;
-  width: 400px;
+  max-width: 80%;
+  margin: 0 auto;
   margin-top: ${(props:Props) => props.listingEdit ? '-3vh' : '4vh'};
+
+  @media screen and (max-width: 480px) {
+    max-width: 90%;
+  }
 `
 
 // ** Listing Description ** //
@@ -69,12 +102,20 @@ export const IndivListingDescription = styled.p`
   background: #05386b;
   padding: 20px 35px;
   margin-top: -1vh;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 0 0 10px 10px;
   color: #edf5e1;
+  width: 80%;
+
+  @media screen and (max-width: 480px) {
+    width: 90%;
+  }
 `
 
 // ** Listing Price ** //
 export const IndivListingPrice = styled.p`
+  color: #05386b;
   margin-top: -1vh;
   text-align: center;
 `
@@ -183,5 +224,30 @@ export const EditDelete = styled.button`
 
 // ** Get Started P ** //
 export const Para = styled.p`
-  
+  color: #05386b;
+  text-align: center;
+  margin-top: -0.1rem;
+  margin-bottom: 0.5rem;
+`
+
+export const GetStarted = styled(Link)`
+  width: fit-content;
+  text-decoration: none;
+  color: #edf5e1;
+  background: #05386b;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  margin: 0 auto;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+  }
+
+  @media screen and (max-width: 280px) {
+    font-size: 0.85rem;
+  }
 `

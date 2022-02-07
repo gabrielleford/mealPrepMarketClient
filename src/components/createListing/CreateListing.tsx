@@ -5,8 +5,7 @@ import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper, ImageInput, ImageUpload, ImageUploadDiv, PreviewSrc } from "./CreateListingElements";
 
-//TODO: Make component that runs preview image source & conditionally renders that component
-//TODO: Style for responsiveness
+//TODO: Form validation
 
 export type CreateState = {
   title: string,

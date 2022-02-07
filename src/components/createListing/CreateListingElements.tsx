@@ -74,7 +74,7 @@ export const CreateH1 = styled.h1`
 export const CreateForm = styled.form`
   width: 100%;
   display: grid;
-  grid-template-columns: 80%;
+  grid-template-columns: 90%;
   grid-gap: 2vh;
   justify-content: center;
 `

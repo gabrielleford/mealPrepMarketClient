@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-//TODO: Style meal prep button & responsiveness
-
 //-------------------------------------------//
 
 
@@ -65,8 +63,9 @@ export const LoginH1 = styled.h1`
 // * Form */
 export const LoginForm = styled.form`
   display: grid;
-  justify-content: center;
   grid-gap: 3vh;
+  grid-template-columns: 90%;
+  justify-content: center;
 `
 
 // * Input * //
@@ -84,7 +83,7 @@ export const LoginLabel = styled.label`
 // * Submit Button * //
 export const LoginSubmit = styled.button`
   font-family: 'Open Sans', sans-serif;
-  width: 50%;
+  width: fit-content;
   margin: -1.5vh auto 0 auto;
   color: #edf5e1;
   background: #05386b;
@@ -92,7 +91,7 @@ export const LoginSubmit = styled.button`
   border-radius: 7px;
   box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
   font-size: 1.1rem;
-  padding: 3px 0 5px 0;
+  padding: 3px 10px 5px 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
@@ -205,8 +204,9 @@ export const SignupH1 = styled.h1`
 // * Form */
 export const SignupForm = styled.form`
   display: grid;
-  justify-content: center;
   grid-gap: 2.5vh;
+  grid-template-columns: 100%;
+  justify-content: center;
 `
 
 // * Input * //
@@ -225,7 +225,8 @@ export const SignupLabel = styled.label`
 // * Submit Button * //
 export const SignupSubmit = styled.button`
   font-family: 'Open Sans', sans-serif;
-  width: 57%;
+  width: fit-content;
+
   margin: 0 auto;
   color: #edf5e1;
   background: #05386b;
@@ -233,7 +234,7 @@ export const SignupSubmit = styled.button`
   border-radius: 7px;
   box-shadow: 0 0 1px 1px rgba(5, 56, 107, 0.3);
   font-size: 0.85rem;
-  padding: 3px 0 3px 0;
+  padding: 3px 10px 4px 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
@@ -278,6 +279,7 @@ export const RoleDiv = styled.div`
 
 export const RoleP = styled.p`
   color: #05386b;
+  margin-left: 2.3vw;
 `
 
 export const SwitchDiv = styled.div`
@@ -290,6 +292,7 @@ export const RoleSwitch = styled.label`
   position: absolute;
   top: 0;
   left: 0;
+  margin-left: 0.5vw;
   width: 32px;
   height: 16px;
   border-radius: 22px;

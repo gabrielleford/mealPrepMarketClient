@@ -35,6 +35,7 @@ export type AppProps = {
   what: string,
   dlt: boolean,
   isOpen: boolean,
+  prevPath: string,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -44,6 +45,7 @@ export type AppProps = {
   setWhat: (what: string) => void,
   setDelete: (del: boolean) => void,
   setIsOpen: (isOpen: boolean) => void,
+  setPrevPath: (prevPath: string) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -55,6 +57,7 @@ const App: React.FunctionComponent = () => {
   const [what, setWhat] = useState<string>('');
   const [dlt, setDelete] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [prevPath, setPrevPath] = useState<string>('/');
   const [user, setUser] = useState<{
     id: string,
     firstName: string,
@@ -117,6 +120,7 @@ const App: React.FunctionComponent = () => {
     localStorage.clear();
     setSessionToken('');
     setDelete(false);
+    setPrevPath('/');
   }
 
   useEffect(() => {
@@ -143,13 +147,14 @@ const App: React.FunctionComponent = () => {
 
         <Routes>
           <Route path='/' element={
-            <Landing 
+            <Landing
             />} 
           />
           <Route path='/register' element={
             <Signup
             updateToken={updateToken}
             sessionToken={sessionToken}
+            prevPath={prevPath}
             setSessionToken={setSessionToken}
             />} 
           />
@@ -157,6 +162,7 @@ const App: React.FunctionComponent = () => {
             <Login 
             updateToken={updateToken}
             sessionToken={sessionToken}
+            prevPath={prevPath}
             setSessionToken={setSessionToken}
             />} 
           />
@@ -210,6 +216,7 @@ const App: React.FunctionComponent = () => {
               setWhat={setWhat}
               setDelete={setDelete}
               clearToken={clearToken}
+              setPrevPath={setPrevPath}
             />}
           />
           <Route path='/listing/edit/:id' element={
@@ -244,6 +251,9 @@ const App: React.FunctionComponent = () => {
             />}
           />
         </Routes>
+        <footer id='footer'>
+          <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
+        </footer>
       </Router>
     </>
   );
