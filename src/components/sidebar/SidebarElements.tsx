@@ -44,9 +44,16 @@ export const SidebarMenu = styled.ul`
 
 export const SidebarLink = styled(Link)`
   color: #5cdb95;
-  font-size: 3rem;
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 2.2rem;
   text-decoration: none;
-  transition: all 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+  transition: border-bottom 0.1s ease-in-out;
+
+  &:hover {
+    border-bottom: solid #5cdb95 3px;
+  }
 
   @media screen and (max-width: 480px) {
     font-size: 2rem;
@@ -60,10 +67,18 @@ export const SidebarLink = styled(Link)`
 export const Logout = styled.button`
   font-family: 'Open Sans', sans-serif;
   color: #5cdb95;
-  font-size: 3rem;
+  font-size: 2.2rem;
+  width: fit-content;
+  margin: 0 auto;
   border: none;
   background: none;
-  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  transition: font-size 0.3s ease-in-out;
+  transition: border-bottom 0.1s ease-in-out;
+
+  &:hover {
+    border-bottom: solid #5cdb95 3px;
+  }
 
   @media screen and (max-width: 480px) {
     font-size: 2rem;
@@ -125,7 +140,7 @@ export const GetStartedP = styled.p`
 `
 
 export const GetStarted = styled(Link)`
-  width: 18%;
+  width: fit-content;
   text-decoration: none;
   color: #edf5e1;
   background: #05386b;
@@ -140,28 +155,7 @@ export const GetStarted = styled(Link)`
     transform: scale(1.1);
   }
 
-  @media screen and (max-width: 560px) {
-    width: 20%;
-  }
-
-  @media screen and (max-width: 500px) {
-    width: 24%;
-  }
-
-  @media screen and (max-width: 420px) {
-    width: 26%;
-  }
-
-  @media screen and (max-width: 385px) {
-    width: 32%
-  }
-
-  @media screen and (max-width: 310px) {
-    width: 36%;
-  }
-
   @media screen and (max-width: 280px) {
     font-size: 0.85rem;
-    width: 40%;
   }
 `

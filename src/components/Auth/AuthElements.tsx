@@ -265,14 +265,6 @@ export const SignupRoute = styled(Link)`
   }
 `
 
-// * Role Button * //
-export const RoleBtn = styled.button`
-  color: #edf5e1;
-  background: #05386b;
-  border: none;
-  border-radius: 4px;
-`
-
 // * Role Switch * //
 export const RoleDiv = styled.div`
   font-size: 0.8rem;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import APIURL from '../helpers/environments';
 import { AppProps } from '../../App';
-import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, RoleBtn, SignupRoute, SignupP, SignupH1, RoleSwitch, RoleCheck, SwitchDiv, RoleDiv, RoleP } from './AuthElements';
+import { SignupContainer, SignupForm, SignupInput, SignupLabel, SignupSubmit, SignupWrapper, SignupRoute, SignupP, SignupH1, RoleSwitch, RoleCheck, SwitchDiv, RoleDiv, RoleP } from './AuthElements';
 // import { signupValidation } from '../helpers/FormValidation';
 
 //TODO: Need to set up form validation

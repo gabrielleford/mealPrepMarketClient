@@ -1,7 +1,7 @@
 import React from "react";
+import APIURL from "../helpers/environments";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import APIURL from "../helpers/environments";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
 import { CancelButton, ConfirmDeleteDiv, DeleteButton, DeleteContainer, DeleteH1, DeleteP, Gif} from "./DeleteElements";
@@ -50,7 +50,6 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
   }
 
   grabGif = ():void => {
-    console.log(this.state.randGifs.length);
     this.setState({
       number: Math.floor(Math.random() * (this.state.max - this.state.min + 1) + this.state.min)
     })
@@ -116,13 +115,9 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     });
     this.grabGif();
     this.setWhat();
-    console.log(this.props.what);
-    console.log(this.props.sessionToken);
-    console.log(this.props.userID);
   }
 
   componentDidUpdate(prevProps:Readonly<DeleteProps>, prevState:Readonly<GifState>) {
-    console.log(this.state.number)
     if (this.state.number !== prevState.number)
     this.setGif(this.state.number);
   }

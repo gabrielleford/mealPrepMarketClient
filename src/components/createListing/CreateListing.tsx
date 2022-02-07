@@ -1,23 +1,22 @@
 import React, { ChangeEvent } from "react";
+import { Buffer } from "buffer";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper } from "./CreateListingElements";
+import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper, ImageInput, ImageUpload, ImageUploadDiv, PreviewSrc } from "./CreateListingElements";
 
 //TODO: Make component that runs preview image source & conditionally renders that component
 //TODO: Style for responsiveness
 
-type CreateState = {
+export type CreateState = {
   title: string,
   image: string,
-  previewSrc: string | ArrayBuffer | null,
-  stringPrvwSrc: string,
-  file: {},
   description: string,
   price: number,
-  tags: string,
-  reader: FileReader,
+  tags: string[],
   listingID: string,
+  previewSrc: string | ArrayBuffer | null,
+  stringPrvwSrc: string,
   _isMounted: boolean,
 }
 
@@ -32,20 +31,21 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     this.state = {
       title: '',
       image: '',
-      previewSrc: '',
-      stringPrvwSrc: '',
-      file: {},
       description: '',
       price: 0,
-      tags: '',
-      reader: new FileReader(),
+      tags: ['vegan', 'vegetarian', 'raw'],
       listingID: '',
+      previewSrc: '',
+      stringPrvwSrc: '',
       _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleImage = this.handleImage.bind(this);
-    // this.previewImg = this.previewImg.bind(this);
+    this.previewImage = this.previewImage.bind(this);
+    this.previewImgSrc = this.previewImgSrc.bind(this);
+    this.handlePost = this.handlePost.bind(this);
+    this.postListing = this.postListing.bind(this);
   }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -59,42 +59,47 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     this.setState({
       image: e.target.value
     })
-    // //! This returns a FileList
-    // console.log(e.target.files);
-    // console.log(typeof e.target.files);
-    // if (typeof e.target.files === 'object' && e.target.files !== null) {
-    //   this.setState({
-    //     file: e.target.files[0]
-    //   })
-    //   //! This is returning null even though there are files and I'm setting files[0] to file
-    //   console.log(e.target.files[0]);
-    //   console.log(this.state.file);
-    // } else {}
-    // if (this.state.file) {
-    //   console.log('hitting this login')
-    //   this.state.reader.readAsDataURL(this.state.file)
-    //   this.state.reader.onload = () => {
-    //     this.setState({
-    //       previewSrc: this.state.reader.result
-    //     })
-    //     console.log(this.state.previewSrc);
-    //   }
-    //   this.previewImg(this.state.previewSrc)
-    // }
+
+    var {files} = e.currentTarget;
+    if (files && files?.length > 0) {
+      this.previewImage(files[0]);
+    }
   }
 
-  // previewImg = (prvwFile: any) => {
-  //     console.log('hitting this second piece logic')
-  //   if (typeof prvwFile !== 'string' && prvwFile) {
-  //     this.setState({
-  //       stringPrvwSrc: Buffer.from(prvwFile).toString()
-  //     })
-  //     console.log(this.state.stringPrvwSrc)
-  //   }
-  // }
+  previewImage = (file: File) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => this.setState({
+      previewSrc: reader.result
+      });
+    if (this.state.previewSrc !== '') {
+      this.previewImgSrc(this.state.previewSrc);
+    }
+  }
 
-  postListing = async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+  previewImgSrc = (prvwFile: any) => {
+  if (prvwFile) {
+    this.setState({
+      stringPrvwSrc: Buffer.from(prvwFile).toString()
+    })
+  }
+}
+
+  handlePost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.postListing(this.state.stringPrvwSrc)
+  }
+
+  postListing = async (encodedImg: string):Promise<void> => {
+    var formData = new FormData();
+    formData.append('file', encodedImg);
+    formData.append('upload_preset', 'MealPrepMarket');
+
+    var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
+      method: 'POST',
+      body: formData,
+    })
+    var cloudinary = await res.json();
 
     await fetch(`${APIURL}/listing/create`, {
       method: "POST",
@@ -102,7 +107,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
         listing: {
           title: this.state.title,
           description: this.state.description,
-          image: this.state.image,
+          image: cloudinary.url,
           price: this.state.price,
           tag: this.state.tags,
         },
@@ -125,15 +130,14 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   }
 
   componentDidMount(){
-    console.log(this.state.listingID)
     this.setState({
       _isMounted: true,
     })
   }
 
   componentDidUpdate(prevProps:Readonly<CreateProps>, prevState:Readonly<CreateState>){
-    if(this.state.listingID !== prevState.listingID ) {
-      console.log(this.state.listingID);
+    if(this.state.previewSrc !== prevState.previewSrc ) {
+      this.previewImgSrc(this.state.previewSrc);
     }
   }
 
@@ -148,10 +152,12 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
       <CreateContainer>
         <CreateWrapper>
           <CreateH1>Create New Listing</CreateH1>
-          <CreateForm onSubmit={this.postListing}>
-            <CreateLabel>Image</CreateLabel>
-            <CreateInput type='file' onChange={this.handleImage} value={this.state.image} /> 
-            {/* {this.state.stringPrvwSrc && <img src={this.state.stringPrvwSrc} alt={this.state.title} />} */}
+          <CreateForm onSubmit={this.handlePost}>
+            <ImageUploadDiv>
+              <ImageUpload htmlFor='image'>Choose Image</ImageUpload>
+              <ImageInput type='file' id='image' onChange={this.handleImage} value={this.state.image} />
+            </ImageUploadDiv>
+            {this.state.stringPrvwSrc && <PreviewSrc src={this.state.stringPrvwSrc}/>}
             <CreateLabel>Title</CreateLabel>
             <CreateInput type='text' name="title" onChange={this.handleChange} />
             <CreateLabel>Description</CreateLabel>
