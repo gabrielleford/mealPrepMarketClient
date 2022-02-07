@@ -47,3 +47,4 @@ Technology Used:
     02.04       Create listing -> responsive
     
     02.05       Create listing -> Cloudinary upload & preview image
+    02.05       Sidebar -> added hover effects, fixed some css
