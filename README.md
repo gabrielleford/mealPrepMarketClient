@@ -44,3 +44,6 @@ Technology Used:
     02.04       Navbar -> main style set up, mostly responsive
     02.04       Sidebar -> Set up files for mobile sidebar
     02.04       Navbar/Sidebar -> responsive & functional
+    02.04       Create listing -> responsive
+    
+    02.05       Create listing -> Cloudinary upload & preview image
