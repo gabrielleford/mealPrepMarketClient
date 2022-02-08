@@ -57,3 +57,4 @@ Technology Used:
     
     02.08       User profile -> responsive, user info section
     02.08       User edit -> added cloudinary upload for profile picture
+    02.08       User info/edit -> responsive
