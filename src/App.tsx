@@ -128,7 +128,7 @@ const App: React.FunctionComponent = () => {
   }, [sessionToken])
 
   return (
-    <>
+    <div id='container'>
       <Router>
         <Navbar 
           clearToken={clearToken} 
@@ -259,7 +259,7 @@ const App: React.FunctionComponent = () => {
           </footer>
         </div>
       </Router>
-    </>
+    </div>
   );
 }
 

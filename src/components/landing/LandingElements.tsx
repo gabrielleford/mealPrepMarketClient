@@ -15,6 +15,7 @@ export const LandingWrapper = styled.div<Props>`
   max-width: 100%;
   margin-top: ${props => (props.sessionToken === '' ? '0' : '10rem')};
   transition: margin-top 0.3s ease-in-out;
+  padding: 0 50px;
 
   @media screen and (max-width: 1215px) {
     margin-top: ${props => (props.sessionToken === '' ? '0' : '9.5rem')};
