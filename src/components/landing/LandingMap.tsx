@@ -3,8 +3,6 @@ import { LandingState } from "./Landing";
 import { ListingCard, ListingH1, ListingImg, ListingPrice, ListingTagContainer, ListingTag } from "../ReusableElements";
 import { RouteLink } from "./LandingElements";
 
-//TODO: Style & add routing to listing based on id
-
 type MapState = {
   divClicked: boolean,
   _isMounted: boolean,
@@ -31,10 +29,10 @@ class LandingMap extends React.Component<MapProps, MapState> {
       this.state._isMounted && this.props.results.map((listing): JSX.Element => {
         return (
           <RouteLink href={`/listing/${listing.id}`} key={listing.id}>
-            <ListingCard key={listing.id} onClick={() => this.setState({divClicked: true})}>
+            <ListingCard onClick={() => this.setState({divClicked: true})}>
               <ListingH1>{listing.title}</ListingH1>
-              <ListingImg src="https://via.placeholder.com/200x150" />
-              <ListingPrice>{listing.price}</ListingPrice>
+              <ListingImg src={listing.image} />
+              <ListingPrice>${listing.price} USD</ListingPrice>
               <ListingTagContainer>
               {/* <ListingTag src=""/> */}
               </ListingTagContainer>

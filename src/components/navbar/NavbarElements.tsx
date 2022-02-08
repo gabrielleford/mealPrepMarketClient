@@ -20,7 +20,7 @@ export const Header = styled.header`
   left: 0;
   padding: 20px 40px;
   border-bottom: 7px solid #edf5e1;
-  transition: all .5s ease-in-out;
+  transition: all .1s ease-in-out;
   z-index: 100;
 
   @media screen and (max-width: 1407px){

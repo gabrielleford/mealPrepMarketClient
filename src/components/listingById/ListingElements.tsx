@@ -143,7 +143,8 @@ export const ListingForm = styled.form`
 // ** Listing Label ** //
 export const ListingLabel = styled.label`
   color: #05386b;
-  margin-left: 6vw;
+  margin-left: 6.5rem;
+  margin-right: auto;
   margin-bottom: -2.5vh;
   margin-top: -1vh;
 `

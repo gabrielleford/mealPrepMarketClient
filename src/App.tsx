@@ -148,22 +148,24 @@ const App: React.FunctionComponent = () => {
         <Routes>
           <Route path='/' element={
             <Landing
+              sessionToken={sessionToken}
+              setPrevPath={setPrevPath}
             />} 
           />
           <Route path='/register' element={
             <Signup
-            updateToken={updateToken}
-            sessionToken={sessionToken}
-            prevPath={prevPath}
-            setSessionToken={setSessionToken}
+              updateToken={updateToken}
+              sessionToken={sessionToken}
+              prevPath={prevPath}
+              setSessionToken={setSessionToken}
             />} 
           />
           <Route path='/login' element={
             <Login 
-            updateToken={updateToken}
-            sessionToken={sessionToken}
-            prevPath={prevPath}
-            setSessionToken={setSessionToken}
+              updateToken={updateToken}
+              sessionToken={sessionToken}
+              prevPath={prevPath}
+              setSessionToken={setSessionToken}
             />} 
           />
           <Route path='/user/:id' element={
@@ -251,9 +253,11 @@ const App: React.FunctionComponent = () => {
             />}
           />
         </Routes>
-        <footer id='footer'>
-          <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
-        </footer>
+        <div id='footerDiv'>
+          <footer id='footer'>
+            <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
+          </footer>
+        </div>
       </Router>
     </>
   );

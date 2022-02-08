@@ -149,10 +149,10 @@ export const GetStarted = styled(Link)`
   margin: 0 auto;
   border-radius: 9px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
   }
 
   @media screen and (max-width: 280px) {

@@ -125,7 +125,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
         <ListingWrapper>
           <IndivListingH1>Edit Listing</IndivListingH1>
           <ListingForm onSubmit={this.updateListing}>
-            <IndivListingImg listingEdit={this.props.listingEdit} src="https://via.placeholder.com/400x250" alt={this.state.title} />
+            <IndivListingImg listingEdit={this.props.listingEdit} src={this.state.image} alt={this.state.title} />
             <ListingLabel>Title</ListingLabel>
             <ListingInput name='title' value={this.state.title} onChange={this.handleChange} />
             <ListingLabel>Description</ListingLabel>
@@ -142,7 +142,11 @@ class ListingEdit extends React.Component<EditProps, EditState> {
             </ButtonDiv>
           </ListingForm>
         </ListingWrapper>
-        {!this.props.listingEdit && <Navigate to={`/listing/${this.state.listingID}`} replace={true} />}
+        {!this.props.listingEdit ?
+        <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> :
+        !localStorage.getItem('Authorization') ?
+        <Navigate to='/' replace={true} /> : ''
+        }
       </ListingContainer>
     )
   }
