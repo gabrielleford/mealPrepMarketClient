@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
-import { ProfileContainer, ProfilePic, ProfileWrapper, UpdateDeleteBtn, UserData, UserP } from "./UserProfileElements";
+import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UserData, UserP } from "./UserProfileElements";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 type UserProps = {
@@ -66,7 +66,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
           <UserData>
             {this.props.user.role === 'primary' && 
               <>
-              <ProfilePic src={this.props.user.profilePicture} />
+              <PreviewSrc src={this.props.user.profilePicture} />
               <UserP>{this.props.user.profileDescription}</UserP>
               </>
             }

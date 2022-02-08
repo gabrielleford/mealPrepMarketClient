@@ -5,8 +5,7 @@ import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
-import { FileName, ImageInput, ImageUpload, ImageUploadDiv } from "../ReusableElements";
-import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UpdateForm, UpdateInput, UpdateLabel, UpdateTextarea } from "./UserProfileElements";
+import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UpdateForm, UpdateInput, UpdateLabel, UpdateTextarea, FileName, ImageInput, ImageUpload, ImageUploadDiv } from "./UserProfileElements";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 type EditProps = {
@@ -86,7 +85,7 @@ class EditUser extends React.Component<EditProps, EditState> {
 
   handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      profilePicture: e.target.value
+      file: e.target.value
     })
 
     var {files} = e.currentTarget;
@@ -185,13 +184,13 @@ class EditUser extends React.Component<EditProps, EditState> {
         <ProfileWrapper>
           <UpdateForm onSubmit={this.handleUpdate}>
             {this.renderPicture()}
+            <FileName>{this.state.file}</FileName>
             {this.props.user.role === 'primary' &&
               <>
               <ImageUploadDiv>
                 <ImageUpload htmlFor='image'>Update Profile Picture</ImageUpload>
                 <ImageInput type='file' id='image' onChange={this.handleImage} value={this.state.file} />
               </ImageUploadDiv>
-              <FileName>{this.state.file}</FileName>
               <UpdateLabel>Profile Description</UpdateLabel>
               <UpdateTextarea name='profileDescription' value={this.state.profileDescription} onChange={this.handleChange} />
               </>
@@ -203,7 +202,7 @@ class EditUser extends React.Component<EditProps, EditState> {
             <UpdateLabel>Email</UpdateLabel>
             <UpdateInput name='email' value={this.state.email} onChange={this.handleChange} />
             <ButtonDiv>
-            <UpdateDeleteBtn type="submit">Update</UpdateDeleteBtn>
+            <UpdateDeleteBtn type="submit">Save</UpdateDeleteBtn>
             <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>
             </ButtonDiv>
           </UpdateForm>
