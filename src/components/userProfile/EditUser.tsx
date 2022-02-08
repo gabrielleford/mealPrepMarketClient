@@ -4,8 +4,10 @@ import { Buffer } from "buffer";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
+import Avatar from '../../assets/BlankAvatar.png';
 import { ButtonDiv } from "../listingById/ListingElements";
-import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UpdateForm, UpdateInput, UpdateLabel, UpdateTextarea, FileName, ImageInput, ImageUpload, ImageUploadDiv } from "./UserProfileElements";
+import { RoleDiv, RoleCheck, RoleSwitch, SwitchDiv } from "../auth/AuthElements";
+import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UpdateForm, UpdateInput, UpdateLabel, UpdateTextarea, FileName, ImageInput, ImageUpload, ImageUploadDiv, RoleP } from "./UserProfileElements";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 type EditProps = {
@@ -19,10 +21,12 @@ type EditProps = {
   setDelete: AppProps['setDelete'],
   setUserEdit: AppProps['setUserEdit'],
   clearToken: AppProps['clearToken'],
+  fetchData: AppProps['fetchData'],
   listingID: ListingState['listingID']
 }
 
 type EditState = {
+  role: string,
   firstName: string,
   lastName: string,
   email: string,
@@ -42,6 +46,7 @@ class EditUser extends React.Component<EditProps, EditState> {
     super(props)
 
     this.state = {
+      role: this.props.user.role,
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName,
       email: this.props.user.email,
@@ -64,14 +69,30 @@ class EditUser extends React.Component<EditProps, EditState> {
     this.renderPicture = this.renderPicture.bind(this);
   }
 
+  changeRole = () => {
+    if(this.state.role === 'primary') {
+      this.setState({
+        role: 'secondary'
+      })
+    } else {
+      this.setState({
+        role: 'primary'
+      })
+    }
+  }
+
   renderPicture = () => {
     if (this.state.newProfilePic) {
       return (
         <PreviewSrc src={this.state.stringPrvwSrc}/>
       )
-    } else {
+    } else if (this.props.user.profilePicture !== '') {
       return (
         <PreviewSrc src={this.props.user.profilePicture} />
+      )
+    } else {
+      return(
+        <PreviewSrc src={Avatar} />
       )
     }
   }
@@ -120,39 +141,68 @@ class EditUser extends React.Component<EditProps, EditState> {
   }
 
   updateUserInfo = async (encodedImg: string):Promise<void> => {
-    var formData = new FormData();
-    formData.append('file', encodedImg);
-    formData.append('upload_preset', 'MealPrepMarketAvatar');
-
-    var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
-      method: 'POST',
-      body: formData,
-    })
-    var cloudinary = await res.json();
-    console.log(cloudinary);
-
-    await fetch(`${APIURL}/user/${this.state.profileID}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        user: {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          email: this.state.email,
-          profilePicture: cloudinary.url,
-          profileDescription: this.state.profileDescription,
-        }
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${this.props.sessionToken}`
+    if (this.props.user.role === 'primary') {
+      var formData = new FormData();
+      formData.append('file', encodedImg);
+      formData.append('upload_preset', 'MealPrepMarketAvatar');
+  
+      var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
+        method: 'POST',
+        body: formData,
       })
-    })
-    .then(res => {
-      console.log(res)
-      if (res.status === 200) {
-        this.props.setUserEdit(!this.props.userEdit);
-      }
-    })
+      var cloudinary = await res.json();
+      console.log(cloudinary);
+  
+      await fetch(`${APIURL}/user/${this.state.profileID}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          user: {
+            role: this.state.role,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            profilePicture: cloudinary.url,
+            profileDescription: this.state.profileDescription,
+          }
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${this.props.sessionToken}`
+        })
+      })
+      .then(res => {
+        console.log(res)
+        if (res.status === 200) {
+          this.props.setUserEdit(!this.props.userEdit);
+        }
+      })
+      .catch(error => console.log(error))
+    } else {
+      await fetch(`${APIURL}/user/${this.state.profileID}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          user: {
+            role: this.state.role,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            profilePicture: this.state.profilePicture,
+            profileDescription: this.state.profileDescription,
+          }
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${this.props.sessionToken}`
+        })
+      })
+      .then(res => {
+        console.log(res)
+        if (res.status === 200) {
+          this.props.setUserEdit(!this.props.userEdit);
+        }
+      })
+      .catch(error => console.log(error))
+    }
   }
 
   componentDidMount() {
@@ -167,6 +217,7 @@ class EditUser extends React.Component<EditProps, EditState> {
     if(this.state.previewSrc !== prevState.previewSrc ) {
       this.previewImgSrc(this.state.previewSrc);
     }
+    console.log(this.state.role);
   }
 
   componentWillUnmount() {
@@ -183,10 +234,10 @@ class EditUser extends React.Component<EditProps, EditState> {
         }
         <ProfileWrapper>
           <UpdateForm onSubmit={this.handleUpdate}>
-            {this.renderPicture()}
-            <FileName>{this.state.file}</FileName>
+            {this.props.user.role === 'primary' && this.renderPicture()}
             {this.props.user.role === 'primary' &&
               <>
+              <FileName>{this.state.file}</FileName>
               <ImageUploadDiv>
                 <ImageUpload htmlFor='image'>Update Profile Picture</ImageUpload>
                 <ImageInput type='file' id='image' onChange={this.handleImage} value={this.state.file} />
@@ -201,6 +252,15 @@ class EditUser extends React.Component<EditProps, EditState> {
             <UpdateInput name='lastName' value={this.state.lastName} onChange={this.handleChange} />
             <UpdateLabel>Email</UpdateLabel>
             <UpdateInput name='email' value={this.state.email} onChange={this.handleChange} />
+            {this.props.user.role === 'secondary' && 
+              <RoleDiv>
+                <RoleP>Become a meal prepper</RoleP>
+                <SwitchDiv>
+                  <RoleCheck id='role' type='checkbox' onChange={this.changeRole}/>
+                  <RoleSwitch htmlFor='role'/>
+                </SwitchDiv>
+              </RoleDiv>
+              }
             <ButtonDiv>
             <UpdateDeleteBtn type="submit">Save</UpdateDeleteBtn>
             <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>

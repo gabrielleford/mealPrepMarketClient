@@ -284,3 +284,7 @@ export const ImageUpload = styled.label`
 export const ImageInput = styled.input`
   display: none;
 ` 
+
+export const RoleP = styled.p`
+  color: #edf5e1;
+`

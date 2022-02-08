@@ -197,6 +197,7 @@ const App: React.FunctionComponent = () => {
               setUserEdit={setUserEdit}
               listingID=''
               clearToken={clearToken}
+              fetchData={fetchData}
             />}
           />
           

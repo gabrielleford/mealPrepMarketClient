@@ -174,12 +174,20 @@ export const ListingTextarea = styled.textarea`
 `
 
 // ** Quantity Selection ** //
+export const QuantityLabel = styled.label`
+  color: #05386b;
+  margin-top: -5rem;
+`
+
 export const QuantitySelect = styled.select`
-  
+  border-radius: 4px;
+  border: thin solid #05386b;
+  color: #05386b;
+  margin-top: -3rem;
 `
 // ** Quantity Options ** //
 export const QuantityOption = styled.option`
-  
+  font-family: 'Open Sans', sans-serif;
 `
 
 // ** Pickup Button ** //
@@ -194,7 +202,24 @@ export const Delivery = styled.button`
 
 // ** Submit order/Add to cart ** //
 export const SubmitOrder = styled.button`
-  
+  font-family: 'Open Sans', sans-serif;
+  width: fit-content;
+  margin: -1.5vh auto 0 auto;
+  color: #edf5e1;
+  background: #05386b;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
+  font-size: 1.1rem;
+  padding: 3px 10px 5px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
+  }
 `
 
 // ** Button Div ** //

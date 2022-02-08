@@ -2,7 +2,7 @@ import React from "react";
 import APIURL from "../helpers/environments";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ButtonDiv, Delivery, EditDelete, GetStarted, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para } from "./ListingElements";
+import { ButtonDiv, Delivery, EditDelete, GetStarted, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para, QuantityLabel } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 
 type ListingProps = {
@@ -187,9 +187,10 @@ class ListingById extends React.Component<ListingProps, ListingState> {
                 <EditDelete onClick={this.editListing}>Edit</EditDelete>
                 <EditDelete onClick={() => this.props.setDelete(true)}>Delete</EditDelete>
               </ButtonDiv>
-            </> : localStorage.getItem('Authorization') ?
+            </> : 
+            localStorage.getItem('Authorization') ?
             <ListingForm onSubmit={this.placeOrder}>
-              <ListingLabel>Quantity</ListingLabel>
+              <QuantityLabel>Quantity</QuantityLabel>
               <QuantitySelect name='quantity' onChange={this.handleChange}>
                 <QuantityOption value={1}>1</QuantityOption>
                 <QuantityOption value={2}>2</QuantityOption>

@@ -4,6 +4,7 @@ import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
 import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UserData, UserP } from "./UserProfileElements";
+import Avatar from '../../assets/BlankAvatar.png';
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 type UserProps = {
@@ -38,6 +39,30 @@ class UserInfo extends React.Component<UserProps, UserState> {
     this.editUser = this.editUser.bind(this);
   }
 
+  renderPicture = () => {
+    if (this.props.user.profilePicture !== '') {
+      return (
+        <PreviewSrc src={this.props.user.profilePicture} />
+      )
+    } else {
+      return(
+        <PreviewSrc src={Avatar} />
+      )
+    }
+  }
+
+  renderDescription = () => {
+    if (this.props.user.profileDescription !== '') {
+      return (
+        <UserP>{this.props.user.profileDescription}</UserP>
+      )
+    } else {
+      return (
+        <></>
+      )
+    }
+  }
+
   editUser = () => {
     this.props.setUserEdit(!this.props.userEdit);
   }
@@ -48,6 +73,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
     });
     console.log(this.props.user);
     this.props.setWhat('user');
+    this.props.fetchData();
   }
 
   componentWillUnmount() {
@@ -64,12 +90,8 @@ class UserInfo extends React.Component<UserProps, UserState> {
         }
         <ProfileWrapper>
           <UserData>
-            {this.props.user.role === 'primary' && 
-              <>
-              <PreviewSrc src={this.props.user.profilePicture} />
-              <UserP>{this.props.user.profileDescription}</UserP>
-              </>
-            }
+            {this.props.user.role === 'primary' && this.renderPicture()}
+            {this.props.user.role === 'primary' && this.renderDescription()}
             <UserP><b>Name</b>: {this.props.user.firstName} {this.props.user.lastName}</UserP>
             <UserP><b>Email</b>: {this.props.user.email}</UserP>
             <ButtonDiv>
