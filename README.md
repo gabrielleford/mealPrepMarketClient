@@ -46,7 +46,14 @@ Technology Used:
     02.04       Navbar/Sidebar -> responsive & functional
     02.04       Create listing -> responsive
     
-    02.05       Create listing -> Cloudinary upload & preview image
     02.05       Sidebar -> added hover effects, fixed some css
+    02.05       Login/Signup -> responsive, toggle for meal prepper
     
-    02.06       Listing by id -> responsive
+    02.06       Create listing -> Cloudinary upload & preview image
+    
+    02.07       Listing by id -> responsive, fixed route to user profile
+    02.07       Landing -> added banner for new user
+    02.07       Footer -> responsive
+    
+    02.08       User profile -> responsive, user info section
+    02.08       User edit -> added cloudinary upload for profile picture
