@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { ListingCard, ListingCards, ListingH1, ListingImg, ListingPrice, ListingTag, ListingTagContainer } from "../ReusableElements";
+import { ListingCard, ListingH1, ListingImg, ListingPrice, ListingTag, ListingTagContainer } from "../ReusableElements";
 import { UserState } from "./UserProfile";
 
 type UserMapState = {
@@ -42,8 +42,8 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
         return(
           <ListingCard key={listing.id} onClick={() => this.setState({divClicked: true})}>
             <ListingH1>{listing.title}</ListingH1>
-            <ListingImg src="https://via.placeholder.com/200x150" />
-            <ListingPrice>{listing.price}</ListingPrice>
+            <ListingImg src={listing.image} />
+            <ListingPrice>${listing.price} USD</ListingPrice>
             <ListingTagContainer>
               {/* <ListingTag /> */}
             </ListingTagContainer>

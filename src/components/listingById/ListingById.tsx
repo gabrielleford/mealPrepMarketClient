@@ -32,7 +32,6 @@ export type ListingState = {
   quantity: number,
   fulfillmentMethod: string,
   responseCode: number,
-  userClicked: boolean,
   _isMounted: boolean,
 }
 
@@ -52,7 +51,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       quantity: 1,
       fulfillmentMethod: 'pickup',
       responseCode: 0,
-      userClicked: false,
       _isMounted: false,
     }
 
@@ -151,6 +149,9 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       _isMounted: false
     })
     this.props.setDelete(false);
+    this.setState({
+      ownerID: '',
+    })
   }
 
   render(): React.ReactNode {
@@ -164,7 +165,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             {this.state.ownerID === this.props.userID ? '' :
               <ListingUserDiv>
                 <PreppedBy>Prepared by </PreppedBy>
-                <ListingUser onClick={() => this.setState({userClicked: true})}>
+                <ListingUser to={`/profile/${this.state.ownerID}`}>
                   {this.state.ownerName}
                 </ListingUser>
               </ListingUserDiv>
@@ -204,8 +205,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           </ListingWrapper>
           {this.props.listingEdit ? 
           <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/> : 
-          this.state.userClicked ? 
-          <Navigate to={`/profile/${this.state.ownerID}`} replace={true} /> : 
           this.state.responseCode === 201 ?
           <Navigate to={`/orders/${this.props.userID}`} replace={true} /> : ''
           }

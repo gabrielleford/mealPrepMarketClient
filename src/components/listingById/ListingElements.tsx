@@ -62,6 +62,7 @@ export const IndivListingH1 = styled.h1`
 export const ListingUserDiv = styled.div`
   display: flex;
   justify-content: space-evenly;
+  align-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: -2rem;
@@ -73,15 +74,17 @@ export const PreppedBy = styled.h4`
   text-align: center;
   color: #05386b;
   margin-right: 0.5vw;
+  margin-top: 1.6rem;
 `
 
 // ** Listing Owner ** //
-export const ListingUser = styled.h4`
+export const ListingUser = styled(Link)`
   font-weight: 300;
   text-align: center;
   text-decoration: underline;
   color: #05386b;
-  margin-left: 0.5vw;
+  margin-left: 0.7vw;
+  margin-top: 1.64rem;
   cursor: pointer;
 `
 

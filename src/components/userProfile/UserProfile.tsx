@@ -89,7 +89,6 @@ componentWillUnmount() {
             <UserProfileMap listings={this.state.listings}/>
           </ListingCards>
         </ProfileWrapper>
-        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </ProfileContainer>
     )
   }

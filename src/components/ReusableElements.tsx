@@ -27,7 +27,7 @@ export const ListingCards = styled.div`
 `
 
 export const ListingCard = styled.div`
-  max-width: 300px;
+  width: 300px;
   min-height: 200px;
   padding: 2% 0 3% 0;
   background: #edf5e1;
@@ -37,6 +37,8 @@ export const ListingCard = styled.div`
 `
 
 export const ListingH1 = styled.h1`
+  color: #05386b;
+  font-weight: 400;
   font-size: 1.4rem;
 
   @media screen and (max-width: 768px) {
@@ -57,7 +59,7 @@ export const ListingImg = styled.img`
 `
 
 export const ListingPrice = styled.p`
-  
+  color: #05386b;
 
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
