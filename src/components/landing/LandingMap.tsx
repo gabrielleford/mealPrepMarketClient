@@ -1,7 +1,6 @@
 import React from "react";
 import { LandingState } from "./Landing";
-import { ListingCard, ListingH1, ListingImg, ListingPrice, ListingTagContainer, ListingTag } from "../ReusableElements";
-import { RouteLink } from "./LandingElements";
+import { ListingCard, ListingH1, ListingImg, ListingPrice, ListingTagContainer, ListingTag, RouteLink } from "../ReusableElements";
 
 type MapState = {
   divClicked: boolean,

@@ -1,8 +1,8 @@
 import React from "react";
 import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
-import { ListingCards } from "../ReusableElements";
-import { ProfileContainer, ProfileDescrip, ProfilePic, ProfileWrapper, UserInfo, UserName } from "./UserProfileElements";
+import { ListingCards, RouteLink } from "../ReusableElements";
+import { NameDescrip, ProfileContainer, ProfileDescrip, ProfilePic, ProfileWrapper, RouteToAccount, UserInfo, UserInfoDiv, UserName } from "./UserProfileElements";
 import UserProfileMap from "./UserProfileMap";
 import { Navigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export type UserState = {
 }
 
 type UserProps = {
-  userID: AppProps['userID'],
+  user: AppProps['user'],
 }
 
 class UserProfile extends React.Component<UserProps, UserState> {
@@ -80,11 +80,16 @@ componentWillUnmount() {
     return (
       <ProfileContainer>
         <ProfileWrapper>
-          <UserInfo>
-            <ProfilePic src='https://via.placeholder.com/50x50' />
-            <UserName>{this.state.userName}</UserName>
-            <ProfileDescrip>{this.state.profileDescription}</ProfileDescrip>
-          </UserInfo>
+          <UserInfoDiv>
+            <UserInfo>
+              {this.state.profilePicture !== '' && <ProfilePic src={this.state.profilePicture} />}
+              <NameDescrip>
+                <UserName>{this.state.userName}</UserName>
+                <ProfileDescrip>{this.state.profileDescription}</ProfileDescrip>
+              </NameDescrip>
+            </UserInfo>
+            {this.props.user.userId === this.state.profileID && <RouteToAccount to={`/edit/${this.state.profileID}`}>Edit</RouteToAccount>}
+          </UserInfoDiv>
           <ListingCards>
             <UserProfileMap listings={this.state.listings}/>
           </ListingCards>

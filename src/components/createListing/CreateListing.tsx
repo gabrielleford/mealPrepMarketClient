@@ -1,9 +1,10 @@
 import React, { ChangeEvent } from "react";
+import APIURL from "../helpers/environments";
 import { Buffer } from "buffer";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import APIURL from "../helpers/environments";
-import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper, ImageInput, ImageUpload, ImageUploadDiv, PreviewSrc } from "./CreateListingElements";
+import { FileName, ImageInput, ImageUpload, ImageUploadDiv } from "../ReusableElements";
+import { CreateContainer, CreateForm, CreateH1, CreateInput, CreateLabel, CreateListingButton, CreateTextarea, CreateWrapper, PreviewSrc } from "./CreateListingElements";
 
 //TODO: Form validation
 
@@ -156,6 +157,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
               <ImageUpload htmlFor='image'>Choose Image</ImageUpload>
               <ImageInput type='file' id='image' onChange={this.handleImage} value={this.state.image} />
             </ImageUploadDiv>
+            <FileName>{this.state.image}</FileName>
             {this.state.stringPrvwSrc && <PreviewSrc src={this.state.stringPrvwSrc}/>}
             <CreateLabel>Title</CreateLabel>
             <CreateInput type='text' name="title" onChange={this.handleChange} />

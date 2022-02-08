@@ -49,7 +49,7 @@ class Navbar extends React.Component<NavbarProps> {
           }
           {localStorage.getItem('Authorization') &&
             <NavItem>
-              <Account href={`http://localhost:3000/user/${this.props.user.id}`}><Icon src={accountIcon} />My Account</Account>
+              <Account href={`http://localhost:3000/user/${this.props.user.userId}`}><Icon src={accountIcon} />My Account</Account>
             </NavItem>
           }
         </NavMenu>

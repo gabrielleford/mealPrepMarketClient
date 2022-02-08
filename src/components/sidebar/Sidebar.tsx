@@ -30,7 +30,7 @@ class Sidebar extends React.Component<SidebarProps> {
                 Create Listing
               </SidebarLink>
             }
-            <SidebarLink to={`/user/${this.props.user.id}`} onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
+            <SidebarLink to={`/user/${this.props.user.userId}`} onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
               My Account
             </SidebarLink>
             <Logout onClick={() => {

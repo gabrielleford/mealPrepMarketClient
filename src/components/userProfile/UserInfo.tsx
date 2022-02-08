@@ -66,12 +66,12 @@ class UserInfo extends React.Component<UserProps, UserState> {
           <UserData>
             {this.props.user.role === 'primary' && 
               <>
-              <ProfilePic src='https://via.placeholder.com/50x50' />
+              <ProfilePic src={this.props.user.profilePicture} />
               <UserP>{this.props.user.profileDescription}</UserP>
               </>
             }
-            <UserP>Name: {this.props.user.firstName} {this.props.user.lastName}</UserP>
-            <UserP>Email: {this.props.user.email}</UserP>
+            <UserP><b>Name</b>: {this.props.user.firstName} {this.props.user.lastName}</UserP>
+            <UserP><b>Email</b>: {this.props.user.email}</UserP>
             <ButtonDiv>
               <UpdateDeleteBtn onClick={this.editUser}>Update</UpdateDeleteBtn>
               <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>

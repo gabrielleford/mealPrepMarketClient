@@ -82,6 +82,7 @@ export const BannerButton = styled(Link)`
   color: #05386b;
   background: #5cdb95;
   padding: 4px 8px 4px 8px;
+  border: solid 2px #5cdb95;
   border-radius: 10px;
   box-shadow: 0 0 5px 1px rgba(92, 219, 149, 0.5);
   transition: all 0.2s ease-in-out;
@@ -93,9 +94,4 @@ export const BannerButton = styled(Link)`
   @media screen and (max-width: 480px) {
     font-size: 0.8rem;
   }
-`
-
-export const RouteLink = styled.a`
-  text-decoration: none;
-  color: #05386b;
 `

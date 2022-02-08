@@ -82,27 +82,27 @@ export const Title = styled(Link)`
 
 // ** Buttons/Links ** //
 export const NavMenu = styled.ul<NavProps>`
-  width: ${props => (props.user.id ? '20%' : props.user.role === 'primary' ? '30%' : '17%')};
+  width: ${props => (props.user.userId ? '20%' : props.user.role === 'primary' ? '30%' : '17%')};
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-right: ${props => (props.user.id ? '2vw' : props.user.role === 'primary' ? '1vw' : '0')};
+  margin-right: ${props => (props.user.userId ? '2vw' : props.user.role === 'primary' ? '1vw' : '0')};
   list-style: none;
   transition: all 0.3s ease-in-out;
 
   @media screen and (max-width: 1407px){
-    width: ${props => (props.user.id ? '25%' : props.user.role === 'primary' ? '35%' : '22%')};
-    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
+    width: ${props => (props.user.userId ? '25%' : props.user.role === 'primary' ? '35%' : '22%')};
+    margin-right: ${props => (props.user.userId ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 1215px) {
-    width: ${props => (props.user.id ? '30%' : props.user.role === 'primary' ? '40%' : '27%')};
-    margin-right: ${props => (props.user.id ? '1vw' : props.user.role === 'primary' ? '0' : '0')};
+    width: ${props => (props.user.userId ? '30%' : props.user.role === 'primary' ? '40%' : '27%')};
+    margin-right: ${props => (props.user.userId ? '1vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 1032px) {
-    width: ${props => (props.user.id ? '35%' : props.user.role === 'primary' ? '45%' : '32%')};
-    margin-right: ${props => (props.user.id ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
+    width: ${props => (props.user.userId ? '35%' : props.user.role === 'primary' ? '45%' : '32%')};
+    margin-right: ${props => (props.user.userId ? '1.5vw' : props.user.role === 'primary' ? '0' : '0')};
   }
 
   @media screen and (max-width: 820px) {
@@ -127,9 +127,14 @@ export const NavLink = styled(Link)`
   border-radius: 28px;
   transition: all 0.3s ease-in-out;
 
+  @media screen and (max-width: 1407px){
+    padding: 7px 12px;
+    font-size: 0.7rem;
+  }
+
   @media screen and (max-width: 1032px) {
-    padding: 8.5px 12px;
-    font-size: 0.9rem;
+    padding: 7px 12px;
+    font-size: 0.6rem;
   }
 `
 
@@ -139,8 +144,9 @@ export const Logout = styled.button`
   background: #05386b;
   padding: 10px 15px;
   border: solid #05386b 2px;
-  border-radius: 28px;
+  border-radius: 18px;
   font-size: 1.05rem;
+  margin-top: 0.15rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
@@ -149,13 +155,14 @@ export const Logout = styled.button`
   }
 
   @media screen and (max-width: 1407px){
-    padding: 9.5px 15px;
-    font-size: 1rem;
+    padding: 7px 12px;
+    font-size: 0.7rem;
   }
 
   @media screen and (max-width: 1032px) {
-    padding: 8.5px 12px;
-    font-size: 0.9rem;
+    padding: 7px 10px;
+    font-size: 0.6rem;
+    margin-top: 0.3rem;
   }
 `
 

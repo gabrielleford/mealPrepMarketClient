@@ -22,7 +22,7 @@ export type AppProps = {
   userID: string | null,
   userName: string | null,
   user: {
-    id: string,
+    userId: string,
     firstName: string,
     lastName: string,
     email: string,
@@ -59,14 +59,14 @@ const App: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prevPath, setPrevPath] = useState<string>('/');
   const [user, setUser] = useState<{
-    id: string,
+    userId: string,
     firstName: string,
     lastName: string,
     email: string,
     profilePicture: string,
     profileDescription: string,
     role: string}>({
-      id: '',
+      userId: '',
       firstName: '', 
       lastName: '', 
       email: '', 
@@ -101,7 +101,7 @@ const App: React.FunctionComponent = () => {
       setUserID('');
       setName('');
       setUser({
-        id: '',
+        userId: '',
         firstName: '', 
         lastName: '', 
         email: '', 
@@ -236,7 +236,7 @@ const App: React.FunctionComponent = () => {
           />
           <Route path='/profile/:id' element={
             <UserProfile
-              userID={userID}
+              user={user}
             />}
           />
           <Route path='/orders/:id' element={

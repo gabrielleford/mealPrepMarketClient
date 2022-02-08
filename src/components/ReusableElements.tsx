@@ -34,6 +34,7 @@ export const ListingCard = styled.div`
   border-radius: 2%;
   text-align: center;
   margin: 0 auto;
+  cursor: pointer;
 `
 
 export const ListingH1 = styled.h1`
@@ -76,4 +77,40 @@ export const ListingTagContainer = styled.div`
 
 export const ListingTag = styled.img`
   
+`
+
+export const RouteLink = styled.a`
+  text-decoration: none;
+  color: #05386b;
+`
+
+// ** Choose Image Button ** //
+export const ImageUploadDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`
+
+export const FileName = styled.p`
+  color: #05386b;
+`
+export const ImageUpload = styled.label`
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  padding: 5px 7px;
+  font-size: 0.73rem;
+  border-radius: 10px;
+  color: #edf5e1;
+  background:#05386b;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #05386b;
+    background: #5cdb95;
+  }
+`
+
+export const ImageInput = styled.input`
+  display: none;
 `

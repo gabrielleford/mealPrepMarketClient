@@ -93,7 +93,7 @@ export const IndivListingImg = styled.img`
   border-radius: ${(props:Props) => props.listingEdit ? '10px' : '10px 10px 0 0'};
   max-width: 80%;
   margin: 0 auto;
-  margin-top: ${(props:Props) => props.listingEdit ? '-3vh' : '4vh'};
+  margin-top: ${(props:Props) => props.listingEdit ? '-3vh' : '6vh'};
 
   @media screen and (max-width: 480px) {
     max-width: 90%;

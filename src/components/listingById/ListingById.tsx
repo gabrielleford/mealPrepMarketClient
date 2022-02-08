@@ -162,7 +162,12 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           }
           <ListingWrapper>
             <IndivListingH1>{this.state.title}</IndivListingH1>
-            {this.state.ownerID === this.props.userID ? '' :
+            {this.state.ownerID === this.props.userID ? 
+              <ListingUserDiv>
+                <ListingUser to={`/profile/${this.state.ownerID}`}>
+                  {this.state.ownerName}
+                </ListingUser>
+              </ListingUserDiv> :
               <ListingUserDiv>
                 <PreppedBy>Prepared by </PreppedBy>
                 <ListingUser to={`/profile/${this.state.ownerID}`}>
