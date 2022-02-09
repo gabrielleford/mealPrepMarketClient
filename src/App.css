@@ -20,7 +20,7 @@ html {
 
 /* TODO: Fix size of background */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif!important;
   background: url('./assets/mealPrepMarketBackgroundDesktop.png') center center;
   background-position: center center;
   background-repeat: no-repeat;
@@ -30,6 +30,7 @@ body {
 
 #container {
   width: 100%;
+  height: 100vh;
 }
 
 #footerDiv {
@@ -75,4 +76,63 @@ body {
   #footer {
     bottom: -3rem;
   }
+}
+
+/* * FORMS * */
+@media screen and (max-width: 768px) {
+  .formContainer {
+    padding-top: 20px;
+    width: 100%;
+  }
+}
+
+.form {
+  font-family: 'Open Sans', sans-serif;
+  background: #05386b;
+}
+
+@media screen and (max-width: 768px) {
+  .form {
+    position: relative;
+    left: calc(-50vw + 50%);
+    width: 100vw;
+    padding: 40px 100px;
+    margin-top: -5vh;
+    border-radius: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form {
+    position: relative;
+    left: calc(-50vw + 50%);
+    width: 100vw;
+    padding: 40px 20px;
+    margin-top: -7vh;
+    border-radius: 0;
+  }
+}
+
+.formTitle {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+  color: #edf5e1;
+  margin-bottom: 1rem;
+}
+
+.formInput {
+  background: #05386b;
+}
+
+.formButton {
+  font-family: 'Open Sans', sans-serif;
+  background: #5cdb95;
+  color: #05386b;
+  border: solid 2px #5cdb95;
+  box-shadow: 0 0 5px 1px rgba(92, 219, 149, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.formButton:hover {
+  background: #8ee4af;
 }

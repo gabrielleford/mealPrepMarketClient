@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Container } from '@mantine/core';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
@@ -36,6 +37,7 @@ export type AppProps = {
   dlt: boolean,
   isOpen: boolean,
   prevPath: string,
+  popoverOpen: boolean,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -46,6 +48,7 @@ export type AppProps = {
   setDelete: (del: boolean) => void,
   setIsOpen: (isOpen: boolean) => void,
   setPrevPath: (prevPath: string) => void,
+  setPopoverOpen: (popoverOpened: boolean) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -58,6 +61,7 @@ const App: React.FunctionComponent = () => {
   const [dlt, setDelete] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prevPath, setPrevPath] = useState<string>('/');
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -144,8 +148,8 @@ const App: React.FunctionComponent = () => {
           setIsOpen={setIsOpen}
           clearToken={clearToken}
         />
-
-        <Routes>
+      <Container mt={130}>
+      <Routes>
           <Route path='/' element={
             <Landing
               sessionToken={sessionToken}
@@ -157,7 +161,9 @@ const App: React.FunctionComponent = () => {
               updateToken={updateToken}
               sessionToken={sessionToken}
               prevPath={prevPath}
+              popoverOpen={popoverOpen}
               setSessionToken={setSessionToken}
+              setPopoverOpen={setPopoverOpen}
             />} 
           />
           <Route path='/login' element={
@@ -254,6 +260,7 @@ const App: React.FunctionComponent = () => {
             />}
           />
         </Routes>
+      </Container>
         <div id='footerDiv'>
           <footer id='footer'>
             <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
