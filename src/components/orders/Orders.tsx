@@ -1,9 +1,8 @@
+import { Container, Grid } from "@mantine/core";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { ListingCards } from "../ReusableElements";
-import { OrdersContainer, OrdersWrapper } from "./OrdersElements";
 import OrdersMap from "./OrdersMap";
 
 export type OrderProps = {
@@ -16,9 +15,11 @@ export type OrderState = {
     id: string,
     image: string,
     quantity: number,
-    listing: {title: string, price: number}
+    fulfillmentMethod: string,
+    listing: {id: string, title: string, image: string, price: number}
   }[]
   profileID: string,
+  ordersFetched: boolean,
   _isMounted: boolean,
 }
 
@@ -27,8 +28,9 @@ class Orders extends React.Component<OrderProps, OrderState> {
     super(props)
 
     this.state = {
-      orders: [{id: '', image: '', quantity: 0, listing: {title: '', price: 0}}],
+      orders: [{id: '', image: '', quantity: 0, fulfillmentMethod: '', listing: {id: '',title: '', image: '', price: 0}}],
       profileID: window.location.pathname.slice(8, 44),
+      ordersFetched: false,
       _isMounted: false,
     }
 
@@ -49,7 +51,9 @@ class Orders extends React.Component<OrderProps, OrderState> {
         console.log(res);
         this.state._isMounted && this.setState({
           orders: [...res],
+          ordersFetched: true,
         });
+        console.log(res);
       })
     }
   }
@@ -75,16 +79,10 @@ class Orders extends React.Component<OrderProps, OrderState> {
 
   render(): React.ReactNode {
     return (
-      <>
-      <OrdersContainer>
-        <OrdersWrapper>
-          <ListingCards>
-            {this.state.orders !== [{id: '', image: '', quantity: 0, listing: {title: '', price: 0}}] && <OrdersMap orders={this.state.orders} sessionToken={this.props.sessionToken} fetchOrders={this.fetchOrders} />}
-          </ListingCards>
-        </OrdersWrapper>
-        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
-      </OrdersContainer>
-      </>
+      <Container>
+          {this.state.orders[0].id !== '' && <OrdersMap orders={this.state.orders} sessionToken={this.props.sessionToken} fetchOrders={this.fetchOrders} />}
+          {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
+      </Container>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
@@ -25,6 +25,7 @@ type UserProps = {
 
 type UserState = {
   profileID: string,
+  goToOrders: boolean,
   _isMounted: boolean,
 }
 
@@ -34,6 +35,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
 
     this.state = {
       profileID: window.location.pathname.slice(6, 42),
+      goToOrders: false,
       _isMounted: false,
     }
 
@@ -98,6 +100,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
             <ButtonDiv>
               <UpdateDeleteBtn onClick={this.editUser}>Update</UpdateDeleteBtn>
               <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>
+              <Link to={`/orders/${this.props.user.userId}`}>My Orders</Link>
             </ButtonDiv>
           </UserData>
         </ProfileWrapper>

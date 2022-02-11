@@ -123,6 +123,11 @@ body {
   width: 550px;
 }
 
+/* * Cards * */
+.cardText {
+  color: #05386b;
+}
+
 /* * Buttons * */
 .formButton {
   font-family: 'Open Sans', sans-serif;

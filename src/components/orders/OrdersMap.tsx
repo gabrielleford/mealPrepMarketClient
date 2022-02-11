@@ -1,8 +1,9 @@
+import { Badge, Button, Card, Center, Grid, Group, Image, Text, Title } from "@mantine/core";
 import React from "react";
+import { Navigate } from "react-router-dom";
 import APIURL from "../helpers/environments";
-import { ListingCard, ListingH1, ListingImg } from "../ReusableElements";
+import { RouteLink } from "../ReusableElements";
 import { OrderProps, OrderState } from "./Orders";
-import { CancelOrder, OrderP } from "./OrdersElements";
 
 type OrderMapState = {
   orderID: string,
@@ -11,7 +12,7 @@ type OrderMapState = {
 }
 
 type OrderMapProps = {
-  orders: OrderState['orders'],
+  orders: OrderState['orders']
   sessionToken: OrderProps['sessionToken'],
   fetchOrders: () => Promise<void>,
 }
@@ -49,13 +50,26 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         console.log(order.id);
         return(
-          <ListingCard key={order.id}>
-            <ListingH1>{order.listing.title}</ListingH1>
-            <ListingImg src="https://via.placeholder.com/200x150" />
-            <OrderP>{order.quantity}</OrderP>
-            <OrderP>${order.quantity * order.listing.price} USD</OrderP>
-            <CancelOrder onClick={() => this.cancelOrder(order.id)}>Cancel Order</CancelOrder>
-          </ListingCard>
+          <Grid.Col span={4}>
+            <RouteLink href={`/listing/${order.listing.id}`}>
+              <Card key={order.id}>
+                <Title className="listingTitle" align="center" order={1}>{order.listing.title}</Title>
+                <Center>
+                  <Image width={275} height={275} radius={10} src={order.listing.image} />
+                </Center>
+                <Center>
+                  <Group direction="column" spacing={0}>
+                    <Text className='cardText' size="lg" mt='lg'><Badge variant='outline' radius='sm' size="lg" color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Order Total</Badge> ${order.quantity * order.listing.price} USD</Text>
+                    <Text className='cardText' size="lg" mt='md'><Badge variant='outline' radius='sm' size="lg" color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Delivery Method</Badge> {order.fulfillmentMethod.charAt(0).toUpperCase() + order.fulfillmentMethod.slice(1)}</Text>
+                  </Group>
+                </Center>
+                <Center mt='lg'>
+                  <Button className="darkButton" size="lg" radius='md' compact>Cancel Order</Button>
+                </Center>
+              </Card>
+            </RouteLink>
+            {this.props.orders.length < 1 && <Navigate to='/' replace={true} />}
+          </Grid.Col>
         )
       })
     )
@@ -83,10 +97,14 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
   render(): React.ReactNode {
     return (
       <>
+      <Grid>
       {this.orderMap()}
+      </Grid>
       </>
     )
   }
 }
 
 export default OrdersMap;
+
+{/*<CancelOrder onClick={() => this.cancelOrder(order.id)}>*/}

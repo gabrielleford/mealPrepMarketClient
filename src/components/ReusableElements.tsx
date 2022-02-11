@@ -81,7 +81,6 @@ export const ListingTag = styled.img`
 
 export const RouteLink = styled.a`
   text-decoration: none;
-  color: #05386b;
 `
 
 // ** Choose Image Button ** //

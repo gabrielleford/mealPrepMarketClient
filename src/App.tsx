@@ -132,7 +132,7 @@ const App: React.FunctionComponent = () => {
       headings: {fontFamily: 'Montserrat'},
       colors: {
         primary: ['#c0f1d6', '#abedc9', '#96e8bb',  '#82e3ae', '#5cdb95', '#43d685', '#2ed177', '#29bc6b', '#209254', '#1c7d48'   ],
-        secondary: ['#cee6fd', '#b6d9fc', '#9eccfa', '#6db3f8', '#3c99f6', '#0b80f4', '#0966c3', '#074d92', '#05386b', '#053361']
+        secondary: ['#cee6fd', '#b6d9fc', '#9eccfa', '#6db3f8', '#05386b', '#0b80f4', '#0966c3', '#074d92', '#3c99f6', '#053361']
       },
       primaryColor: 'primary',
     }}>
