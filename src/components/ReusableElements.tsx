@@ -99,15 +99,16 @@ export const ImageUpload = styled.label`
   margin: 0 auto;
   width: fit-content;
   padding: 5px 7px;
-  font-size: 0.73rem;
+  font-size: 0.8rem;
   border-radius: 10px;
-  color: #edf5e1;
-  background:#05386b;
+  color: #05386b;
+  background: #5cdb95;
+  box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    color: #05386b;
-    background: #5cdb95;
+    background: #8ee4af;
+    box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
   }
 `
 

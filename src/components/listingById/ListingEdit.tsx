@@ -21,11 +21,13 @@ export type EditProps = {
   what: AppProps['what'],
   listingEdit: AppProps['listingEdit'],
   dlt: AppProps['dlt'],
-  userID: AppProps['userID'],
+  user: AppProps['user'],
+  response: AppProps['response'],
   setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
   clearToken: AppProps['clearToken'],
+  setResponse: AppProps['setResponse'],
 }
 
 class ListingEdit extends React.Component<EditProps, EditState> {
@@ -120,7 +122,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     return (
       <ListingContainer>
         {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
+          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
         }
         <ListingWrapper>
           <IndivListingH1>Edit Listing</IndivListingH1>

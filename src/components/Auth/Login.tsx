@@ -75,7 +75,7 @@ class Login extends React.Component<LoginProps, LoginState> {
       return res.json()
     })
     .then(json => {
-      console.log(json);
+      console.log(this.state.responseCode);
       if (this.state.responseCode === 201) {
         this.props.updateToken(json.sessionToken);
         this.props.setSessionToken(json.sessionToken)
@@ -92,6 +92,10 @@ class Login extends React.Component<LoginProps, LoginState> {
       _isMounted: true
     })
   }
+
+  // componentDidUpdate(prevProps:Readonly<LoginProps>, prevState:Readonly<LoginState>) {
+
+  // }
 
   componentWillUnmount() {
     this.setState({

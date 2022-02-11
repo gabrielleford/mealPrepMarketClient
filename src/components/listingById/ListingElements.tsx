@@ -110,6 +110,7 @@ export const IndivListingDescription = styled.p`
   border-radius: 0 0 10px 10px;
   color: #edf5e1;
   width: 80%;
+  white-space: pre-line;
 
   @media screen and (max-width: 480px) {
     width: 90%;

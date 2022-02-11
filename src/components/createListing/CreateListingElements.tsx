@@ -79,14 +79,6 @@ export const CreateForm = styled.form`
   justify-content: center;
 `
 
-export const CreateInput = styled.input`
-  width: 90%;
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  border: thin solid #05386b;
-`
-
 export const CreateTextarea = styled.textarea`
   font-family: 'Open Sans', sans-serif;
   width: 90%;
@@ -115,10 +107,11 @@ export const CreateListingButton = styled.button`
   width: fit-content;
   margin: -0.5vh auto 0 auto;
   color: #edf5e1;
-  background: #05386b;
   border: none;
   border-radius: 8px;
-  box-shadow: 0 0 2px 1px rgba(5, 56, 107, 0.4);
+  color: #05386b;
+  background: #5cdb95;
+  box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
   font-size: 1rem;
   padding: 5px 7px;
   cursor: pointer;
@@ -126,7 +119,7 @@ export const CreateListingButton = styled.button`
 
   &:hover {
     color: #05386b;
-    background: #5cdb95;
+    background: #8ee4af;
     box-shadow: 0 0 2px 1px rgba(92, 219, 149, 0.4);
   }
   
@@ -136,5 +129,18 @@ export const CreateListingButton = styled.button`
 
   @media screen and (max-width: 480px) {
     font-size: 0.8rem;
+  }
+`
+
+export const TagLabel = styled.label`
+  border-radius: 50%;
+`
+
+export const CreateInput = styled.input`
+  display: none;
+
+  &:checked + ${TagLabel} {
+  background: rgba(92, 219, 149, 0.3);
+  border-radius: 10px;
   }
 `

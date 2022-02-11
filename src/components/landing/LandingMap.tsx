@@ -57,7 +57,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
   render(): React.ReactNode {
     return (
       <>
-        {this.props.results && this.mapListings()}
+        {this.props.results[0].id !== '' && this.mapListings()}
       </>
     )
   }

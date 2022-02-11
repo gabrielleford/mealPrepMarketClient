@@ -7,7 +7,7 @@ import FulfillmentMap from "./FulfillmentMap";
 import { OrdersContainer, OrdersWrapper } from "./OrdersElements";
 
 export type FulfillProps = {
-  userID: AppProps['userID'],
+  user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   fetchData: AppProps['fetchData'],
 }
@@ -59,8 +59,8 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
 
   fetchOrders = async ():Promise<void> => {
     console.log(`PROFILEID: ${this.state.profileID}`);
-    console.log(`USERID: ${this.props.userID}`)
-    if (this.state.profileID === this.props.userID) {
+    console.log(`USERID: ${this.props.user.userId}`)
+    if (this.state.profileID === this.props.user.userId) {
       await fetch(`${APIURL}/order/fulfillment/${this.state.profileID}`, {
         method: 'GET',
         headers: new Headers({
@@ -87,7 +87,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {
-    if (this.props.userID !== prevProps.userID) {
+    if (this.props.user.userId !== prevProps.user.userId) {
       this.fetchOrders();
     }
   }

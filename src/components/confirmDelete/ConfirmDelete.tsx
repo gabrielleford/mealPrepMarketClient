@@ -13,18 +13,19 @@ type GifState = {
   randGifs: string[],
   gif: string,
   endpoint: string,
-  responseCode: number,
-  deleted: boolean,
   _isMounted: boolean,
 }
 
 type DeleteProps = {
   listingID: ListingState['listingID'],
-  userID: AppProps['userID'],
+  user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   what: AppProps['what'],
+  dlt: AppProps['dlt'],
+  response: AppProps['response'],
   setDelete: AppProps['setDelete'],
   clearToken: AppProps['clearToken'],
+  setResponse: AppProps['setResponse'],
 }
 
 class ConfirmDelete extends React.Component<DeleteProps, GifState> {
@@ -38,8 +39,6 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
       randGifs: ['', 'https://media.giphy.com/media/uUFuppAa2AU7mfQFoo/giphy-downsized-large.gif', 'https://media.giphy.com/media/nltL8wnwoOYyPI6VPu/giphy.gif', 'https://media.giphy.com/media/3ohzAKkcyuLEIiI9Wg/giphy.gif', 'https://media.giphy.com/media/Qvq2680UHZ7vgxUeDh/giphy-downsized-large.gif', 'https://media.giphy.com/media/2KVfyCSkwyh4IWNHHk/giphy.gif', 'https://media.giphy.com/media/qJPM6zdMAL39wLoKJx/giphy.gif', 'https://media.giphy.com/media/1swY7LHRqVwzivnvgI/giphy.gif', 'https://media.giphy.com/media/h45zAKT2Np2ZS5tHvk/giphy.gif', 'https://media.giphy.com/media/pICj6JWqVpm5aapOIS/giphy.gif', 'https://media.giphy.com/media/8vR5eRDdPYHQq4n7jh/giphy.gif', 'https://media.giphy.com/media/26tn0dQX4oeqrhZni/giphy.gif', 'https://media.giphy.com/media/5b5OU7aUekfdSAER5I/giphy.gif', 'https://media.giphy.com/media/28I5KEqbxUEafaeNtV/giphy.gif', 'https://media.giphy.com/media/nqHj2YRYma2m2fRKrY/giphy.gif'],
       gif: '',
       endpoint: '',
-      responseCode: 0,
-      deleted: false,
       _isMounted: false,
     }
 
@@ -70,7 +69,7 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
         break;
       case 'user':
         this.setState({
-          endpoint: `/user/${this.props.userID}`
+          endpoint: `/user/${this.props.user.userId}`
         })
         break;
       case 'order':
@@ -91,20 +90,13 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
       })
     })
     .then(res => {
-      this.setState({
-        responseCode: res.status
-      });
+      this.props.setResponse(res.status);
       return res.json();
     })
     .then(res => {
       console.log(res);
       if (this.props.what === 'user') {
-        this.props.clearToken();
-      } else if (this.state.responseCode === 200) {
-        this.setState({
-          deleted: true
-        })
-        this.props.setDelete(false);
+        this.state._isMounted && this.props.clearToken();
       }
     })
   }
@@ -124,12 +116,13 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
 
   componentWillUnmount() {
     this.setState({
-      deleted: false,
       _isMounted: false
     });
+    this.props.setDelete(false);
   }
 
   render(): React.ReactNode {
+    console.log(this.props.dlt);
     return (
       <DeleteContainer onClick={() => this.props.setDelete(false)}>
         <ConfirmDeleteDiv>
@@ -141,7 +134,7 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
             <CancelButton onClick={() => this.props.setDelete(false)}>Cancel</CancelButton>
           </ButtonDiv>
         </ConfirmDeleteDiv>
-        {this.state.deleted ? 
+        {this.props.response === 200 ?
         <Navigate to='/' replace={true} /> :
         !localStorage.getItem('Authorization') ?
         <Navigate to='/' replace={true} /> : ''

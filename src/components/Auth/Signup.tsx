@@ -174,7 +174,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
     })
     .then(json => {
       console.log(json);
-      if (this.state.responseCode === 200) {
+      if (this.state.responseCode === 201) {
         this.state._isMounted && this.setState({
           user: json.user.id,
         });
@@ -217,18 +217,18 @@ class Signup extends React.Component<SignupProps, SignupState> {
 
   render(): React.ReactNode {
       return (
-        <Container classNames='formContainer' mt={150} size={600} padding='lg'>
+        <Container className='formContainer' mt={150} size={600} padding='lg'>
           <Paper className='form' sx={{paddingTop: 40, paddingBottom: 40, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>
             <Title align='center' className='formTitle' order={1}>Sign Up</Title>
             <Grid gutter='lg'>
               <Grid.Col>
-                <Input className='formInput' name='firstName' placeholder='First Name' radius='md' invalid={this.state.firstNameErr ? true : false} required value={this.state.firstName} onChange={this.handleChange}/>
+                <Input name='firstName' placeholder='First Name' radius='md' invalid={this.state.firstNameErr ? true : false} required value={this.state.firstName} onChange={this.handleChange}/>
               </Grid.Col>
               <Grid.Col>
-                <Input className='formInput' name='lastName' placeholder='Last Name' radius='md' invalid={this.state.lastNameErr ? true : false} required value={this.state.lastName} onChange={this.handleChange}/>
+                <Input name='lastName' placeholder='Last Name' radius='md' invalid={this.state.lastNameErr ? true : false} required value={this.state.lastName} onChange={this.handleChange}/>
               </Grid.Col>
               <Grid.Col>
-                <Input className='formInput' name='email' type='email' icon={<GoMail/>} placeholder='Email' invalid={this.state.emailErr ? true : false} radius='md' required value={this.state.email} onChange={this.handleChange}/>
+                <Input name='email' type='email' icon={<GoMail/>} placeholder='Email' invalid={this.state.emailErr ? true : false} radius='md' required value={this.state.email} onChange={this.handleChange}/>
               </Grid.Col>
               <Grid.Col>
                 <Popover 
@@ -238,14 +238,14 @@ class Signup extends React.Component<SignupProps, SignupState> {
                   onFocusCapture={() => this.props.setPopoverOpen(true)}
                   onBlurCapture={() => this.props.setPopoverOpen(false)}
                   target={
-                  <PasswordInput className='passInput' name='password' icon={<FiLock/>} placeholder='Password' radius='md' description='Password must be 8 characters long, include at least one uppercase letter, one number, and one special character' required onChange={this.handleChange}/>}
+                  <PasswordInput name='password' icon={<FiLock/>} placeholder='Password' radius='md' description='Password must be 8 characters long, include at least one uppercase letter, one number, and one special character' required onChange={this.handleChange}/>}
                 >
                 <PasswordRequirements label='Includes at least 8 characters' meets={this.state.password.length > 7} />
                 {this.checkPass()}
                 </Popover>
               </Grid.Col>
               <Grid.Col>
-                <PasswordInput className='passInput' name='confirmPassword' icon={<FiLock/>}placeholder='Confirm Password' radius='md' required error={this.state.confirmPasswordErr ? 'Passwords don\'t match' : ''} value={this.state.confirmPassword} onChange={this.handleChange}/>
+                <PasswordInput name='confirmPassword' icon={<FiLock/>}placeholder='Confirm Password' radius='md' required error={this.state.confirmPasswordErr ? 'Passwords don\'t match' : ''} value={this.state.confirmPassword} onChange={this.handleChange}/>
               </Grid.Col>
               <Grid.Col>
                 <Group position='center' spacing='xs'>
@@ -285,7 +285,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
               </Grid.Col>
             </Grid>
           </Paper>
-          {this.state.user !== '' && <Navigate to={this.props.prevPath} replace={true}/>}
+          {this.state.responseCode === 201 && <Navigate to={this.props.prevPath} replace={true}/>}
         </Container>
       )
   }

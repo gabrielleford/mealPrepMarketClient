@@ -7,7 +7,7 @@ import { OrdersContainer, OrdersWrapper } from "./OrdersElements";
 import OrdersMap from "./OrdersMap";
 
 export type OrderProps = {
-  userID: AppProps['userID'],
+  user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
 }
 
@@ -36,7 +36,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   }
 
   fetchOrders = async ():Promise<void> => {
-    if (this.state.profileID === this.props.userID) {
+    if (this.state.profileID === this.props.user.userId) {
       await fetch(`${APIURL}/order/myOrders`, {
         method: 'GET',
         headers: new Headers({
@@ -62,7 +62,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {
-    if (this.props.userID !== prevProps.userID) {
+    if (this.props.user.userId !== prevProps.user.userId) {
       this.fetchOrders();
     }
   }

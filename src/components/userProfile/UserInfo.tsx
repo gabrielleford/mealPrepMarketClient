@@ -12,14 +12,15 @@ type UserProps = {
   what: AppProps['what'],
   dlt: AppProps['dlt'],
   userEdit: AppProps['userEdit'],
-  userID: AppProps['userID'],
   sessionToken: AppProps['sessionToken'],
+  response: AppProps['response'],
   listingID: ListingState['listingID'],
   setWhat: AppProps['setWhat'],
   setDelete: AppProps['setDelete'],
   setUserEdit: AppProps['setUserEdit'],
   fetchData: AppProps['fetchData'],
   clearToken: AppProps['clearToken'],
+  setResponse: AppProps['setResponse'],
 }
 
 type UserState = {
@@ -86,7 +87,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
     return (
       <ProfileContainer>
         {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} sessionToken={this.props.sessionToken} listingID={this.props.listingID} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
+          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
         }
         <ProfileWrapper>
           <UserData>

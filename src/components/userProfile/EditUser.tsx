@@ -12,16 +12,17 @@ import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 type EditProps = {
   sessionToken: AppProps['sessionToken'],
-  userID: AppProps['userID']
   user: AppProps['user'],
   what: AppProps['what'],
   dlt: AppProps['dlt'],
   userEdit: AppProps['userEdit'],
+  response: AppProps['response'],
   setWhat: AppProps['setWhat'],
   setDelete: AppProps['setDelete'],
   setUserEdit: AppProps['setUserEdit'],
   clearToken: AppProps['clearToken'],
   fetchData: AppProps['fetchData'],
+  setResponse: AppProps['setResponse'],
   listingID: ListingState['listingID']
 }
 
@@ -230,7 +231,7 @@ class EditUser extends React.Component<EditProps, EditState> {
     return (
       <ProfileContainer>
         {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} sessionToken={this.props.sessionToken} listingID={this.props.listingID} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
+          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
         }
         <ProfileWrapper>
           <UpdateForm onSubmit={this.handleUpdate}>

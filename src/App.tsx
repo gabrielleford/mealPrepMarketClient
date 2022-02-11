@@ -18,10 +18,7 @@ import UserInfo from './components/userProfile/UserInfo';
 import Sidebar from './components/sidebar/Sidebar';
 
 export type AppProps = {
-  isLoggedIn: boolean,
   sessionToken: string | null,
-  userID: string | null,
-  userName: string | null,
   user: {
     userId: string,
     firstName: string,
@@ -38,6 +35,7 @@ export type AppProps = {
   isOpen: boolean,
   prevPath: string,
   popoverOpen: boolean,
+  response: number,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -49,12 +47,11 @@ export type AppProps = {
   setIsOpen: (isOpen: boolean) => void,
   setPrevPath: (prevPath: string) => void,
   setPopoverOpen: (popoverOpened: boolean) => void,
+  setResponse: (response: number) => void,
 }
 
 const App: React.FunctionComponent = () => {
   const [sessionToken, setSessionToken] = useState<string | null>('');
-  const [userID, setUserID] = useState<string | null>('');
-  const [userName, setName] = useState<string | null>('');
   const [listingEdit, setListingEdit] = useState<boolean>(false);
   const [userEdit, setUserEdit] = useState<boolean>(false);
   const [what, setWhat] = useState<string>('');
@@ -62,6 +59,7 @@ const App: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prevPath, setPrevPath] = useState<string>('/');
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+  const [response, setResponse] = useState<number>(0);
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -95,15 +93,11 @@ const App: React.FunctionComponent = () => {
         })
         .then(res => {
           console.log(res);
-          setUserID(res.userId);
-          setName(`${res.firstName} ${res.lastName}`);
           setUser(res)
         })
         .catch(error => console.log(error))
       }
     } else {
-      setUserID('');
-      setName('');
       setUser({
         userId: '',
         firstName: '', 
@@ -123,6 +117,7 @@ const App: React.FunctionComponent = () => {
   const clearToken = () => {
     localStorage.clear();
     setSessionToken('');
+    setWhat('');
     setDelete(false);
     setPrevPath('/');
   }
@@ -154,6 +149,7 @@ const App: React.FunctionComponent = () => {
             <Landing
               sessionToken={sessionToken}
               setPrevPath={setPrevPath}
+              setResponse={setResponse}
             />} 
           />
           <Route path='/register' element={
@@ -180,14 +176,15 @@ const App: React.FunctionComponent = () => {
               dlt={dlt}
               what={what}
               userEdit={userEdit}
-              userID={userID}
               sessionToken={sessionToken}
+              response={response}
               setDelete={setDelete}
               setWhat={setWhat}
               setUserEdit={setUserEdit}
               fetchData={fetchData}
               listingID=''
               clearToken={clearToken}
+              setResponse={setResponse}
             />}
           />
           <Route path='/edit/:id' element={
@@ -197,13 +194,14 @@ const App: React.FunctionComponent = () => {
               dlt={dlt}
               what={what}
               userEdit={userEdit}
-              userID={userID}
+              response={response}
               setDelete={setDelete}
               setWhat={setWhat}
               setUserEdit={setUserEdit}
               listingID=''
               clearToken={clearToken}
               fetchData={fetchData}
+              setResponse={setResponse}
             />}
           />
           
@@ -214,18 +212,19 @@ const App: React.FunctionComponent = () => {
           />
           <Route path='/listing/:id' element={
             <ListingById
-              userID={userID}
               sessionToken={sessionToken}
-              userName={userName}
               listingEdit={listingEdit}
               what={what}
               dlt={dlt}
+              response={response}
+              user={user}
               setListingEdit={setListingEdit}
               fetchData={fetchData}
               setWhat={setWhat}
               setDelete={setDelete}
               clearToken={clearToken}
               setPrevPath={setPrevPath}
+              setResponse={setResponse}
             />}
           />
           <Route path='/listing/edit/:id' element={
@@ -234,11 +233,13 @@ const App: React.FunctionComponent = () => {
               listingEdit={listingEdit}
               what={what}
               dlt={dlt}
-              userID={userID}
+              response={response}
+              user={user}
               setListingEdit={setListingEdit}
               setWhat={setWhat}
               setDelete={setDelete}
               clearToken={clearToken}
+              setResponse={setResponse}
             />}
           />
           <Route path='/profile/:id' element={
@@ -248,13 +249,13 @@ const App: React.FunctionComponent = () => {
           />
           <Route path='/orders/:id' element={
             <Orders
-              userID={userID}
+              user={user}
               sessionToken={sessionToken}
             />}
           />
           <Route path='/fulfillment/:id' element={
             <Fulfillment
-              userID={userID}
+              user={user}
               sessionToken={sessionToken}
               fetchData={fetchData}
             />}

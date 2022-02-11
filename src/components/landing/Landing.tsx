@@ -8,6 +8,7 @@ import LandingMap from "./LandingMap";
 export type LandingProps = {
   sessionToken: AppProps['sessionToken'],
   setPrevPath: AppProps['setPrevPath'],
+  setResponse: AppProps['setResponse'],
 }
 
 export type LandingState = {
@@ -16,7 +17,7 @@ export type LandingState = {
     title: string,
     image: string,
     price: number,
-    tag: string,
+    tag: string[],
   }[],
   _isMounted: boolean,
 }
@@ -31,7 +32,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
         title: '',
         image: '',
         price: 0,
-        tag: '',
+        tag: [],
       }],
       _isMounted: false,
     }
@@ -57,6 +58,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
     this.setState({
       _isMounted: true
     });
+    this.props.setResponse(0);
     this.props.setPrevPath('/');
     this.fetchListings();
   }
@@ -79,7 +81,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
         }
         <LandingWrapper sessionToken={this.props.sessionToken}>
           <ListingCards>
-            {this.state.results && <LandingMap results={this.state.results} />}
+            {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
           </ListingCards>
         </LandingWrapper>
       </LandingContainer>

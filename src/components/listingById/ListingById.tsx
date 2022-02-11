@@ -6,18 +6,19 @@ import { ButtonDiv, Delivery, EditDelete, GetStarted, ListingContainer, IndivLis
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 
 type ListingProps = {
-  userID: AppProps['userID'],
+  user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
-  userName: AppProps['userName'],
   what: AppProps['what'],
   listingEdit: AppProps['listingEdit'],
   dlt: AppProps['dlt'],
+  response: AppProps['response'],
   fetchData: AppProps['fetchData'],
   setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
   clearToken: AppProps['clearToken'],
   setPrevPath: AppProps['setPrevPath'],
+  setResponse: AppProps['setResponse'],
 }
 
 export type ListingState = {
@@ -158,11 +159,11 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       return (
         <ListingContainer>
           {this.props.dlt && 
-            <ConfirmDelete what={this.props.what} listingID={this.state.listingID} sessionToken={this.props.sessionToken} userID={this.props.userID} setDelete={this.props.setDelete} clearToken={this.props.clearToken} />
+            <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
           }
           <ListingWrapper>
             <IndivListingH1>{this.state.title}</IndivListingH1>
-            {this.state.ownerID === this.props.userID ? 
+            {this.state.ownerID === this.props.user.userId ? 
               <ListingUserDiv>
                 <ListingUser to={`/profile/${this.state.ownerID}`}>
                   {this.state.ownerName}
@@ -181,7 +182,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               {/* <IndivListingTag /> */}
             </IndivListingTagContainer>
             <IndivListingPrice>${this.state.price} USD</IndivListingPrice>
-            {this.state.ownerID === this.props.userID ? 
+            {this.state.ownerID === this.props.user.userId ? 
             <>
               <ButtonDiv>
                 <EditDelete onClick={this.editListing}>Edit</EditDelete>
@@ -209,10 +210,12 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             </>
           }
           </ListingWrapper>
-          {this.props.listingEdit ? 
+          {this.props.response === 200 && this.state._isMounted ?
+          <Navigate to='/' replace={true} /> :
+          this.props.listingEdit ? 
           <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/> : 
           this.state.responseCode === 201 ?
-          <Navigate to={`/orders/${this.props.userID}`} replace={true} /> : ''
+          <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
           }
         </ListingContainer>
       )
