@@ -16,6 +16,7 @@ export const SidebarContainer = styled.aside<SidebarProps>`
     align-items: center;
     position: fixed;
     top: ${props => (props.isOpen ? '0' : '-100%')};
+    opacity: ${props => (props.isOpen ? '100%' : '0')};
     left: 0;
     width: 100vw;
     height: 100vh;

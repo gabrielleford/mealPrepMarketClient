@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Container } from '@mantine/core';
+import { Container, MantineProvider } from '@mantine/core';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Landing from './components/landing/Landing';
@@ -127,148 +127,158 @@ const App: React.FunctionComponent = () => {
   }, [sessionToken])
 
   return (
-    <div id='container'>
-      <Router>
-        <Navbar 
-          clearToken={clearToken} 
-          setSessionToken={setSessionToken} 
-          sessionToken={sessionToken} 
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
-        <Sidebar
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          clearToken={clearToken}
-        />
-      <Container mt={130}>
-      <Routes>
-          <Route path='/' element={
-            <Landing
-              sessionToken={sessionToken}
-              setPrevPath={setPrevPath}
-              setResponse={setResponse}
-            />} 
+    <MantineProvider theme={{
+      fontFamily: 'Open Sans, sans-serif',
+      headings: {fontFamily: 'Montserrat'},
+      colors: {
+        primary: ['#c0f1d6', '#abedc9', '#96e8bb',  '#82e3ae', '#5cdb95', '#43d685', '#2ed177', '#29bc6b', '#209254', '#1c7d48'   ],
+        secondary: ['#cee6fd', '#b6d9fc', '#9eccfa', '#6db3f8', '#3c99f6', '#0b80f4', '#0966c3', '#074d92', '#05386b', '#053361']
+      },
+      primaryColor: 'primary',
+    }}>
+      <div id='container'>
+        <Router>
+          <Navbar 
+            clearToken={clearToken} 
+            setSessionToken={setSessionToken} 
+            sessionToken={sessionToken} 
+            user={user}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
           />
-          <Route path='/register' element={
-            <Signup
-              updateToken={updateToken}
-              sessionToken={sessionToken}
-              prevPath={prevPath}
-              popoverOpen={popoverOpen}
-              setSessionToken={setSessionToken}
-              setPopoverOpen={setPopoverOpen}
-            />} 
+          <Sidebar
+            user={user}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            clearToken={clearToken}
           />
-          <Route path='/login' element={
-            <Login 
-              updateToken={updateToken}
-              sessionToken={sessionToken}
-              prevPath={prevPath}
-              setSessionToken={setSessionToken}
-            />} 
-          />
-          <Route path='/user/:id' element={
-            <UserInfo
-              user={user}
-              dlt={dlt}
-              what={what}
-              userEdit={userEdit}
-              sessionToken={sessionToken}
-              response={response}
-              setDelete={setDelete}
-              setWhat={setWhat}
-              setUserEdit={setUserEdit}
-              fetchData={fetchData}
-              listingID=''
-              clearToken={clearToken}
-              setResponse={setResponse}
-            />}
-          />
-          <Route path='/edit/:id' element={
-            <EditUser
-              sessionToken={sessionToken}
-              user={user}
-              dlt={dlt}
-              what={what}
-              userEdit={userEdit}
-              response={response}
-              setDelete={setDelete}
-              setWhat={setWhat}
-              setUserEdit={setUserEdit}
-              listingID=''
-              clearToken={clearToken}
-              fetchData={fetchData}
-              setResponse={setResponse}
-            />}
-          />
-          
-          <Route path='/create' element={
-            <CreateListing 
-              sessionToken={sessionToken}
-            />} 
-          />
-          <Route path='/listing/:id' element={
-            <ListingById
-              sessionToken={sessionToken}
-              listingEdit={listingEdit}
-              what={what}
-              dlt={dlt}
-              response={response}
-              user={user}
-              setListingEdit={setListingEdit}
-              fetchData={fetchData}
-              setWhat={setWhat}
-              setDelete={setDelete}
-              clearToken={clearToken}
-              setPrevPath={setPrevPath}
-              setResponse={setResponse}
-            />}
-          />
-          <Route path='/listing/edit/:id' element={
-            <ListingEdit
-              sessionToken={sessionToken}
-              listingEdit={listingEdit}
-              what={what}
-              dlt={dlt}
-              response={response}
-              user={user}
-              setListingEdit={setListingEdit}
-              setWhat={setWhat}
-              setDelete={setDelete}
-              clearToken={clearToken}
-              setResponse={setResponse}
-            />}
-          />
-          <Route path='/profile/:id' element={
-            <UserProfile
-              user={user}
-            />}
-          />
-          <Route path='/orders/:id' element={
-            <Orders
-              user={user}
-              sessionToken={sessionToken}
-            />}
-          />
-          <Route path='/fulfillment/:id' element={
-            <Fulfillment
-              user={user}
-              sessionToken={sessionToken}
-              fetchData={fetchData}
-            />}
-          />
-        </Routes>
-      </Container>
-        <div id='footerDiv'>
-          <footer id='footer'>
-            <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
-          </footer>
-        </div>
-      </Router>
-    </div>
+        <Container mt={130} fluid>
+        <Routes>
+            <Route path='/' element={
+              <Landing
+                sessionToken={sessionToken}
+                setPrevPath={setPrevPath}
+                setResponse={setResponse}
+              />} 
+            />
+            <Route path='/register' element={
+              <Signup
+                updateToken={updateToken}
+                sessionToken={sessionToken}
+                prevPath={prevPath}
+                popoverOpen={popoverOpen}
+                setSessionToken={setSessionToken}
+                setPopoverOpen={setPopoverOpen}
+              />} 
+            />
+            <Route path='/login' element={
+              <Login 
+                updateToken={updateToken}
+                sessionToken={sessionToken}
+                prevPath={prevPath}
+                setSessionToken={setSessionToken}
+              />} 
+            />
+            <Route path='/user/:id' element={
+              <UserInfo
+                user={user}
+                dlt={dlt}
+                what={what}
+                userEdit={userEdit}
+                sessionToken={sessionToken}
+                response={response}
+                setDelete={setDelete}
+                setWhat={setWhat}
+                setUserEdit={setUserEdit}
+                fetchData={fetchData}
+                listingID=''
+                clearToken={clearToken}
+                setResponse={setResponse}
+              />}
+            />
+            <Route path='/edit/:id' element={
+              <EditUser
+                sessionToken={sessionToken}
+                user={user}
+                dlt={dlt}
+                what={what}
+                userEdit={userEdit}
+                response={response}
+                setDelete={setDelete}
+                setWhat={setWhat}
+                setUserEdit={setUserEdit}
+                listingID=''
+                clearToken={clearToken}
+                fetchData={fetchData}
+                setResponse={setResponse}
+              />}
+            />
+            
+            <Route path='/create' element={
+              <CreateListing 
+                sessionToken={sessionToken}
+              />} 
+            />
+            <Route path='/listing/:id' element={
+              <ListingById
+                sessionToken={sessionToken}
+                listingEdit={listingEdit}
+                what={what}
+                dlt={dlt}
+                response={response}
+                user={user}
+                setListingEdit={setListingEdit}
+                fetchData={fetchData}
+                setWhat={setWhat}
+                setDelete={setDelete}
+                clearToken={clearToken}
+                setPrevPath={setPrevPath}
+                setResponse={setResponse}
+              />}
+            />
+            <Route path='/listing/edit/:id' element={
+              <ListingEdit
+                sessionToken={sessionToken}
+                listingEdit={listingEdit}
+                what={what}
+                dlt={dlt}
+                response={response}
+                user={user}
+                setListingEdit={setListingEdit}
+                setWhat={setWhat}
+                setDelete={setDelete}
+                clearToken={clearToken}
+                setResponse={setResponse}
+              />}
+            />
+            <Route path='/profile/:id' element={
+              <UserProfile
+                user={user}
+              />}
+            />
+            <Route path='/orders/:id' element={
+              <Orders
+                user={user}
+                sessionToken={sessionToken}
+              />}
+            />
+            <Route path='/fulfillment/:id' element={
+              <Fulfillment
+                user={user}
+                sessionToken={sessionToken}
+                fetchData={fetchData}
+              />}
+            />
+          </Routes>
+        </Container>
+        </Router>
+        {/* <div id='footerDiv'>
+            <footer id='footer'>
+              <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
+            </footer>
+          </div> */}
+      </div>
+    </MantineProvider>
   );
 }
 

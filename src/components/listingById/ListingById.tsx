@@ -2,9 +2,9 @@ import React from "react";
 import APIURL from "../helpers/environments";
 import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ButtonDiv, Delivery, EditDelete, GetStarted, ListingContainer, IndivListingDescription, ListingForm, IndivListingH1, IndivListingImg, ListingLabel, IndivListingPrice, IndivListingTag, IndivListingTagContainer, ListingUser, ListingWrapper, Pickup, QuantityOption, QuantitySelect, ListingUserDiv, PreppedBy, SubmitOrder, Para, QuantityLabel } from "./ListingElements";
+import { Fulfillment, FulfillmentInput, FulfillmentLabel } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
-import { Badge, Button, Card, Center, Container, Grid, Group, Image, Paper, Select, Text, Title } from "@mantine/core";
+import { Badge, Button, Card, Center, Container, Grid, Group, Image, MantineProvider, Paper, Select, Text, Title } from "@mantine/core";
 
 type ListingProps = {
   user: AppProps['user'],
@@ -157,7 +157,10 @@ class ListingById extends React.Component<ListingProps, ListingState> {
 
   render(): React.ReactNode {
       return (
-        <Container size={700}>
+        <Container id='listingById' size={700}>
+          {this.props.dlt && 
+            <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
+          }
           <Card radius='lg' padding='sm' className="listingCard">
               <Title className="listingTitle" align="center" order={1}>{this.state.title}</Title>
               <Group spacing={5} position="center">
@@ -177,33 +180,43 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               <Text mt={-7} className="description">{this.state.description}
               <br/>
                 <Center>
-                  <Badge mt={7} variant='filled' color='green' radius='lg' size="xl">${this.state.price} USD</Badge>
+                  <Badge mt={7} radius='lg' size="xl">${this.state.price} USD</Badge>
                 </Center>
               </Text>
               </Center>
               {this.props.user.userId === this.state.ownerID ?
               <Group mt='md' position="center" spacing='xl'>
-                <Button className="darkButton" radius='md' size='xl' compact>Edit</Button>
-                <Button className="darkButton" radius='md' size='xl' compact>Delete</Button>
+                <Button className="darkButton" radius='md' size='xl' compact onClick={this.editListing}>Edit</Button>
+                <Button className="darkButton" radius='md' size='xl' compact onClick={() => this.props.setDelete(true)}>Delete</Button>
               </Group> :
               localStorage.getItem('Authorization') ?
               <Grid>
-                <Grid.Col>
-                  <Select data={[
+                <Grid.Col id='select'>
+                    <Select label='Quantity' style={{width: '50%', margin: '10px auto 0 auto'}} radius='md' data={[
                     {value: '1', label:'1'},
                     {value: '2', label:'2'},
                     {value: '3', label:'3'},
                     {value: '4', label:'4'},
-                  ]} />
+                    ]} />
                 </Grid.Col>
                 <Grid.Col>
-                  <Group>
-                    <Button radius='md' size='xl' compact>Pickup</Button>
-                    <Button radius='md' size='xl' compact>Deliver</Button>
+                  <Group position="center">
+                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="pickup">
+                      <FulfillmentInput id='pickup' name='radio' type='radio' className='fulfillmentInput' defaultChecked />
+                      <Fulfillment id='pickupBtn' className='fulfillmentSpan'>Pickup</Fulfillment>
+                    </FulfillmentLabel>
+                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="delivery">
+                      <FulfillmentInput id="delivery" name='radio' type='radio' className='fulfillmentInput' />
+                      <Fulfillment id='deliveryBtn' className='fulfillmentSpan'>Delivery</Fulfillment>
+                    </FulfillmentLabel>
+                    {/* <Button className='darkButton' radius='md' size='lg' compact>Pickup</Button>
+                    <Button className='darkButton' radius='md' size='lg' compact>Deliver</Button> */}
                   </Group>
                 </Grid.Col>
                 <Grid.Col>
-                  <Button>Place Order</Button>
+                  <Center>
+                    <Button className='darkButton' radius='md' size='xl' compact>Place Order</Button>
+                  </Center>
                 </Grid.Col>
               </Grid> :
               <Group direction="column" position="center" spacing={0}>
@@ -218,65 +231,3 @@ class ListingById extends React.Component<ListingProps, ListingState> {
 }
 
 export default ListingById;
-
-{/* <ListingContainer>
-{this.props.dlt && 
-  <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
-}
-<ListingWrapper>
-  <IndivListingH1>{this.state.title}</IndivListingH1>
-  {this.state.ownerID === this.props.user.userId ? 
-    <ListingUserDiv>
-      <ListingUser to={`/profile/${this.state.ownerID}`}>
-        {this.state.ownerName}
-      </ListingUser>
-    </ListingUserDiv> :
-    <ListingUserDiv>
-      <PreppedBy>Prepared by </PreppedBy>
-      <ListingUser to={`/profile/${this.state.ownerID}`}>
-        {this.state.ownerName}
-      </ListingUser>
-    </ListingUserDiv>
-  }
-  <IndivListingImg listingEdit={this.props.listingEdit} src={this.state.image} alt={this.state.title}/>
-  <IndivListingDescription>{this.state.description}</IndivListingDescription>
-  <IndivListingTagContainer>
-    {/* <IndivListingTag /> */}
-//   </IndivListingTagContainer>
-//   <IndivListingPrice>${this.state.price} USD</IndivListingPrice>
-//   {this.state.ownerID === this.props.user.userId ? 
-//   <>
-//     <ButtonDiv>
-//       <EditDelete onClick={this.editListing}>Edit</EditDelete>
-//       <EditDelete onClick={() => this.props.setDelete(true)}>Delete</EditDelete>
-//     </ButtonDiv>
-//   </> : 
-//   localStorage.getItem('Authorization') ?
-//   <ListingForm onSubmit={this.placeOrder}>
-//     <QuantityLabel>Quantity</QuantityLabel>
-//     <QuantitySelect name='quantity' onChange={this.handleChange}>
-//       <QuantityOption value={1}>1</QuantityOption>
-//       <QuantityOption value={2}>2</QuantityOption>
-//       <QuantityOption value={3}>3</QuantityOption>
-//       <QuantityOption value={4}>4</QuantityOption>
-//     </QuantitySelect>
-//     <ButtonDiv>
-//       <Pickup onClick={this.setFulfillment}>Pickup</Pickup>
-//       <Delivery onClick={this.setFulfillment}>Delivery</Delivery>
-//     </ButtonDiv>
-//     <SubmitOrder type="submit">Place Order</SubmitOrder>
-//   </ListingForm> :
-//   <>
-//   <Para>Interested in ordering?</Para>
-//   <GetStarted to='/login'>Get Started!</GetStarted>
-//   </>
-// }
-// </ListingWrapper>
-// {this.props.response === 200 && this.state._isMounted ?
-// <Navigate to='/' replace={true} /> :
-// this.props.listingEdit ? 
-// <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true}/> : 
-// this.state.responseCode === 201 ?
-// <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
-// }
-// </ListingContainer> */}

@@ -2,8 +2,9 @@ import React from "react";
 import APIURL from '../helpers/environments'
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { AppProps } from "../../App";
-import { ButtonDiv, EditDelete, ListingContainer, ListingForm, IndivListingH1, IndivListingImg, ListingInput, ListingLabel, ListingTextarea, ListingWrapper } from './ListingElements';
+import {  } from './ListingElements';
 import { Navigate } from "react-router-dom";
+import { Container } from "@mantine/core";
 
 export type EditState = {
   listingID: string,
@@ -120,38 +121,42 @@ class ListingEdit extends React.Component<EditProps, EditState> {
 
   render(): React.ReactNode {
     return (
-      <ListingContainer>
-        {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
-        }
-        <ListingWrapper>
-          <IndivListingH1>Edit Listing</IndivListingH1>
-          <ListingForm onSubmit={this.updateListing}>
-            <IndivListingImg listingEdit={this.props.listingEdit} src={this.state.image} alt={this.state.title} />
-            <ListingLabel>Title</ListingLabel>
-            <ListingInput name='title' value={this.state.title} onChange={this.handleChange} />
-            <ListingLabel>Description</ListingLabel>
-            <ListingTextarea name='description' value={this.state.description} onChange={this.handleChange} />
-            <ListingLabel>Price</ListingLabel>
-            <ListingInput name='price' value={this.state.price} onChange={this.handleChange} />
-            <ListingLabel>Tags</ListingLabel>
-            <ListingInput name='tag' value={this.state.tag} onChange={this.handleChange} />
-            <ButtonDiv>
-              <EditDelete type="submit">Save</EditDelete>  
-              <EditDelete onClick={(e) => {
-                e.preventDefault() 
-                this.props.setDelete(true)}}>Delete</EditDelete>
-            </ButtonDiv>
-          </ListingForm>
-        </ListingWrapper>
-        {!this.props.listingEdit ?
-        <Navigate to={`/listing/${this.state.listingID}`} replace={true} /> :
-        !localStorage.getItem('Authorization') ?
-        <Navigate to='/' replace={true} /> : ''
-        }
-      </ListingContainer>
+      <Container>
+
+      </Container>
     )
   }
 }
 
 export default ListingEdit;
+
+{/* <ListingContainer>
+{this.props.dlt && 
+  <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
+}
+<ListingWrapper>
+  <IndivListingH1>Edit Listing</IndivListingH1>
+  <ListingForm onSubmit={this.updateListing}>
+    <IndivListingImg listingEdit={this.props.listingEdit} src={this.state.image} alt={this.state.title} />
+    <ListingLabel>Title</ListingLabel>
+    <ListingInput name='title' value={this.state.title} onChange={this.handleChange} />
+    <ListingLabel>Description</ListingLabel>
+    <ListingTextarea name='description' value={this.state.description} onChange={this.handleChange} />
+    <ListingLabel>Price</ListingLabel>
+    <ListingInput name='price' value={this.state.price} onChange={this.handleChange} />
+    <ListingLabel>Tags</ListingLabel>
+    <ListingInput name='tag' value={this.state.tag} onChange={this.handleChange} />
+    <ButtonDiv>
+      <EditDelete type="submit">Save</EditDelete>  
+      <EditDelete onClick={(e) => {
+        e.preventDefault() 
+        this.props.setDelete(true)}}>Delete</EditDelete>
+    </ButtonDiv>
+  </ListingForm>
+</ListingWrapper>
+{!this.props.listingEdit ?
+<Navigate to={`/listing/${this.state.listingID}`} replace={true} /> :
+!localStorage.getItem('Authorization') ?
+<Navigate to='/' replace={true} /> : ''
+}
+</ListingContainer> */}

@@ -37,7 +37,7 @@ export const LandingWrapper = styled.div<Props>`
 export const Banner = styled.div`
   position: relative;
   left: calc(-50vw + 50%);
-  margin-top: 4rem;
+  margin-top: 3rem;
   width: 100vw;
   padding: 0.5rem 0 1.4rem 0;
   background: #05386b;
@@ -45,7 +45,7 @@ export const Banner = styled.div`
   text-align: center;
 
   @media screen and (max-width: 1407px) and (min-width: 1216px) {
-    margin-top: 7.5rem;
+    margin-top: 5rem;
   }
 
   @media screen and (max-width: 1215px) and (min-width: 1033px) {
