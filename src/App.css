@@ -132,3 +132,35 @@ body {
 .formButton:hover {
   background: #8ee4af;
 }
+
+.listingCard {
+  background: #edf5e1;
+}
+
+.listingTitle {
+  color: #05386b;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+.listingText {
+  color: #05386b;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.description {
+  white-space: pre-line;
+  background-color: #05386b;
+  color: #edf5e1;
+  padding: 20px 30px;
+  border-radius: 0 0 10px 10px;
+  width: 550px;
+}
+
+@media screen and (max-width: 768px) {
+  .description {
+    padding-top: 20px;
+    color: #05386b;
+    background: none;
+  }
+}
