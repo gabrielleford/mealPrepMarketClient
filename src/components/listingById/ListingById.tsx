@@ -4,7 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { Fulfillment, FulfillmentInput, FulfillmentLabel } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
-import { Badge, Button, Card, Center, Container, Grid, Group, Image, MantineProvider, Paper, Select, Text, Title } from "@mantine/core";
+import { BsEmojiDizzy, BsEmojiFrown } from 'react-icons/bs';
+import { Alert, Badge, Button, Card, Center, Container, Grid, Group, Image, Select, Text, Title } from "@mantine/core";
 
 type ListingProps = {
   user: AppProps['user'],
@@ -31,7 +32,7 @@ export type ListingState = {
   tag: string,
   ownerID: string,
   ownerName: string,
-  quantity: number,
+  quantity: string | null,
   fulfillmentMethod: string,
   responseCode: number,
   _isMounted: boolean,
@@ -50,14 +51,13 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       tag: '',
       ownerID: '',
       ownerName: '',
-      quantity: 1,
+      quantity: '',
       fulfillmentMethod: 'pickup',
       responseCode: 0,
       _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.setFulfillment = this.setFulfillment.bind(this);
   }
 
   fetchListing = async ():Promise<void> => {
@@ -83,13 +83,13 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     .catch(error => console.log(error))
   }
 
-  handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  handleChange = (value: string | null) => {
     this.setState({
-      quantity: +e.target.value
+      quantity: value
     })
   }
 
-  placeOrder = async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+  placeOrder = async (e: React.FormEvent<HTMLButtonElement>):Promise<void> => {
     e.preventDefault();
 
     await fetch(`${APIURL}/order/${this.state.listingID}`, {
@@ -120,20 +120,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
 
   editListing = () => {
     this.props.setListingEdit(!this.props.listingEdit);
-  }
-
-  setFulfillment = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (this.state.fulfillmentMethod === 'delivery'){
-      this.setState({
-        fulfillmentMethod: 'pickup' 
-      })
-    } else {
-      this.setState({
-        fulfillmentMethod: 'delivery'
-      })
-    }
   }
 
   componentDidMount() {
@@ -192,30 +178,42 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               localStorage.getItem('Authorization') ?
               <Grid>
                 <Grid.Col id='select'>
-                    <Select label='Quantity' style={{width: '50%', margin: '10px auto 0 auto'}} radius='md' data={[
-                    {value: '1', label:'1'},
-                    {value: '2', label:'2'},
-                    {value: '3', label:'3'},
-                    {value: '4', label:'4'},
-                    ]} />
+                    <Select label='Quantity' style={{width: '50%', margin: '10px auto 0 auto'}} radius='md'
+                    data={[
+                      {value: '1', label:'1'},
+                      {value: '2', label:'2'},
+                      {value: '3', label:'3'},
+                      {value: '4', label:'4'},
+                      ]} onChange={this.handleChange} />
                 </Grid.Col>
                 <Grid.Col>
                   <Group position="center">
-                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="pickup">
-                      <FulfillmentInput id='pickup' name='radio' type='radio' className='fulfillmentInput' defaultChecked />
-                      <Fulfillment id='pickupBtn' className='fulfillmentSpan'>Pickup</Fulfillment>
+                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="pickup" >
+                      <FulfillmentInput id='pickup' name='radio' type='radio' className='fulfillmentInput' value={this.state.fulfillmentMethod} defaultChecked onChange={() => this.setState({fulfillmentMethod: 'pickup'})} />
+                      <Fulfillment id='pickupBtn' className='fulfillmentSpan' onChange={() => this.setState({fulfillmentMethod: 'pickup'})}>Pickup</Fulfillment>
                     </FulfillmentLabel>
-                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="delivery">
-                      <FulfillmentInput id="delivery" name='radio' type='radio' className='fulfillmentInput' />
-                      <Fulfillment id='deliveryBtn' className='fulfillmentSpan'>Delivery</Fulfillment>
+                    <FulfillmentLabel className='fulfillmentContainer' htmlFor="delivery" >
+                      <FulfillmentInput id="delivery" name='radio' type='radio' className='fulfillmentInput' onChange={() => this.setState({fulfillmentMethod: 'delivery'})} />
+                      <Fulfillment id='deliveryBtn' className='fulfillmentSpan' onChange={() => this.setState({fulfillmentMethod: 'delivery'})}>Delivery</Fulfillment>
                     </FulfillmentLabel>
-                    {/* <Button className='darkButton' radius='md' size='lg' compact>Pickup</Button>
-                    <Button className='darkButton' radius='md' size='lg' compact>Deliver</Button> */}
                   </Group>
                 </Grid.Col>
                 <Grid.Col>
                   <Center>
-                    <Button className='darkButton' radius='md' size='xl' compact>Place Order</Button>
+                    <Button className='darkButton' radius='md' size='xl' compact onClick={this.placeOrder}>Place Order</Button>
+                  </Center>
+                </Grid.Col>
+                <Grid.Col>
+                  <Center>
+                    {this.state.responseCode === 500 ?
+                      <Alert icon={<BsEmojiFrown/>} title='Sorry' color='red' radius='md' withCloseButton onClose={() => this.setState({
+                        responseCode: 0
+                      })}>Internal Error</Alert> :
+                      this.state.responseCode === 400 ?
+                      <Alert icon={<BsEmojiDizzy/>} title='Oops' color='red' radius='md' withCloseButton onClose={() => this.setState({
+                        responseCode: 0
+                      })}>Please select quantity</Alert> : ''
+                    }
                   </Center>
                 </Grid.Col>
               </Grid> :
@@ -225,6 +223,13 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               </Group>
               }
           </Card>
+          {this.props.response === 200 && this.state._isMounted ?
+            <Navigate to='/' replace={true} /> :
+            this.props.listingEdit ?
+            <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true} /> :
+            this.state.responseCode === 201 ?
+            <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
+          }
         </Container>
       )
   }
