@@ -167,7 +167,7 @@ const App: React.FunctionComponent = () => {
           />
         <Container mt={130} fluid>
         <Routes>
-            <Route path='/home' element={
+            <Route path='/' element={
               <Landing
                 sessionToken={sessionToken}
                 setPrevPath={setPrevPath}
