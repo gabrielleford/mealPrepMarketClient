@@ -14,7 +14,6 @@ type ListingProps = {
   listingEdit: AppProps['listingEdit'],
   dlt: AppProps['dlt'],
   response: AppProps['response'],
-  fetchData: AppProps['fetchData'],
   setWhat: AppProps['setWhat'],
   setListingEdit: AppProps['setListingEdit'],
   setDelete: AppProps['setDelete'],
@@ -126,7 +125,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     this.setState({
       _isMounted: true
     })
-    this.props.fetchData();
     this.fetchListing();
     this.props.setPrevPath(window.location.pathname);
   }

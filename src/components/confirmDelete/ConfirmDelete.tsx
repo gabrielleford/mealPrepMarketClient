@@ -122,7 +122,6 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
   }
 
   render(): React.ReactNode {
-    console.log(this.props.dlt);
     return (
       <DeleteContainer onClick={() => this.props.setDelete(false)}>
         <ConfirmDeleteDiv>

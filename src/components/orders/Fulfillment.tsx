@@ -8,7 +8,6 @@ import FulfillmentMap from "./FulfillmentMap";
 export type FulfillProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
-  fetchData: AppProps['fetchData'],
 }
 
 export type FulfillState = {

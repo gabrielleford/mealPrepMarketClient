@@ -13,7 +13,6 @@ import ListingEdit from './components/listingById/ListingEdit';
 import UserProfile from './components/userProfile/UserProfile';
 import Orders from './components/orders/Orders';
 import Fulfillment from './components/orders/Fulfillment';
-import EditUser from './components/userProfile/EditUser';
 import UserInfo from './components/userProfile/UserInfo';
 import Sidebar from './components/sidebar/Sidebar';
 
@@ -53,13 +52,17 @@ export type AppProps = {
 const App: React.FunctionComponent = () => {
   const [sessionToken, setSessionToken] = useState<string | null>('');
   const [listingEdit, setListingEdit] = useState<boolean>(false);
-  const [userEdit, setUserEdit] = useState<boolean>(false);
   const [what, setWhat] = useState<string>('');
   const [dlt, setDelete] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prevPath, setPrevPath] = useState<string>('/');
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [response, setResponse] = useState<number>(0);
+  const [userName, setUserName] = useState<string>('');
+  const [userDescrip, setUserDescrip] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userPic, setUserPic] = useState<string>('');
+  const [userRole, setUserRole] = useState<string>('');
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -76,38 +79,6 @@ const App: React.FunctionComponent = () => {
       profileDescription: '', 
       role: ''});
 
-  const fetchData = async ():Promise<void> => {
-    if (localStorage.getItem('Authorization')) {
-      setSessionToken(localStorage.getItem('Authorization'));
-
-      if(sessionToken !== '') {
-        await fetch(`${APIURL}/user/checkToken`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${sessionToken}`
-          }
-        })
-        .then(res => {
-          return res.json()
-        })
-        .then(res => {
-          setUser(res)
-        })
-        .catch(error => console.log(error))
-      }
-    } else {
-      setUser({
-        userId: '',
-        firstName: '', 
-        lastName: '', 
-        email: '', 
-        profilePicture: '', 
-        profileDescription: '', 
-        role: ''});
-    }
-  }
-
   const updateToken = (newToken:string) => {
     localStorage.setItem('Authorization', newToken);
     setSessionToken(newToken);
@@ -119,12 +90,55 @@ const App: React.FunctionComponent = () => {
     setWhat('');
     setDelete(false);
     setPrevPath('/');
+    setUser({
+      userId: '',
+      firstName: '', 
+      lastName: '', 
+      email: '', 
+      profilePicture: '', 
+      profileDescription: '', 
+      role: ''});
   }
 
   useEffect(() => {
-    fetchData()
-  }, [sessionToken])
+    if (localStorage.getItem('Authorization'))
+    setSessionToken(localStorage.getItem('Authorization')); 
 
+      const fetchData = async ():Promise<void> => {
+        if (sessionToken !== '' && user.userId === '') {
+          await fetch(`${APIURL}/user/checkToken`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${sessionToken}`
+            }
+          })
+          .then(res => {
+            console.log('hitting the fetch')
+            return res.json()
+          })
+          .then(res => {
+            setUser(res)
+          })
+          .then(() => user)
+          .catch(error => console.log(error))
+        } else if (user.userId !== '' && sessionToken === '') {
+          setUser({
+            userId: '',
+            firstName: '', 
+            lastName: '', 
+            email: '', 
+            profilePicture: '', 
+            profileDescription: '', 
+            role: ''});
+        }
+      }
+
+      fetchData()
+
+  }, [user, sessionToken])
+
+  console.log(user);
   return (
     <MantineProvider theme={{
       fontFamily: 'Open Sans, sans-serif',
@@ -183,36 +197,15 @@ const App: React.FunctionComponent = () => {
                 user={user}
                 dlt={dlt}
                 what={what}
-                userEdit={userEdit}
                 sessionToken={sessionToken}
                 response={response}
                 setDelete={setDelete}
                 setWhat={setWhat}
-                setUserEdit={setUserEdit}
-                fetchData={fetchData}
                 listingID=''
                 clearToken={clearToken}
                 setResponse={setResponse}
               />}
             />
-            <Route path='/edit/:id' element={
-              <EditUser
-                sessionToken={sessionToken}
-                user={user}
-                dlt={dlt}
-                what={what}
-                userEdit={userEdit}
-                response={response}
-                setDelete={setDelete}
-                setWhat={setWhat}
-                setUserEdit={setUserEdit}
-                listingID=''
-                clearToken={clearToken}
-                fetchData={fetchData}
-                setResponse={setResponse}
-              />}
-            />
-            
             <Route path='/create' element={
               <CreateListing 
                 sessionToken={sessionToken}
@@ -227,7 +220,6 @@ const App: React.FunctionComponent = () => {
                 response={response}
                 user={user}
                 setListingEdit={setListingEdit}
-                fetchData={fetchData}
                 setWhat={setWhat}
                 setDelete={setDelete}
                 clearToken={clearToken}
@@ -265,7 +257,6 @@ const App: React.FunctionComponent = () => {
               <Fulfillment
                 user={user}
                 sessionToken={sessionToken}
-                fetchData={fetchData}
               />}
             />
           </Routes>
