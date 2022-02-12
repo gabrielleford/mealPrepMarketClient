@@ -28,7 +28,6 @@ export type AppProps = {
     role: string
   },
   listingEdit: boolean,
-  userEdit: boolean,
   what: string,
   dlt: boolean,
   isOpen: boolean,
@@ -40,7 +39,15 @@ export type AppProps = {
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
   setListingEdit: (listingEdit: boolean) => void,
-  setUserEdit: (userEdit: boolean) => void,
+  setUser: (user: {
+    userId: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    profilePicture: string,
+    profileDescription: string,
+    role: string
+  }) => void,
   setWhat: (what: string) => void,
   setDelete: (del: boolean) => void,
   setIsOpen: (isOpen: boolean) => void,
@@ -58,11 +65,6 @@ const App: React.FunctionComponent = () => {
   const [prevPath, setPrevPath] = useState<string>('/');
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [response, setResponse] = useState<number>(0);
-  const [userName, setUserName] = useState<string>('');
-  const [userDescrip, setUserDescrip] = useState<string>('');
-  const [userEmail, setUserEmail] = useState<string>('');
-  const [userPic, setUserPic] = useState<string>('');
-  const [userRole, setUserRole] = useState<string>('');
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -204,6 +206,7 @@ const App: React.FunctionComponent = () => {
                 listingID=''
                 clearToken={clearToken}
                 setResponse={setResponse}
+                setUser={setUser}
               />}
             />
             <Route path='/create' element={

@@ -28,6 +28,7 @@ type EditProps = {
   setDelete: UserProps['setDelete'],
   clearToken: UserProps['clearToken'],
   setResponse: UserProps['setResponse'],
+  setUser: UserProps['setUser'],
   listingID: ListingState['listingID']
 }
 
@@ -242,35 +243,94 @@ class EditUser extends React.Component<EditProps, EditState> {
   }
 }
 
-handleUpdate = () => {
-  this.updateUserInfo(this.state.stringPrvwSrc)
-}
+  handleUpdate = () => {
+    this.updateUserInfo(this.state.stringPrvwSrc)
+  }
 
-updateUserInfo = async (encodedImg: string):Promise<void> => {
-  if (this.props.user.role === 'primary' && this.state.newProfilePic) {
-    var formData = new FormData();
-    formData.append('file', encodedImg);
-    formData.append('upload_preset', 'MealPrepMarketAvatar');
+  updateUserInfo = async (encodedImg: string):Promise<void> => {
+    if (this.props.user.role === 'primary' && this.state.newProfilePic) {
+      var formData = new FormData();
+      formData.append('file', encodedImg);
+      formData.append('upload_preset', 'MealPrepMarketAvatar');
 
-    var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
-      method: 'POST',
-      body: formData,
-    })
-    var cloudinary = await res.json();
-    console.log(cloudinary);
+      var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+      var cloudinary = await res.json();
+      console.log(cloudinary);
 
-    await fetch(`${APIURL}/user/${this.state.profileID}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        user: {
-          role: this.props.role,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          email: this.props.email,
-          profilePicture: cloudinary.url,
-          profileDescription: this.props.profileDescription,
+      await fetch(`${APIURL}/user/${this.state.profileID}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          user: {
+            role: this.props.role,
+            firstName: this.props.firstName,
+            lastName: this.props.lastName,
+            email: this.props.email,
+            profilePicture: cloudinary.url,
+            profileDescription: this.props.profileDescription,
+          }
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${this.props.sessionToken}`
+        })
+      })
+      .then(res => {
+        this.setState({
+          responseCode: res.status
+        })
+        console.log(res)
+      })
+      .then(() => {
+        if (this.state.responseCode === 200) {
+          this.getUpdatedUser();
         }
-      }),
+      })
+      .catch(error => console.log(error))
+    } else {
+      await fetch(`${APIURL}/user/${this.state.profileID}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          user: {
+            role: this.props.role,
+            firstName: this.props.firstName,
+            lastName: this.props.lastName,
+            email: this.props.email,
+            profilePicture: this.props.profilePicture,
+            profileDescription: this.props.profileDescription,
+          }
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${this.props.sessionToken}`
+        })
+      })
+      .then(res => {
+        this.setState({
+          editDescription: false,
+          editName: false,
+          editEmail: false,
+          inputVisible: false,
+          responseCode: res.status
+        })
+        console.log(res)
+        return res.json()
+      })
+      .then(res => console.log(res))
+      .then(() => {
+        if (this.state.responseCode === 200) {
+          this.getUpdatedUser();
+        }
+      })
+      .catch(error => console.log(error))
+    }
+  }
+
+  getUpdatedUser = async ():Promise<void> => {
+    await fetch(`${APIURL}/user/userInfo/${this.state.profileID}`, {
+      method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
         authorization: `Bearer ${this.props.sessionToken}`
@@ -278,56 +338,41 @@ updateUserInfo = async (encodedImg: string):Promise<void> => {
     })
     .then(res => {
       console.log(res)
-    })
-    .catch(error => console.log(error))
-  } else {
-    await fetch(`${APIURL}/user/${this.state.profileID}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        user: {
-          role: this.props.role,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          email: this.props.email,
-          profilePicture: this.props.profilePicture,
-          profileDescription: this.props.profileDescription,
-        }
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${this.props.sessionToken}`
-      })
-    })
-    .then(res => {
       this.setState({
-        editDescription: false,
-        editName: false,
-        editEmail: false,
-        inputVisible: false,
+        responseCode: 0
       })
-      console.log(res)
       return res.json()
     })
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
+    .then(res => {
+      this.props.setUser(res);
+      console.log(res)
+    });
   }
-}
 
-componentDidMount() {
 
-}
+  componentDidMount() {
+    this.setState({
+      _isMounted: true,
+    })
+  }
 
-componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
-  if(this.state.previewSrc !== prevState.previewSrc ) {
-    this.previewImgSrc(this.state.previewSrc);
+  componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
+    if(this.state.previewSrc !== prevState.previewSrc ) {
+      this.previewImgSrc(this.state.previewSrc);
+    }
+    if (this.props.user.userId !== prevProps.user.userId && this.props.firstName !== prevProps.firstName) {
+      this.renderComponent();
+    }
+    if (this.state.inputVisible !== prevState.inputVisible) {
+      this.renderComponent();
+    }
   }
-  if (this.props.user.userId !== prevProps.user.userId && this.props.firstName !== prevProps.firstName) {
-    this.renderComponent();
+
+  componentWillUnmount() {
+    this.setState({
+      _isMounted: false
+    })
   }
-  if (this.state.inputVisible !== prevState.inputVisible) {
-    this.renderComponent();
-  }
-}
 
   renderComponent = () => {
     return (
