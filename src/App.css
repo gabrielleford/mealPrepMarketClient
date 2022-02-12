@@ -94,6 +94,14 @@ body {
   margin-bottom: 1rem;
 }
 
+.avatarLabel {
+  cursor: pointer;
+}
+
+.avatarInput {
+  display: none;
+}
+
 /* * Listing By ID * */
 #listingById {
   margin-bottom: 8rem;
@@ -136,7 +144,7 @@ body {
 #userCard {
   background: #05386b;
   margin-top: 12rem;
-  height: 30vh;
+  min-height: 30vh;
 }
 
 /* * Buttons * */
