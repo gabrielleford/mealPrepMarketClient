@@ -116,7 +116,6 @@ const App: React.FunctionComponent = () => {
             }
           })
           .then(res => {
-            console.log('hitting the fetch')
             return res.json()
           })
           .then(res => {
@@ -140,7 +139,6 @@ const App: React.FunctionComponent = () => {
 
   }, [user, sessionToken])
 
-  console.log(user);
   return (
     <MantineProvider theme={{
       fontFamily: 'Open Sans, sans-serif',

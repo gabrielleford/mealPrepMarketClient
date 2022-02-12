@@ -69,10 +69,12 @@ class UserInfo extends React.Component<UserProps, UserState> {
   }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    this.setState({
-      ...this.state,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name !== 'image') {
+      this.setState({
+        ...this.state,
+        [e.target.name]: e.target.value,
+      })
+    }
   }
 
   changeRole = () => {

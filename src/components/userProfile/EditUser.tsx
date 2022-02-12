@@ -130,8 +130,8 @@ class EditUser extends React.Component<EditProps, EditState> {
                 <Avatar className="avatar" size={80} radius={40} src={this.props.user.profilePicture} />
               }
             </label>
-            <input id='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
-            <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>
+            <input id='image' name='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
+            {this.state.file !== '' && <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>}
           </Group>
         )
       } else {
@@ -142,8 +142,8 @@ class EditUser extends React.Component<EditProps, EditState> {
               <Avatar className="avatar" src={this.state.stringPrvwSrc} size={80} radius={40} /> :
               <Avatar className="avatar" color='primary' size={80} radius={40} />}
             </label>
-            <input id='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
-            <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>
+            <input id='image' name='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
+            {this.state.file !== '' && <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>}
           </Group>
         )
       }
@@ -153,7 +153,12 @@ class EditUser extends React.Component<EditProps, EditState> {
       if (!this.state.editDescription) {
         if (this.props.user.profileDescription !== '') {
           return (
-            <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('description')}>{this.props.user.profileDescription}</Text>
+            <>
+              {this.props.profileDescription.length > 40 && this.props.profileDescription.length < 100 ? 
+                <Text sx={{cursor: 'pointer', maxWidth: '200px'}} onClick={() => this.setEdit('description')}>{this.props.user.profileDescription}</Text> :
+                <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('description')}>{this.props.user.profileDescription}</Text>
+              }
+            </>
           )
         } else {
           return (
@@ -213,7 +218,8 @@ class EditUser extends React.Component<EditProps, EditState> {
   // ** Logic for updating user info ** //
   handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      file: e.target.value
+      file: e.target.value,
+      newProfilePic: true,
     })
 
     var {files} = e.currentTarget;
@@ -234,99 +240,104 @@ class EditUser extends React.Component<EditProps, EditState> {
   }
 
   previewImgSrc = (prvwFile: any) => {
+  console.log(this.state.newProfilePic);
   if (prvwFile) {
     this.setState({
       stringPrvwSrc: Buffer.from(prvwFile).toString(),
-      newProfilePic: true,
       inputVisible: true,
     })
   }
 }
 
-  handleUpdate = () => {
-    this.updateUserInfo(this.state.stringPrvwSrc)
+handleUpdate = () => {
+  console.log(this.props.profilePicture);
+  if (this.props.role === 'primary' && this.state.newProfilePic && this.state.stringPrvwSrc !== '') {
+    this.updateUserProfilePic(this.state.stringPrvwSrc)
+  } else {
+    this.updateUserInfo();
   }
+}
 
-  updateUserInfo = async (encodedImg: string):Promise<void> => {
-    if (this.props.user.role === 'primary' && this.state.newProfilePic) {
-      var formData = new FormData();
-      formData.append('file', encodedImg);
-      formData.append('upload_preset', 'MealPrepMarketAvatar');
+updateUserProfilePic = async (encodedImg: string):Promise<void> => {
+  console.log('user profile pic')
+    const formData = new FormData();
+    formData.append('file', encodedImg);
+    formData.append('upload_preset', 'MealPrepMarketAvatar');
 
-      var res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
-        method: 'POST',
-        body: formData,
-      })
-      var cloudinary = await res.json();
-      console.log(cloudinary);
+    const res = await fetch(`https://api.cloudinary.com/v1_1/gabrielleford/image/upload`, {
+      method: 'POST',
+      body: formData,
+    })
+    const cloudinary = await res.json();
+    console.log(cloudinary);
 
-      await fetch(`${APIURL}/user/${this.state.profileID}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          user: {
-            role: this.props.role,
-            firstName: this.props.firstName,
-            lastName: this.props.lastName,
-            email: this.props.email,
-            profilePicture: cloudinary.url,
-            profileDescription: this.props.profileDescription,
-          }
-        }),
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${this.props.sessionToken}`
-        })
-      })
-      .then(res => {
-        this.setState({
-          responseCode: res.status
-        })
-        console.log(res)
-      })
-      .then(() => {
-        if (this.state.responseCode === 200) {
-          this.getUpdatedUser();
+    await fetch(`${APIURL}/user/${this.state.profileID}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        user: {
+          role: this.props.role,
+          firstName: this.props.firstName,
+          lastName: this.props.lastName,
+          email: this.props.email,
+          profilePicture: cloudinary.url,
+          profileDescription: this.props.profileDescription,
         }
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${this.props.sessionToken}`
       })
-      .catch(error => console.log(error))
-    } else {
-      await fetch(`${APIURL}/user/${this.state.profileID}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          user: {
-            role: this.props.role,
-            firstName: this.props.firstName,
-            lastName: this.props.lastName,
-            email: this.props.email,
-            profilePicture: this.props.profilePicture,
-            profileDescription: this.props.profileDescription,
-          }
-        }),
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${this.props.sessionToken}`
-        })
+    })
+    .then(res => {
+      this.setState({
+        responseCode: res.status
       })
-      .then(res => {
-        this.setState({
-          editDescription: false,
-          editName: false,
-          editEmail: false,
-          inputVisible: false,
-          responseCode: res.status
-        })
-        console.log(res)
-        return res.json()
-      })
-      .then(res => console.log(res))
-      .then(() => {
-        if (this.state.responseCode === 200) {
-          this.getUpdatedUser();
-        }
-      })
-      .catch(error => console.log(error))
+      console.log(res)
+    })
+    .then(() => {
+      if (this.state.responseCode === 200) {
+        this.getUpdatedUser();
+      }
+    })
+    .catch(error => console.log(error))
+}
+
+updateUserInfo = async ():Promise<void> => {
+  console.log('update user info')
+  console.log(this.props.profilePicture)
+  console.log(this.state.newProfilePic);
+  await fetch(`${APIURL}/user/${this.state.profileID}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      user: {
+        role: this.props.role,
+        firstName: this.props.firstName,
+        lastName: this.props.lastName,
+        email: this.props.email,
+        profilePicture: this.props.user.profilePicture,
+        profileDescription: this.props.profileDescription,
+      }
+    }),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${this.props.sessionToken}`
+    })
+  })
+  .then(res => {
+    this.setState({
+      responseCode: res.status
+    })
+    console.log(res)
+    return res.json()
+  })
+  .then(res => console.log(res))
+  .then(() => {
+    if (this.state.responseCode === 200) {
+      this.getUpdatedUser();
     }
-  }
+  })
+  .catch(error => console.log(error))
+}
 
   getUpdatedUser = async ():Promise<void> => {
     await fetch(`${APIURL}/user/userInfo/${this.state.profileID}`, {
@@ -339,6 +350,10 @@ class EditUser extends React.Component<EditProps, EditState> {
     .then(res => {
       console.log(res)
       this.setState({
+        editDescription: false,
+        editName: false,
+        editEmail: false,
+        inputVisible: false,
         responseCode: 0
       })
       return res.json()
@@ -354,6 +369,7 @@ class EditUser extends React.Component<EditProps, EditState> {
     this.setState({
       _isMounted: true,
     })
+    console.log(this.state.newProfilePic)
   }
 
   componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
@@ -379,10 +395,16 @@ class EditUser extends React.Component<EditProps, EditState> {
       <Grid sx={{color: '#edf5e1', margin: 'auto'}}>
       {this.props.user.role === 'primary' && 
         <Grid.Col>
-          <Group position="center">
-            {this.renderAvatar()}
-            {this.renderDescription()}
-          </Group>
+          {this.props.profileDescription.length >= 100 ?
+            <Group position="center" direction="column">
+              {this.renderAvatar()}
+              {this.renderDescription()}
+            </Group> :
+            <Group position="center">
+              {this.renderAvatar()}
+              {this.renderDescription()}
+            </Group>
+          }
         </Grid.Col>
       }
       {this.renderName()}
@@ -409,6 +431,7 @@ class EditUser extends React.Component<EditProps, EditState> {
         {this.props.dlt && 
           <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
         }
+        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
     </Grid>
     )
   }
