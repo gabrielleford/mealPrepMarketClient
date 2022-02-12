@@ -92,7 +92,6 @@ const App: React.FunctionComponent = () => {
           return res.json()
         })
         .then(res => {
-          console.log(res);
           setUser(res)
         })
         .catch(error => console.log(error))

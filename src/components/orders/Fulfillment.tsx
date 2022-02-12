@@ -1,10 +1,9 @@
 import React from "react";
+import APIURL from "../helpers/environments";
+import { Container } from "@mantine/core";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import APIURL from "../helpers/environments";
-import { ListingCards } from "../ReusableElements";
 import FulfillmentMap from "./FulfillmentMap";
-import { OrdersContainer, OrdersWrapper } from "./OrdersElements";
 
 export type FulfillProps = {
   user: AppProps['user'],
@@ -100,16 +99,21 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
 
   render(): React.ReactNode {
     return(
-      <OrdersContainer>
-        <OrdersWrapper>
-          <ListingCards>
-            <FulfillmentMap orders={this.state.orders} />
-          </ListingCards>
-        </OrdersWrapper>
+      <Container>
+        {this.state.orders[0].id !== '' && <FulfillmentMap orders={this.state.orders} />}
         {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
-      </OrdersContainer>
+      </Container>
     )
   }
 }
 
 export default Fulfillment;
+
+{/* <OrdersContainer>
+<OrdersWrapper>
+  <ListingCards>
+    <FulfillmentMap orders={this.state.orders} />
+  </ListingCards>
+</OrdersWrapper>
+{!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
+</OrdersContainer> */}

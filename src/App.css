@@ -128,6 +128,17 @@ body {
   color: #05386b;
 }
 
+/* * User Info * */
+#userInfo {
+  transition: all 0.2s ease-in-out;
+}
+
+#userCard {
+  background: #05386b;
+  margin-top: 12rem;
+  height: 30vh;
+}
+
 /* * Buttons * */
 .formButton {
   font-family: 'Open Sans', sans-serif;
@@ -246,6 +257,10 @@ body {
   .listingCard {
     margin-top: -1rem;
   }
+
+  #userInfo {
+    margin-top: 16rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -256,5 +271,9 @@ body {
     padding: 40px 20px;
     margin-top: -7vh;
     border-radius: 0;
+  }
+
+  #userInfo {
+    margin-top: 19rem;
   }
 }

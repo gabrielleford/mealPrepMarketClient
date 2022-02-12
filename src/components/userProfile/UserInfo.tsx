@@ -4,8 +4,8 @@ import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import { ButtonDiv } from "../listingById/ListingElements";
 import { PreviewSrc, ProfileContainer, ProfileWrapper, UpdateDeleteBtn, UserData, UserP } from "./UserProfileElements";
-import Avatar from '../../assets/BlankAvatar.png';
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
+import { Avatar, Button, Card, Center, Container, Grid, Group, Text } from "@mantine/core";
 
 type UserProps = {
   user: AppProps['user'],
@@ -45,11 +45,11 @@ class UserInfo extends React.Component<UserProps, UserState> {
   renderPicture = () => {
     if (this.props.user.profilePicture !== '') {
       return (
-        <PreviewSrc src={this.props.user.profilePicture} />
+        <Avatar size={70} radius={35} src={this.props.user.profilePicture} />
       )
     } else {
       return(
-        <PreviewSrc src={Avatar} />
+        <Avatar size={70} radius={35} />
       )
     }
   }
@@ -61,7 +61,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
       )
     } else {
       return (
-        <></>
+        <Text>You don't have a description, yet!&#128577; Click here to add one.</Text>
       )
     }
   }
@@ -74,7 +74,6 @@ class UserInfo extends React.Component<UserProps, UserState> {
     this.setState({
       _isMounted: true,
     });
-    console.log(this.props.user);
     this.props.setWhat('user');
     this.props.fetchData();
   }
@@ -87,32 +86,67 @@ class UserInfo extends React.Component<UserProps, UserState> {
 
   render(): React.ReactNode {
     return (
-      <ProfileContainer>
+      <Container id='userInfo'>
         {this.props.dlt && 
           <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
         }
-        <ProfileWrapper>
-          <UserData>
-            {this.props.user.role === 'primary' && this.renderPicture()}
-            {this.props.user.role === 'primary' && this.renderDescription()}
-            <UserP><b>Name</b>: {this.props.user.firstName} {this.props.user.lastName}</UserP>
-            <UserP><b>Email</b>: {this.props.user.email}</UserP>
-            <ButtonDiv>
-              <UpdateDeleteBtn onClick={this.editUser}>Update</UpdateDeleteBtn>
-              <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>
-              <Link to={`/orders/${this.props.user.userId}`}>My Orders</Link>
-            </ButtonDiv>
-          </UserData>
-        </ProfileWrapper>
+        <Card id="userCard" radius='lg' sx={{padding: '60px 0', width: '90%', margin: 'auto'}}>
+          <Grid sx={{color: '#edf5e1', margin: 'auto'}}>
+            <Grid.Col>
+              {this.props.user.role === 'primary' && this.renderPicture()}
+              {this.props.user.role === 'primary' && this.renderDescription()}
+              <Group position="center">
+                <Text size="xl">{this.props.user.firstName}</Text>
+                <Text size="xl">{this.props.user.lastName}</Text>
+              </Group>
+            </Grid.Col>
+            <Grid.Col>
+              <Center>
+                <Text size="xl">{this.props.user.email}</Text>
+              </Center>
+            </Grid.Col>
+            <Grid.Col>
+              <Group mt='lg' position="center">
+                <Button className="formButton" size="lg" radius='md' compact onClick={this.editUser}>Update</Button>
+                <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.setDelete(true)}>Delete</Button>
+                <Button component={Link} to={`/orders/${this.props.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
+              </Group>
+            </Grid.Col>
+          </Grid>
+        </Card>
         {
           this.props.userEdit ? 
           <Navigate to={`/edit/${this.state.profileID}`} replace={true} /> :
           !localStorage.getItem('Authorization') ?
           <Navigate to='/' replace={true} /> : ''
         }
-      </ProfileContainer>
+      </Container>
     )
   }
 }
 
 export default UserInfo;
+{/* <ProfileContainer>
+{this.props.dlt && 
+  <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
+}
+<ProfileWrapper>
+  <UserData>
+    {this.props.user.role === 'primary' && this.renderPicture()}
+    {this.props.user.role === 'primary' && this.renderDescription()}
+    <UserP><b>Name</b>: {this.props.user.firstName} {this.props.user.lastName}</UserP>
+    <UserP><b>Email</b>: {this.props.user.email}</UserP>
+    <ButtonDiv>
+      <UpdateDeleteBtn onClick={this.editUser}>Update</UpdateDeleteBtn>
+      <UpdateDeleteBtn onClick={() => this.props.setDelete(true)}>Delete Account</UpdateDeleteBtn>
+      <Link to={`/orders/${this.props.user.userId}`}>My Orders</Link>
+    </ButtonDiv>
+  </UserData>
+</ProfileWrapper>
+{
+  this.props.userEdit ? 
+  <Navigate to={`/edit/${this.state.profileID}`} replace={true} /> :
+  !localStorage.getItem('Authorization') ?
+  <Navigate to='/' replace={true} /> : ''
+}
+</ProfileContainer> */}
