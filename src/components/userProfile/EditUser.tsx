@@ -124,7 +124,7 @@ class EditUser extends React.Component<EditProps, EditState> {
       if (this.props.user.profilePicture !== '') {
         return (
           <Group direction="column">
-            <label>
+            <label className='avatarLabel' htmlFor="image">
               {this.state.stringPrvwSrc ? 
                 <Avatar className="avatar" src={this.state.stringPrvwSrc} size={80} radius={40} /> :
                 <Avatar className="avatar" size={80} radius={40} src={this.props.user.profilePicture} />
@@ -217,6 +217,7 @@ class EditUser extends React.Component<EditProps, EditState> {
 
   // ** Logic for updating user info ** //
   handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('clicked')
     this.setState({
       file: e.target.value,
       newProfilePic: true,
@@ -350,11 +351,15 @@ updateUserInfo = async ():Promise<void> => {
     .then(res => {
       console.log(res)
       this.setState({
+        file: '',
+        previewSrc: '',
+        stringPrvwSrc: '',
         editDescription: false,
         editName: false,
         editEmail: false,
         inputVisible: false,
-        responseCode: 0
+        responseCode: 0,
+
       })
       return res.json()
     })
