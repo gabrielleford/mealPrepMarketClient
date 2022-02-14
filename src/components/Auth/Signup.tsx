@@ -166,7 +166,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
       },
     })
     .then(res => {
-      this.setState({
+      this.state._isMounted && this.setState({
         responseCode: res.status,
         submitted: false,
       })
@@ -285,7 +285,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
               </Grid.Col>
             </Grid>
           </Paper>
-          {this.state.responseCode === 201 && <Navigate to={this.props.prevPath} replace={true}/>}
+          {this.state.user !== '' && <Navigate to={this.props.prevPath} replace={true}/>}
         </Container>
       )
   }

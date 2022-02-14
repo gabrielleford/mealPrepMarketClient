@@ -30,6 +30,16 @@ class Sidebar extends React.Component<SidebarProps> {
                 Create Listing
               </SidebarLink>
             }
+            {this.props.user.role === 'admin' &&
+              <SidebarLink to='/create' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
+                Create Listing
+              </SidebarLink>
+            }
+            {this.props.user.role === 'main admin' &&
+              <SidebarLink to='/create' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
+                Create Listing
+              </SidebarLink>
+            }
             <SidebarLink to={`/user/${this.props.user.userId}`} onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
               My Account
             </SidebarLink>
