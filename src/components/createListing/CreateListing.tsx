@@ -309,59 +309,55 @@ class TagRender extends React.Component<TagProps> {
   render(): React.ReactNode {
     return (
       <>
-      <CreateInput id='keto' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="keto">
+      <CreateInput id='Keto' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Keto">
         <Image className="tagImg" width={80} height={80} src={Keto} />
       </TagLabel>
-      <CreateInput id='lowCarb' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="lowCarb">
+      <CreateInput id='Low Carb' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Low Carb">
         <Image className="tagImg" width={80} height={80} src={LowCarb} />
       </TagLabel>
-      <CreateInput id='mediterranean' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="mediterranean">
+      <CreateInput id='Mediterranean' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Mediterranean">
         <Image className="tagImg" width={80} height={80} src={Mediterranean} />
       </TagLabel>
-      <CreateInput id='paleo' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="paleo">
+      <CreateInput id='Paleo' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Paleo">
         <Image className="tagImg" width={80} height={80} src={Paleo} />
       </TagLabel>
-      <CreateInput id='vegan' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="vegan">
+      <CreateInput id='Vegan' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Vegan">
         <Image className="tagImg" width={80} height={80} src={Vegan} />
       </TagLabel>
-      <CreateInput id='vegetarian' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="vegetarian">
+      <CreateInput id='Vegetarian' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Vegetarian">
         <Image className="tagImg" width={80} height={80} src={Vegetarian} />
       </TagLabel>
-      <CreateInput id='dairyFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="dairyFree">
+      <CreateInput id='Dairy Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Dairy Free">
         <Image className="tagImg" width={80} height={80} src={DairyFree} />
       </TagLabel>
-      <CreateInput id='eggFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="eggFree">
+      <CreateInput id='Egg Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Egg Free">
         <Image className="tagImg" width={80} height={80} src={EggFree} />
       </TagLabel>
-      <CreateInput id='glutenFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="glutenFree">
+      <CreateInput id='Gluten Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Gluten Free">
         <Image className="tagImg" width={80} height={80} src={GlutenFree} />
       </TagLabel>
-      <CreateInput id='nutFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="nutFree">
+      <CreateInput id='Nut Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Nut Free">
         <Image className="tagImg" width={80} height={80} src={NutFree} />
       </TagLabel>
-      <CreateInput id='soyFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="soyFree">
+      <CreateInput id='Soy Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Soy Free">
         <Image className="tagImg" width={80} height={80} src={SoyFree} />
       </TagLabel>
-      <CreateInput id='sugarFree' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="sugarFree">
+      <CreateInput id='Sugar Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="Sugar Free">
         <Image className="tagImg" width={80} height={80} src={SugarFree} />
       </TagLabel>
       </>
     )
   }
 }
-
-/*
-I've been able to replace line breaks in a text input in my JSON with .replaceAll, but I'm having trouble reflecting that change on the front end so when a user breaks a line for a new paragraph it shows up the same on the front end. I'm trying to find out how to replace that with <br/>
-*/
