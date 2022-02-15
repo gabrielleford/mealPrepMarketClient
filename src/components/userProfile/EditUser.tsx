@@ -2,7 +2,6 @@ import React, { ChangeEvent } from "react";
 import APIURL from "../helpers/environments";
 import { Buffer } from "buffer";
 import { Link, Navigate } from "react-router-dom";
-import { AppProps } from "../../App";
 import { ListingState } from "../listingById/ListingById";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 import { Avatar, Button, Center, Grid, Group, Input, Text, Textarea } from "@mantine/core";
@@ -374,7 +373,6 @@ updateUserInfo = async ():Promise<void> => {
     this.setState({
       _isMounted: true,
     })
-    console.log(this.state.newProfilePic)
   }
 
   componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
