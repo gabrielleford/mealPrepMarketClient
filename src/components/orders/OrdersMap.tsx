@@ -50,7 +50,7 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         console.log(order.id);
         return(
-          <Grid.Col span={4}>
+          <Grid.Col key={order.id} span={4}>
             <RouteLink href={`/listing/${order.listing.id}`}>
               <Card key={order.id}>
                 <Title className="listingTitle" align="center" order={1}>{order.listing.title}</Title>
