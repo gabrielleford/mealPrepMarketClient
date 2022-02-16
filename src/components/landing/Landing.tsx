@@ -77,7 +77,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
           <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
           <BannerButton to='/login'>Get Started!</BannerButton>
         </Banner>
-        {/* {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />} */}
+        {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
       </Container>
     )
   }
