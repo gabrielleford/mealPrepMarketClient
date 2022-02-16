@@ -143,6 +143,8 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       case 'title': 
           value.length < 3 ? this.setState({
             titleErr: true
+          }) : this.state.title.length >= 3 ? this.setState({
+            titleErr: false
           }) : this.setState({
             titleErr: false
           })
@@ -152,6 +154,8 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             descriptionErr: true
           }) : value.length > 2000 ? this.setState({
             descriptionErr: true
+          }) : this.state.description.length >= 20 ? this.setState({
+            descriptionErr: false
           }) : this.setState({
             descriptionErr: false
           })
@@ -161,6 +165,8 @@ class ListingById extends React.Component<ListingProps, ListingState> {
             priceErr: true
           }) : +value > 999.99 ? this.setState({
             priceErr: true
+          }) : this.state.price >= 1 ? this.setState({
+            priceErr: false
           }) : this.setState({
             priceErr: false
           })
