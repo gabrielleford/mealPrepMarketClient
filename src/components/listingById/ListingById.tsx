@@ -1,13 +1,28 @@
 import React from "react";
 import APIURL from "../helpers/environments";
+import Keto from '../../assets/mealPrepMarketIconKeto.png';
+import LowCarb from '../../assets/mealPrepMarketIconLowCarb.png';
+import Mediterranean from '../../assets/mealPrepMarketIconMediterranean.png';
+import Paleo from '../../assets/mealPrepMarketIconPaleo.png';
+import Vegan from '../../assets/mealPrepMarketIconVegan.png';
+import Vegetarian from '../../assets/mealPrepMarketIconVegetarian.png';
+import DairyFree from '../../assets/mealPrepMarketIconDairyFree.png';
+import EggFree from '../../assets/mealPrepMarketIconEggFree.png';
+import GlutenFree from '../../assets/mealPrepMarketIconGlutenFree.png';
+import NutFree from '../../assets/mealPrepMarketIconNutFree.png';
+import SoyFree from '../../assets/mealPrepMarketIconSoyFree.png';
+import SugarFree from '../../assets/mealPrepMarketIconSugarFree.png';
 import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { Fulfillment, FulfillmentInput, FulfillmentLabel } from "./ListingElements";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { BsEmojiDizzy, BsEmojiFrown } from 'react-icons/bs';
-import { Alert, Badge, Button, Card, Center, Container, Grid, Group, Image, Select, Text, Title } from "@mantine/core";
+import { Alert, Avatar, Badge, Button, Card, Center, Container, Grid, Group, Image, Select, Text, Title } from "@mantine/core";
+import ListingEdit from "./ListingEdit";
 
-type ListingProps = {
+let tagSrc:string = '';
+
+export type ListingProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   what: AppProps['what'],
@@ -28,12 +43,16 @@ export type ListingState = {
   description: string,
   image: string,
   price: number,
-  tag: string,
+  priceStr: string,
+  tag: string[],
   ownerID: string,
   ownerName: string,
   quantity: string | null,
   fulfillmentMethod: string,
   responseCode: number,
+  titleErr: boolean,
+  descriptionErr: boolean,
+  priceErr: boolean,
   _isMounted: boolean,
 }
 
@@ -47,16 +66,112 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       description: '',
       image: '',
       price: 0,
-      tag: '',
+      priceStr: '',
+      tag: [''],
       ownerID: '',
       ownerName: '',
       quantity: '',
       fulfillmentMethod: 'pickup',
       responseCode: 0,
+      titleErr: false,
+      descriptionErr: false,
+      priceErr: false,
       _isMounted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
+  }
+  
+  tagImages = (tag: string) => {
+    switch(tag) {
+      case 'Keto':
+        tagSrc = Keto
+        break;
+      case 'Low Carb':
+        tagSrc = LowCarb
+        break;
+      case 'Mediterranean':
+        tagSrc = Mediterranean
+        break;
+      case 'Paleo':
+        tagSrc = Paleo
+        break;
+      case 'Vegan':
+        tagSrc = Vegan
+        break;
+      case 'Vegetarian':
+        tagSrc = Vegetarian
+        break;
+      case 'Dairy Free':
+        tagSrc = DairyFree
+        break;
+      case 'Egg Free':
+        tagSrc = EggFree
+        break;
+      case 'Gluten Free':
+        tagSrc = GlutenFree
+        break;
+      case 'Nut Free':
+        tagSrc = NutFree
+        break;
+      case 'Soy Free':
+        tagSrc = SoyFree
+        break;
+      case 'Sugar Free':
+        tagSrc = SugarFree
+        break;
+      default:
+        tagSrc= ''
+    }
+    return (
+      tagSrc
+    )
+  }
+
+  handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    })
+
+    const {name, value} = e.target;
+    this.checkValue(name, value);
+  }
+
+  checkValue = (name: string, value: string) => {
+    switch (name) {
+      case 'title': 
+          value.length < 3 ? this.setState({
+            titleErr: true
+          }) : this.setState({
+            titleErr: false
+          })
+        break;
+      case 'description':
+          value.length < 20 ? this.setState({
+            descriptionErr: true
+          }) : value.length > 2000 ? this.setState({
+            descriptionErr: true
+          }) : this.setState({
+            descriptionErr: false
+          })
+        break;
+      case 'price':
+          +value < 1 ? this.setState({
+            priceErr: true
+          }) : +value > 999.99 ? this.setState({
+            priceErr: true
+          }) : this.setState({
+            priceErr: false
+          })
+        break;
+      }
+    }
+
+  handleNumber = (value: number) => {
+    this.setState({
+      price: value
+    })
   }
 
   fetchListing = async ():Promise<void> => {
@@ -79,10 +194,15 @@ class ListingById extends React.Component<ListingProps, ListingState> {
       })
       this.state._isMounted && this.props.setWhat('listing');
     })
+    .then(() => {
+      this.setState({
+        priceStr: this.state.price.toString()
+      })
+    })
     .catch(error => console.log(error))
   }
 
-  handleChange = (value: string | null) => {
+  handleQuantity = (value: string | null) => {
     this.setState({
       quantity: value
     })
@@ -117,10 +237,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     .catch(error => console.log(error))
   }
 
-  editListing = () => {
-    this.props.setListingEdit(!this.props.listingEdit);
-  }
-
   componentDidMount() {
     this.setState({
       _isMounted: true
@@ -145,15 +261,13 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           {this.props.dlt && 
             <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
           }
+          {this.props.user.userId === this.state.ownerID ?
+          <ListingEdit app={{...this.props}} listingState={{...this.state}} handleChange={this.handleChange} fetchListing={this.fetchListing} handleNumber={this.handleNumber} /> :
           <Card radius='lg' padding='sm' className="listingCard">
               <Title className="listingTitle" align="center" order={1}>{this.state.title}</Title>
               <Group spacing={5} position="center">
-                {this.state.ownerID === this.props.user.userId ? 
-                <Text size="lg" sx={{color: '#379683', fontFamily: 'Open-Sans, sans-serif'}} align="center" variant="link" component={Link} to={`/profile/${this.state.ownerID}`}>{this.state.ownerName}</Text> :
-                <>
                 <Text className="listingText" size="lg">Prepared by</Text>
                 <Text size="lg" sx={{color: '#379683', fontFamily: 'Open-Sans, sans-serif'}} variant="link" component={Link} to={`/profile/${this.state.ownerID}`}>{this.state.ownerName}</Text>
-                </>}
               </Group>
               <Center>
                 <Card.Section>
@@ -168,12 +282,15 @@ class ListingById extends React.Component<ListingProps, ListingState> {
                 </Center>
               </Text>
               </Center>
-              {this.props.user.userId === this.state.ownerID ?
-              <Group mt='md' position="center" spacing='xl'>
-                <Button className="darkButton" radius='md' size='xl' compact onClick={this.editListing}>Edit</Button>
-                <Button className="darkButton" radius='md' size='xl' compact onClick={() => this.props.setDelete(true)}>Delete</Button>
-              </Group> :
-              localStorage.getItem('Authorization') ?
+              <Group mt='md' position="center">
+                {this.state.tag.map(tag => {
+                  this.tagImages(tag)
+                  return (
+                    <Avatar key={tag} size='xl' src={tagSrc} alt={tag} />
+                  )
+                })}
+              </Group>
+              {localStorage.getItem('Authorization') ?
               <Grid>
                 <Grid.Col id='select'>
                     <Select label='Quantity' style={{width: '50%', margin: '10px auto 0 auto'}} radius='md'
@@ -182,7 +299,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
                       {value: '2', label:'2'},
                       {value: '3', label:'3'},
                       {value: '4', label:'4'},
-                      ]} onChange={this.handleChange} />
+                      ]} onChange={this.handleQuantity} />
                 </Grid.Col>
                 <Grid.Col>
                   <Group position="center">
@@ -221,6 +338,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               </Group>
               }
           </Card>
+          }
           {this.props.response === 200 && this.state._isMounted ?
             <Navigate to='/' replace={true} /> :
             this.props.listingEdit ?

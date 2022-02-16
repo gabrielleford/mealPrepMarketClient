@@ -6,38 +6,11 @@ type Props = {
   sessionToken: LandingProps['sessionToken'],
 }
 
-export const LandingContainer = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
-`
-
-export const LandingWrapper = styled.div<Props>`
-  max-width: 100%;
-  margin-top: ${props => (props.sessionToken === '' ? '0' : '10rem')};
-  transition: margin-top 0.3s ease-in-out;
-  padding: 0 50px;
-
-  @media screen and (max-width: 1215px) {
-    margin-top: ${props => (props.sessionToken === '' ? '0' : '9.5rem')};
-  }
-
-  @media screen and (max-width: 1032px) {
-    margin-top: ${props => (props.sessionToken === '' ? '0' : '8rem')};
-  }
-
-  @media screen and (max-width: 768px) {
-    margin-top: ${props => (props.sessionToken === '' ? '0' : '6.5rem')};
-  }
-
-  @media screen and (max-width: 480px) {
-    margin-top: ${props => (props.sessionToken === '' ? '0' : '6.5rem')};
-  }
-`
-
-export const Banner = styled.div`
+export const Banner = styled.div<Props>`
+  display: ${props => (props.sessionToken ? 'none' : 'block' )};
   position: relative;
   left: calc(-50vw + 50%);
-  margin-top: 3rem;
+  margin-top: -1rem;
   width: 100vw;
   padding: 0.5rem 0 1.4rem 0;
   background: #05386b;

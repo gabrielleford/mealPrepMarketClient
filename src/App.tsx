@@ -9,7 +9,6 @@ import Navbar from './components/navbar/Navbar';
 import APIURL from './components/helpers/environments';
 import CreateListing from './components/createListing/CreateListing';
 import ListingById from './components/listingById/ListingById';
-import ListingEdit from './components/listingById/ListingEdit';
 import UserProfile from './components/userProfile/UserProfile';
 import Orders from './components/orders/Orders';
 import Fulfillment from './components/orders/Fulfillment';
@@ -144,12 +143,11 @@ const App: React.FunctionComponent = () => {
       fontFamily: 'Open Sans, sans-serif',
       headings: {fontFamily: 'Montserrat'},
       colors: {
-        primary: ['#c0f1d6', '#abedc9', '#96e8bb',  '#82e3ae', '#5cdb95', '#43d685', '#2ed177', '#29bc6b', '#209254', '#1c7d48'   ],
-        secondary: ['#cee6fd', '#b6d9fc', '#9eccfa', '#6db3f8', '#05386b', '#0b80f4', '#0966c3', '#074d92', '#3c99f6', '#053361']
+        primary: ['#c0f1d6', '#abedc9', '#96e8bb',  '#82e3ae', '#29bc6b', '#43d685', '#2ed177', '#5cdb95', '#209254', '#1c7d48'   ],
+        secondary: ['#cee6fd', '#b6d9fc', '#9eccfa', '#6db3f8', '#0966c3', '#0b80f4', '#05386b', '#074d92', '#3c99f6', '#053361']
       },
       primaryColor: 'primary',
     }}>
-      <div id='container'>
         <Router>
           <Navbar 
             clearToken={clearToken} 
@@ -165,7 +163,7 @@ const App: React.FunctionComponent = () => {
             setIsOpen={setIsOpen}
             clearToken={clearToken}
           />
-        <Container mt={130} fluid>
+        <Container mt={130} fluid={true}>
         <Routes>
             <Route path='/' element={
               <Landing
@@ -228,21 +226,6 @@ const App: React.FunctionComponent = () => {
                 setResponse={setResponse}
               />}
             />
-            <Route path='/listing/edit/:id' element={
-              <ListingEdit
-                sessionToken={sessionToken}
-                listingEdit={listingEdit}
-                what={what}
-                dlt={dlt}
-                response={response}
-                user={user}
-                setListingEdit={setListingEdit}
-                setWhat={setWhat}
-                setDelete={setDelete}
-                clearToken={clearToken}
-                setResponse={setResponse}
-              />}
-            />
             <Route path='/profile/:id' element={
               <UserProfile
                 user={user}
@@ -268,7 +251,6 @@ const App: React.FunctionComponent = () => {
               <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
             </footer>
           </div> */}
-      </div>
     </MantineProvider>
   );
 }

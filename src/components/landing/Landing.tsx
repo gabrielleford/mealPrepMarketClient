@@ -1,9 +1,9 @@
 import React from "react";
-import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
-import { ListingCards } from "../ReusableElements";
-import { Banner, BannerButton, BannerH1, BannerP, LandingContainer, LandingWrapper } from './LandingElements'
+import { AppProps } from "../../App";
 import LandingMap from "./LandingMap";
+import { Banner, BannerButton, BannerH1, BannerP } from './LandingElements'
+import { Container } from "@mantine/core";
 
 export type LandingProps = {
   sessionToken: AppProps['sessionToken'],
@@ -71,22 +71,31 @@ class Landing extends React.Component<LandingProps, LandingState> {
 
   render(): React.ReactNode {
     return (
-      <LandingContainer>
-        {!localStorage.getItem('Authorization') && 
-          <Banner>
-            <BannerH1>Making Your Life Easier</BannerH1>
-            <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
-            <BannerButton to='/login'>Get Started!</BannerButton>
-          </Banner>
-        }
-        <LandingWrapper sessionToken={this.props.sessionToken}>
-          <ListingCards>
-            {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
-          </ListingCards>
-        </LandingWrapper>
-      </LandingContainer>
+      <Container style={{ margin:'0 auto'}} fluid={true}>
+        <Banner sessionToken={this.props.sessionToken}>
+          <BannerH1>Making Your Life Easier</BannerH1>
+          <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
+          <BannerButton to='/login'>Get Started!</BannerButton>
+        </Banner>
+        {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
+      </Container>
     )
   }
 }
 
 export default Landing;
+
+      // <LandingContainer>
+      //   {!localStorage.getItem('Authorization') && 
+      //     <Banner>
+      //       <BannerH1>Making Your Life Easier</BannerH1>
+      //       <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
+      //       <BannerButton to='/login'>Get Started!</BannerButton>
+      //     </Banner>
+      //   }
+      //   <LandingWrapper sessionToken={this.props.sessionToken}>
+      //     <ListingCards>
+      //       {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
+      //     </ListingCards>
+      //   </LandingWrapper>
+      // </LandingContainer>

@@ -6,6 +6,7 @@ switch (window.location.hostname) {
     break;
   case 'https://mealprepmarket.herokuapp.com':
     APIURL = 'https://mealprepmarket-server.herokuapp.com'
+    break;
 }
 
 export default APIURL;

@@ -5,7 +5,7 @@ import { AppProps } from '../../App';
 import {GoMail} from 'react-icons/go'
 import { FiLock } from 'react-icons/fi';
 import { BsEmojiDizzy, BsEmojiFrown } from 'react-icons/bs';
-import { Alert, Button, Center, Container, Grid, Input, Paper, PasswordInput, Space, Text, Title } from '@mantine/core';
+import { Alert, Button, Center, Container, Grid, Input, Paper, PasswordInput, Text, Title } from '@mantine/core';
 
 export type LoginProps = {
   sessionToken: AppProps['sessionToken'],

@@ -50,10 +50,12 @@ fetchUserProfile = async ():Promise<void> => {
       'Content-Type': 'application/json'
     })
   })
-  .then(res => res.json())
+  .then(res => {
+    console.log(res)
+    return res.json()})
   .then(res => {
     console.log(res);
-    this.state._isMounted && this.setState({
+      this.setState({
       listings: [...res.listings],
       profilePicture: res.profilePicture,
       profileDescription: res.profileDescription,
@@ -67,6 +69,7 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
+  console.log(APIURL);
   this.fetchUserProfile();
 }
 
