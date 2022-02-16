@@ -53,26 +53,3 @@ class Navbar extends React.Component<NavbarProps> {
 }
 
 export default Navbar;
-
-{/* <NavMenu isOpen={this.props.isOpen} user={this.props.user}>
-{!localStorage.getItem('Authorization') && 
-  <NavItem>
-    <NavLink to='/login'>Login or Signup</NavLink>
-  </NavItem>
-}
-{this.props.user.role === 'primary' && 
-  <NavItem>
-    <NavLink to='/create'>Create New Listing</NavLink>
-  </NavItem>
-}
-{localStorage.getItem('Authorization') && 
-  <NavItem>
-    <Logout onClick={this.props.clearToken}>Logout</Logout>
-  </NavItem>
-}
-{localStorage.getItem('Authorization') &&
-  <NavItem>
-    <Account href={`http://localhost:3000/user/${this.props.user.userId}`}><Icon src={accountIcon} />My Account</Account>
-  </NavItem>
-}
-</NavMenu> */}

@@ -171,6 +171,17 @@ body {
   min-height: 30vh;
 }
 
+/* * Orders * */
+#noOrdersText {
+  color: #5cdb95;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+#noOrdersText:hover {
+  color: #c9f4da;
+}
+
 /* * Buttons * */
 .formButton {
   font-family: 'Open Sans', sans-serif;

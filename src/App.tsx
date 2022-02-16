@@ -246,11 +246,6 @@ const App: React.FunctionComponent = () => {
           </Routes>
         </Container>
         </Router>
-        {/* <div id='footerDiv'>
-            <footer id='footer'>
-              <p>© <a href='https://gabrielleford.github.io/'>Gabrielle Ford</a> 2022</p>
-            </footer>
-          </div> */}
     </MantineProvider>
   );
 }

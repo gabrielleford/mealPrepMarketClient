@@ -1,6 +1,6 @@
-import { Container, Grid } from "@mantine/core";
+import { Center, Container, Grid, Paper, Text, Title } from "@mantine/core";
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import APIURL from "../helpers/environments";
 import OrdersMap from "./OrdersMap";
@@ -80,7 +80,17 @@ class Orders extends React.Component<OrderProps, OrderState> {
   render(): React.ReactNode {
     return (
       <Container>
-          {this.state.orders[0].id !== '' && <OrdersMap orders={this.state.orders} sessionToken={this.props.sessionToken} fetchOrders={this.fetchOrders} />}
+          {this.state.orders.length < 1 ?
+            <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
+              <Center>
+                <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
+              </Center>
+              <Center>
+                <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/'>Check out what our wonderful meal preppers have to offer!</Text>
+              </Center>
+            </Paper> :
+            <OrdersMap orders={this.state.orders} sessionToken={this.props.sessionToken} fetchOrders={this.fetchOrders} />
+          }
           {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </Container>
     )
