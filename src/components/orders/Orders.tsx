@@ -1,4 +1,4 @@
-import { Center, Container, Grid, Paper, Text, Title } from "@mantine/core";
+import { Center, Container, Paper, Text, Title } from "@mantine/core";
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";

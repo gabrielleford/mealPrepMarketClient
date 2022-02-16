@@ -1,9 +1,9 @@
 import React from "react";
 import APIURL from "../helpers/environments";
-import { Container } from "@mantine/core";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import FulfillmentMap from "./FulfillmentMap";
+import { Center, Container, Paper, Text, Title } from "@mantine/core";
 
 export type FulfillProps = {
   user: AppProps['user'],
@@ -99,7 +99,17 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
   render(): React.ReactNode {
     return(
       <Container>
-        {this.state.orders[0].id !== '' && <FulfillmentMap orders={this.state.orders} />}
+        {this.state.orders.length < 1 ?
+          <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
+            <Center>
+              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
+            </Center>
+            <Center>
+              <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/'>Check out what our wonderful meal preppers have to offer!</Text>
+            </Center>
+          </Paper> :
+          <FulfillmentMap orders={this.state.orders} />
+        }
         {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </Container>
     )
@@ -107,12 +117,3 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
 }
 
 export default Fulfillment;
-
-{/* <OrdersContainer>
-<OrdersWrapper>
-  <ListingCards>
-    <FulfillmentMap orders={this.state.orders} />
-  </ListingCards>
-</OrdersWrapper>
-{!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
-</OrdersContainer> */}

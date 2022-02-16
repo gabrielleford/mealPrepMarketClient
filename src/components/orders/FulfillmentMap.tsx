@@ -1,7 +1,8 @@
+import { Badge, Card, Center, Grid, Group, Text, Title } from "@mantine/core";
 import React from "react";
-import { ListingCard, ListingH1 } from "../ReusableElements";
+import { RouteLink } from "../ReusableElements";
 import { FulfillState } from "./Fulfillment";
-import { OrderInfo, OrderP } from "./OrdersElements";
+
 
 type FulfillMapProps = {
   orders: FulfillState['orders'],
@@ -24,13 +25,30 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
     return (
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         return (
-          <ListingCard key={order.id}>
-            <ListingH1>{order.listing.title}</ListingH1>
-            <OrderP>Customer: {order.user.firstName} {order.user.lastName}</OrderP>
-            <OrderP>Quantity: {order.quantity}</OrderP>
-            <OrderP>Pickup or Delivery: {order.fulfillmentMethod}</OrderP>
-            <OrderP>Total: {order.quantity * order.listing.price}</OrderP>
-          </ListingCard>
+          <Grid.Col span={4} key={order.id}>
+            <RouteLink href={`/listing/${order.listingId}`}>
+              <Card radius='lg' sx={{background: '#edf5e1'}}>
+                <Center>
+                  <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{order.listing.title}</Title>
+                </Center>
+                <Center>
+                  <Text color='secondary'>Customer: {order.user.firstName} {order.user.lastName}</Text>
+                </Center>
+                <Group mt='md'>
+                  <Badge variant='outline' radius='sm' color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Quantity</Badge> 
+                  <Text className='cardText'>{order.quantity}</Text>
+                </Group>
+                <Group mt='sm'>
+                  <Badge variant='outline' radius='sm' color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Order Total</Badge>
+                  <Text className='cardText'> ${order.quantity * order.listing.price} USD</Text>
+                </Group>
+                <Group mt='sm'>
+                  <Badge variant='outline' radius='sm' size="sm" color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Delivery Method</Badge> 
+                  <Text className='cardText'>{order.fulfillmentMethod.charAt(0).toUpperCase() + order.fulfillmentMethod.slice(1)}</Text>
+                </Group>
+              </Card>
+            </RouteLink>
+          </Grid.Col>
         )
       })
     )
@@ -57,9 +75,9 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 
   render(): React.ReactNode {
     return (
-      <>
-      {this.mapOrders()}
-      </>
+      <Grid justify='space-between' mt={60}>
+        {this.props.orders[0].id !== '' && this.mapOrders()}
+      </Grid>
     )
   }
 }
