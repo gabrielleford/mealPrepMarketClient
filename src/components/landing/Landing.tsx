@@ -71,7 +71,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
 
   render(): React.ReactNode {
     return (
-      <Container style={{ margin:'0 auto'}} fluid={true}>
+      <Container style={{ marginTop:'0', marginBottom: '8rem', marginLeft:'auto', marginRight: 'auto'}} fluid={true}>
         <Banner sessionToken={this.props.sessionToken}>
           <BannerH1>Making Your Life Easier</BannerH1>
           <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
@@ -84,18 +84,3 @@ class Landing extends React.Component<LandingProps, LandingState> {
 }
 
 export default Landing;
-
-      // <LandingContainer>
-      //   {!localStorage.getItem('Authorization') && 
-      //     <Banner>
-      //       <BannerH1>Making Your Life Easier</BannerH1>
-      //       <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
-      //       <BannerButton to='/login'>Get Started!</BannerButton>
-      //     </Banner>
-      //   }
-      //   <LandingWrapper sessionToken={this.props.sessionToken}>
-      //     <ListingCards>
-      //       {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
-      //     </ListingCards>
-      //   </LandingWrapper>
-      // </LandingContainer>
