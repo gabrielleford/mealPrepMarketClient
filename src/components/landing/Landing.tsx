@@ -1,7 +1,7 @@
 import React from "react";
 import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
-import LandingMap from "./LandingMap";
+// import LandingMap from "./LandingMap";
 import { Banner, BannerButton, BannerH1, BannerP } from './LandingElements'
 import { Container } from "@mantine/core";
 
@@ -45,11 +45,12 @@ class Landing extends React.Component<LandingProps, LandingState> {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
+    .then(res => res.text())
     .then(res => {
-      this.state._isMounted && this.setState({
-        results: [...res]
-      })
+      console.log(res)
+      // this.state._isMounted && this.setState({
+      //   results: [...res]
+      // })
     })
     .catch(error => console.log(error))
   }
@@ -77,7 +78,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
           <BannerP>Join today to order high-quality <br/> meals from preppers near you.</BannerP>
           <BannerButton to='/login'>Get Started!</BannerButton>
         </Banner>
-        {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />}
+        {/* {this.state.results[0].id !== '' && <LandingMap results={this.state.results} />} */}
       </Container>
     )
   }
