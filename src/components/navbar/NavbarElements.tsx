@@ -212,7 +212,7 @@ export const MobileIcon = styled.div<NavProps>`
   cursor: pointer;
   transition: all 0.4s ease-in-out;
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 768px) {
     display: block;
     margin-top: 0.75vh;
     font-size: 2rem;

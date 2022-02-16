@@ -49,6 +49,26 @@ body {
   width: 100%;
 }
 
+/* * Navbar * */
+.navMenu {
+  display: flex;
+}
+
+.navButton {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  background-color: #05386b;
+  color: #edf5e1;
+  border: 1px solid #379683;
+  transition: all 0.2s ease-in-out;
+}
+
+.navButton:hover {
+  background-color: #c9f4da;
+  color: #05386b;
+  border: solid 1px #05386b;
+}
+
 /* * Footer * */
 #footerDiv {
   position: relative;
@@ -272,6 +292,10 @@ body {
 
   #userInfo {
     margin-top: 16rem;
+  }
+
+  .navMenu {
+    display: none;
   }
 }
 
