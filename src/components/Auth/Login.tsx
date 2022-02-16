@@ -55,7 +55,7 @@ class Login extends React.Component<LoginProps, LoginState> {
       submitted: true,
     });
 
-    await fetch(`${APIURL}/user/login`, {
+    await fetch(`https://mealprepmarket-server.herokuapp.com/user/login`, {
       method: "POST",
       body: JSON.stringify({
         user: {
