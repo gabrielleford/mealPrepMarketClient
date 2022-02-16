@@ -205,7 +205,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     this.setState({
       submitted: true
     })
-    await fetch(`${APIURL}/listing/${this.state.listingID}`, {
+    await fetch(`${APIURL}/listing/edit/${this.state.listingID}`, {
       method: 'PUT',
       body: JSON.stringify({
         listing: {

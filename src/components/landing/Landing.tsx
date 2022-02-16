@@ -1,7 +1,7 @@
 import React from "react";
 import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
-// import LandingMap from "./LandingMap";
+import LandingMap from "./LandingMap";
 import { Banner, BannerButton, BannerH1, BannerP } from './LandingElements'
 import { Container } from "@mantine/core";
 
@@ -39,18 +39,17 @@ class Landing extends React.Component<LandingProps, LandingState> {
   }
 
   fetchListings = async ():Promise<void> => {
-    await fetch(`${APIURL}/listing/`, {
+    await fetch(`${APIURL}/listing/all`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.text())
+    .then(res => res.json())
     .then(res => {
-      console.log(res)
-      // this.state._isMounted && this.setState({
-      //   results: [...res]
-      // })
+      this.state._isMounted && this.setState({
+        results: [...res]
+      })
     })
     .catch(error => console.log(error))
   }

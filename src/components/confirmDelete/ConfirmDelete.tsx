@@ -64,12 +64,12 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     switch(this.props.what) {
       case 'listing':
         this.setState({
-          endpoint: `/listing/${this.props.listingID}`
+          endpoint: `/listing/delete/${this.props.listingID}`
         });
         break;
       case 'user':
         this.setState({
-          endpoint: `/user/${this.props.user.userId}`
+          endpoint: `/user/delete/${this.props.user.userId}`
         })
         break;
       case 'order':

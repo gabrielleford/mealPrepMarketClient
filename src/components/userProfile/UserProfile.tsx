@@ -44,7 +44,7 @@ constructor(props: UserProps) {
 }
 
 fetchUserProfile = async ():Promise<void> => {
-  await fetch(`${APIURL}/user/${this.state.profileID}`, {
+  await fetch(`${APIURL}/user/prepper/${this.state.profileID}`, {
     method: 'GET',
     headers: new Headers({
       'Content-Type': 'application/json'
