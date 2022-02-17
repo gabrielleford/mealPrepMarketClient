@@ -10,7 +10,6 @@ type FulfillMapProps = {
 
 type FulfillMapState = {
   _isMounted: boolean,
-  route: string,
 }
 
 class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
@@ -19,14 +18,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 
     this.state = {
       _isMounted: false,
-      route: '',
     }
-  }
-
-  setRoute = (id: string) => {
-    this.setState({
-      route: id
-    })
   }
 
   mapOrders = () => {
@@ -80,7 +72,6 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
   }
 
   render(): React.ReactNode {
-    console.log(this.state.route);
     return (
       <Grid justify='space-between' mt={100}>
         {this.props.orders[0].id !== '' && this.mapOrders()}
