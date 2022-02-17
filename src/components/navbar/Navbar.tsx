@@ -37,14 +37,14 @@ class Navbar extends React.Component<NavbarProps> {
         </MobileIcon>
         <Group className='navMenu' mr='lg'>
           {!localStorage.getItem('Authorization') && <Button className="navButton" size='lg' radius='lg' component={Link} to='/login' compact>Login or Sign Up</Button>}
-          {(this.props.user.role === 'primary' || this.props.user.role === 'admin' || this.props.user.role === 'main admin') && <Button className="navButton" size='lg' radius='lg' component={Link} to='/create' compact>Create Listing</Button>}
+          {this.props.user.role !== 'secondary' && <Button className="navButton" size='lg' radius='lg' component={Link} to='/create' compact>Create Listing</Button>}
           {localStorage.getItem('Authorization') && <Button className="navButton" size='lg' radius='lg' onClick={this.props.clearToken} compact>Logout</Button>}
           <Menu sx={{cursor: 'pointer'}} control={<Image src={AccountIcon} height={35} />}>
             <Menu.Label>My Account</Menu.Label>
             <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/user/${this.props.user.userId}`} icon={<BsGear/>}>Settings</Menu.Item>
             <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/orders/${this.props.user.userId}`} icon={<BsReceipt/>}>My Orders</Menu.Item>
-            {(this.props.user.role === 'primary' || this.props.user.role === 'admin' || this.props.user.role === 'main admin') && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/fulfillment/${this.props.user.userId}`} icon={<BsCardChecklist/>}>Fulfillment</Menu.Item>}
-            {(this.props.user.role === 'primary' || this.props.user.role === 'admin' || this.props.user.role === 'main admin') && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/profile/${this.props.user.userId}`} icon={<CgProfile/>}>My Profile</Menu.Item>}
+            {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/fulfillment/${this.props.user.userId}`} icon={<BsCardChecklist/>}>Fulfillment</Menu.Item>}
+            {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/profile/${this.props.user.userId}`} icon={<CgProfile/>}>My Profile</Menu.Item>}
           </Menu>
         </Group>
       </Header>

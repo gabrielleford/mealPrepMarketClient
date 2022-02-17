@@ -81,10 +81,8 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       return (
         <>
           {this.props.listingState.description.length > 255 ?
-            <Spoiler sx={{color: '#05386b'}} maxHeight={70} showLabel='View more' hideLabel='View less'>
+            <Spoiler mt={-30} sx={{color: '#05386b'}} maxHeight={120} showLabel='View more' hideLabel='View less'>
               <Text mt={-40} style={{paddingTop: '55px', cursor: 'pointer'}} className="description" onClick={() => this.setEdit('description')}>{this.props.listingState.description}
-              <br/>
-              {this.renderPrice()}
               </Text>
             </Spoiler> :
             <Text mt={-40} style={{paddingTop: '55px', cursor: 'pointer'}} className="description" onClick={() => this.setEdit('description')}>{this.props.listingState.description}
@@ -108,9 +106,14 @@ class ListingEdit extends React.Component<EditProps, EditState> {
   renderPrice = () => {
     if (!this.state.editPrice) {
       return (
-        <Center>
-          <Badge sx={{cursor: 'pointer'}} mt={20} radius='lg' size="xl" onClick={() => this.setEdit('price')}>${this.props.listingState.price} USD</Badge>
-        </Center>
+        <>
+        {this.props.listingState.description.length > 255 ?
+          <Badge sx={{cursor: 'pointer'}} color='secondary' mt={5} mb={5} radius='lg' size="xl" onClick={() => this.setEdit('price')}>${this.props.listingState.price} USD</Badge> :
+          <Center>
+            <Badge sx={{cursor: 'pointer'}} mt={20} radius='lg' size="xl" onClick={() => this.setEdit('price')}>${this.props.listingState.price} USD</Badge>
+          </Center>
+        }
+        </>
       )
     }
   }
@@ -281,6 +284,11 @@ class ListingEdit extends React.Component<EditProps, EditState> {
         <Center>
           {this.renderDescription()}
         </Center>
+        {this.props.listingState.description.length > 255 && 
+        <Center>
+          {this.renderPrice()}
+        </Center>
+        }
         <Group mt='md' position="center">
           {this.props.listingState.tag.map(tag => {
             this.tagImages(tag)

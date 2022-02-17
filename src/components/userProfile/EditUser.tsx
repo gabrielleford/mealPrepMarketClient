@@ -396,7 +396,7 @@ updateUserInfo = async ():Promise<void> => {
   renderComponent = () => {
     return (
       <Grid sx={{color: '#edf5e1', margin: 'auto'}}>
-      {this.props.user.role === 'primary' && 
+      {this.props.user.role !== 'secondary' && 
         <Grid.Col>
           {this.props.profileDescription.length >= 100 ?
             <Group position="center" direction="column">
@@ -424,6 +424,7 @@ updateUserInfo = async ():Promise<void> => {
         <Group mt='lg' position="center">
           <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.setDelete(true)}>Delete</Button>
           <Button component={Link} to={`/orders/${this.props.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
+          {this.props.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.user.userId}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
         </Group>
       </Grid.Col>
       <Grid.Col>

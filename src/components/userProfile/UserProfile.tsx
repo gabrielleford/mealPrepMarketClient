@@ -1,10 +1,9 @@
 import React from "react";
 import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
-import { ListingCards, RouteLink } from "../ReusableElements";
-import { NameDescrip, ProfileContainer, ProfileDescrip, ProfilePic, ProfileWrapper, RouteToAccount, UserInfo, UserInfoDiv, UserName } from "./UserProfileElements";
 import UserProfileMap from "./UserProfileMap";
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Avatar, Button, Card, Center, Container, Group, Text } from "@mantine/core";
 
 export type UserState = {
   profileOwner: string,
@@ -14,7 +13,7 @@ export type UserState = {
     title: string,
     image: string,
     price: number,
-    tag: string,
+    tag: string[],
   }[],
   profilePicture: string,
   profileDescription: string,
@@ -33,7 +32,7 @@ constructor(props: UserProps) {
   this.state = {
     profileOwner: '',
     profileID: window.location.pathname.slice(9, 45),
-    listings: [{id: '', title: '', image: '', price: 0, tag: ''}],
+    listings: [{id: '', title: '', image: '', price: 0, tag: ['']}],
     profilePicture: '',
     profileDescription: '',
     userName: '',
@@ -57,6 +56,7 @@ fetchUserProfile = async ():Promise<void> => {
     console.log(res);
       this.setState({
       listings: [...res.listings],
+      profileOwner: res.id,
       profilePicture: res.profilePicture,
       profileDescription: res.profileDescription,
       userName: `${res.firstName} ${res.lastName}`
@@ -81,23 +81,28 @@ componentWillUnmount() {
 
   render(): React.ReactNode {
     return (
-      <ProfileContainer>
-        <ProfileWrapper>
-          <UserInfoDiv>
-            <UserInfo>
-              {this.state.profilePicture !== '' && <ProfilePic src={this.state.profilePicture} />}
-              <NameDescrip>
-                <UserName>{this.state.userName}</UserName>
-                <ProfileDescrip>{this.state.profileDescription}</ProfileDescrip>
-              </NameDescrip>
-            </UserInfo>
-            {this.props.user.userId === this.state.profileID && <RouteToAccount to={`/edit/${this.state.profileID}`}>Edit</RouteToAccount>}
-          </UserInfoDiv>
-          <ListingCards>
-            <UserProfileMap listings={this.state.listings}/>
-          </ListingCards>
-        </ProfileWrapper>
-      </ProfileContainer>
+      <Container>
+        <Card mt='lg' radius='md' sx={{width: '700px', background: '#05386b'}}>
+          <Group position="center" spacing={60}>
+            <Avatar src={this.state.profilePicture} size={150} radius={75} />
+            {(this.props.user.userId === this.state.profileOwner && this.state.profileDescription === '' ) ?
+              <Group direction="column" position="center">
+                <Text sx={{cursor: 'pointer'}} component={Link} to={`/user/${this.state.profileOwner}`}>You don't have a description, yet&#128577;</Text>
+                <Text sx={{cursor: 'pointer'}} mt={-10} component={Link} to={`/user/${this.state.profileOwner}`}>Click me to add one!</Text>
+              </Group> :
+              this.state.profileDescription.length > 40 && this.state.profileDescription.length < 100 ?
+              <Text sx={{maxWidth: '200px', color: '#edf5e1'}}>{this.state.profileDescription}</Text> :
+              <Text sx={{color: '#edf5e1'}}>{this.state.profileDescription}</Text>
+            }
+          </Group>
+          {this.props.user.userId === this.state.profileOwner &&
+            <Center>
+              <Button className="formButton" radius='md' component={Link} to={`/user/${this.state.profileOwner}`} compact>Edit My Profile</Button>
+            </Center>
+          }
+        </Card>
+        <UserProfileMap listings={this.state.listings}/>
+      </Container>
     )
   }
 }

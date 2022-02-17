@@ -28,6 +28,7 @@ export const UserInfoDiv = styled.div`
   left: calc(-50vw + 50%);
   width: 100vw;
   background: #05386b;
+  margin-top: -1rem;
   padding: 20px 40px;
 
   @media screen and (max-width: 1407px) and (min-width: 1216px) {

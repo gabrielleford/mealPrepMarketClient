@@ -90,7 +90,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
         return (
             <Grid.Col span={!localStorage.getItem('Authorization')? 3 : 5} key={listing.id}>
               <RouteLink href={`/listing/${listing.id}`}>
-                <Card sx={{background: '#edf5e1'}}>
+                <Card radius='lg' sx={{background: '#edf5e1'}}>
                   <Center>
                     <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
                   </Center>
