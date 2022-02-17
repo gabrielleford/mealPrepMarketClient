@@ -14,6 +14,7 @@ import Orders from './components/orders/Orders';
 import Fulfillment from './components/orders/Fulfillment';
 import UserInfo from './components/userProfile/UserInfo';
 import Sidebar from './components/sidebar/Sidebar';
+import Footer from './components/footer/Footer';
 
 export type AppProps = {
   sessionToken: string | null,
@@ -29,6 +30,7 @@ export type AppProps = {
   listingEdit: boolean,
   what: string,
   dlt: boolean,
+  endpointID: string,
   isOpen: boolean,
   prevPath: string,
   popoverOpen: boolean,
@@ -48,20 +50,21 @@ export type AppProps = {
     role: string
   }) => void,
   setWhat: (what: string) => void,
-  setDelete: (del: boolean) => void,
+  setDlt: (del: boolean) => void,
   setIsOpen: (isOpen: boolean) => void,
   setPrevPath: (prevPath: string) => void,
   setPopoverOpen: (popoverOpened: boolean) => void,
   setResponse: (response: number) => void,
+  setEndpointID: (endpointID: string) => void,
 }
 
 const App: React.FunctionComponent = () => {
   const [sessionToken, setSessionToken] = useState<string | null>('');
-  const [listingEdit, setListingEdit] = useState<boolean>(false);
   const [what, setWhat] = useState<string>('');
-  const [dlt, setDelete] = useState<boolean>(false);
+  const [dlt, setDlt] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prevPath, setPrevPath] = useState<string>('/');
+  const [endpointID, setEndpointID] = useState<string>('');
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [response, setResponse] = useState<number>(0);
   const [user, setUser] = useState<{
@@ -89,7 +92,7 @@ const App: React.FunctionComponent = () => {
     localStorage.clear();
     setSessionToken('');
     setWhat('');
-    setDelete(false);
+    setDlt(false);
     setPrevPath('/');
     setUser({
       userId: '',
@@ -148,104 +151,119 @@ const App: React.FunctionComponent = () => {
       },
       primaryColor: 'primary',
     }}>
+      <div id='container'>
         <Router>
-          <Navbar 
-            clearToken={clearToken} 
-            setSessionToken={setSessionToken} 
-            sessionToken={sessionToken} 
-            user={user}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
-          <Sidebar
-            user={user}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            clearToken={clearToken}
-          />
-        <Container mt={130} fluid={true}>
-        <Routes>
-            <Route path='/' element={
-              <Landing
-                sessionToken={sessionToken}
-                setPrevPath={setPrevPath}
-                setResponse={setResponse}
-              />} 
+          <div id='allContent'>
+            <Navbar 
+              clearToken={clearToken} 
+              setSessionToken={setSessionToken} 
+              sessionToken={sessionToken} 
+              user={user}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
             />
-            <Route path='/register' element={
-              <Signup
-                updateToken={updateToken}
-                sessionToken={sessionToken}
-                prevPath={prevPath}
-                popoverOpen={popoverOpen}
-                setSessionToken={setSessionToken}
-                setPopoverOpen={setPopoverOpen}
-              />} 
+            <Sidebar
+              user={user}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              clearToken={clearToken}
             />
-            <Route path='/login' element={
-              <Login 
-                updateToken={updateToken}
-                sessionToken={sessionToken}
-                prevPath={prevPath}
-                setSessionToken={setSessionToken}
-              />} 
-            />
-            <Route path='/user/:id' element={
-              <UserInfo
-                user={user}
-                dlt={dlt}
-                what={what}
-                sessionToken={sessionToken}
-                response={response}
-                setDelete={setDelete}
-                setWhat={setWhat}
-                listingID=''
-                clearToken={clearToken}
-                setResponse={setResponse}
-                setUser={setUser}
-              />}
-            />
-            <Route path='/create' element={
-              <CreateListing 
-                sessionToken={sessionToken}
-              />} 
-            />
-            <Route path='/listing/:id' element={
-              <ListingById
-                sessionToken={sessionToken}
-                listingEdit={listingEdit}
-                what={what}
-                dlt={dlt}
-                response={response}
-                user={user}
-                setListingEdit={setListingEdit}
-                setWhat={setWhat}
-                setDelete={setDelete}
-                clearToken={clearToken}
-                setPrevPath={setPrevPath}
-                setResponse={setResponse}
-              />}
-            />
-            <Route path='/profile/:id' element={
-              <UserProfile
-                user={user}
-              />}
-            />
-            <Route path='/orders/:id' element={
-              <Orders
-                user={user}
-                sessionToken={sessionToken}
-              />}
-            />
-            <Route path='/fulfillment/:id' element={
-              <Fulfillment
-                user={user}
-                sessionToken={sessionToken}
-              />}
-            />
-          </Routes>
-        </Container>
+            <Container mt={130} mb={100} fluid={true}>
+              <Routes>
+                <Route path='/' element={
+                  <Landing
+                    sessionToken={sessionToken}
+                    setPrevPath={setPrevPath}
+                    setResponse={setResponse}
+                  />} 
+                />
+                <Route path='/register' element={
+                  <Signup
+                    updateToken={updateToken}
+                    sessionToken={sessionToken}
+                    prevPath={prevPath}
+                    popoverOpen={popoverOpen}
+                    setSessionToken={setSessionToken}
+                    setPopoverOpen={setPopoverOpen}
+                  />} 
+                />
+                <Route path='/login' element={
+                  <Login 
+                    sessionToken={sessionToken}
+                    prevPath={prevPath}
+                    updateToken={updateToken}
+                    setSessionToken={setSessionToken}
+                  />} 
+                />
+                <Route path='/user/:id' element={
+                  <UserInfo
+                    user={user}
+                    dlt={dlt}
+                    what={what}
+                    sessionToken={sessionToken}
+                    response={response}
+                    endpointID={endpointID}
+                    setEndpointID={setEndpointID}
+                    setDlt={setDlt}
+                    setWhat={setWhat}
+                    clearToken={clearToken}
+                    setResponse={setResponse}
+                    setUser={setUser}
+                  />}
+                />
+                <Route path='/create' element={
+                  <CreateListing 
+                    sessionToken={sessionToken}
+                  />} 
+                />
+                <Route path='/listing/:id' element={
+                  <ListingById
+                    sessionToken={sessionToken}
+                    what={what}
+                    dlt={dlt}
+                    response={response}
+                    user={user}
+                    endpointID={endpointID}
+                    setEndpointID={setEndpointID}
+                    setWhat={setWhat}
+                    setDlt={setDlt}
+                    clearToken={clearToken}
+                    setPrevPath={setPrevPath}
+                    setResponse={setResponse}
+                  />}
+                />
+                <Route path='/profile/:id' element={
+                  <UserProfile
+                    user={user}
+                  />}
+                />
+                <Route path='/orders/:id' element={
+                  <Orders
+                    user={user}
+                    sessionToken={sessionToken}
+                    endpointID={endpointID}
+                    what={what}
+                    dlt={dlt}
+                    response={response}
+                    setDlt={setDlt}
+                    setWhat={setWhat}
+                    clearToken={clearToken}
+                    setEndpointID={setEndpointID}
+                    setResponse={setResponse}
+                  />}
+                />
+                <Route path='/fulfillment/:id' element={
+                  <Fulfillment
+                    user={user}
+                    sessionToken={sessionToken}
+                  />}
+                />
+              </Routes>
+            </Container>
+          </div>
         </Router>
+        <Footer />
+      </div>
     </MantineProvider>
   );
 }

@@ -88,7 +88,7 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
     return(
       this.state._isMounted && this.props.listings.map((listing):JSX.Element => {
         return(
-          <Grid.Col span={4} key={listing.id}>
+          <Grid.Col span={3} key={listing.id}>
           <RouteLink href={`/listing/${listing.id}`}>
             <Card radius='lg' sx={{background: '#edf5e1'}}>
               <Center>

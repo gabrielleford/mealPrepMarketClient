@@ -4,6 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import FulfillmentMap from "./FulfillmentMap";
 import { Center, Container, Paper, Text, Title } from "@mantine/core";
+import { BannerH1 } from "../landing/LandingElements";
+import { Banner } from "./OrdersElements";
 
 export type FulfillProps = {
   user: AppProps['user'],
@@ -99,6 +101,9 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
   render(): React.ReactNode {
     return(
       <Container>
+        <Banner>
+          <BannerH1>Fulfillment</BannerH1>
+        </Banner>
         {this.state.orders.length < 1 ?
           <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
             <Center>

@@ -10,25 +10,10 @@ import UserInfo from "./UserInfo";
 
 
 type EditProps = {
-  role: UserState['role'],
-  firstName: UserState['firstName'],
-  lastName: UserState['lastName'],
-  email: UserState['email'],
-  profilePicture: UserState['profilePicture'],
-  profileDescription: UserState['profileDescription'],
+  userState: UserState
+  app: UserProps
   handleChange: UserInfo['handleChange']
   changeRole: UserInfo['changeRole']
-  sessionToken: UserProps['sessionToken'],
-  user: UserProps['user'],
-  what: UserProps['what'],
-  dlt: UserProps['dlt'],
-  response: UserProps['response'],
-  setWhat: UserProps['setWhat'],
-  setDelete: UserProps['setDelete'],
-  clearToken: UserProps['clearToken'],
-  setResponse: UserProps['setResponse'],
-  setUser: UserProps['setUser'],
-  listingID: ListingState['listingID']
 }
 
 type EditState = {
@@ -82,8 +67,8 @@ class EditUser extends React.Component<EditProps, EditState> {
         return (
           <Grid.Col>
               <Group position="center">
-                <Text sx={{cursor: 'pointer'}} size="xl" onClick={() => this.setEdit('name')}>{this.props.user.firstName}</Text>
-                <Text sx={{cursor: 'pointer'}} size="xl" onClick={() => this.setEdit('name')}>{this.props.user.lastName}</Text>
+                <Text sx={{cursor: 'pointer'}} size="xl" onClick={() => this.setEdit('name')}>{this.props.app.user.firstName}</Text>
+                <Text sx={{cursor: 'pointer'}} size="xl" onClick={() => this.setEdit('name')}>{this.props.app.user.lastName}</Text>
               </Group>
           </Grid.Col>
         )
@@ -91,8 +76,8 @@ class EditUser extends React.Component<EditProps, EditState> {
         return (
           <Grid.Col>
             <Group position="center">
-              <Input name="firstName" radius='md' value={this.props.firstName} onChange={this.props.handleChange}/>
-              <Input name='lastName' radius='md' value={this.props.lastName} onChange={this.props.handleChange} />
+              <Input name="firstName" radius='md' value={this.props.userState.firstName} onChange={this.props.handleChange}/>
+              <Input name='lastName' radius='md' value={this.props.userState.lastName} onChange={this.props.handleChange} />
             </Group>
           </Grid.Col>
         )
@@ -104,7 +89,7 @@ class EditUser extends React.Component<EditProps, EditState> {
         return (
           <Grid.Col>
             <Center>
-              <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('email')}>{this.props.user.email}</Text>
+              <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('email')}>{this.props.app.user.email}</Text>
             </Center>
           </Grid.Col>
         )
@@ -112,7 +97,7 @@ class EditUser extends React.Component<EditProps, EditState> {
         return (
           <Grid.Col>
             <Center>
-              <Input name='email' radius='md' value={this.props.email} onChange={this.props.handleChange}/>
+              <Input name='email' radius='md' value={this.props.userState.email} onChange={this.props.handleChange}/>
             </Center>
           </Grid.Col>
         )
@@ -120,42 +105,28 @@ class EditUser extends React.Component<EditProps, EditState> {
     }
   
     renderAvatar = () => {
-      if (this.props.user.profilePicture !== '') {
-        return (
-          <Group direction="column">
-            <label className='avatarLabel' htmlFor="image">
-              {this.state.stringPrvwSrc ? 
-                <Avatar className="avatar" src={this.state.stringPrvwSrc} size={80} radius={40} /> :
-                <Avatar className="avatar" size={80} radius={40} src={this.props.user.profilePicture} />
-              }
-            </label>
-            <input id='image' name='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
-            {this.state.file !== '' && <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>}
-          </Group>
-        )
-      } else {
-        return(
-          <Group direction="column" position="center">
-            <label className="avatarLabel" htmlFor="image">
-              {this.state.stringPrvwSrc ?
+      return (
+        <Group direction="column">
+          <label className='avatarLabel' htmlFor="image">
+            {this.state.stringPrvwSrc ? 
               <Avatar className="avatar" src={this.state.stringPrvwSrc} size={80} radius={40} /> :
-              <Avatar className="avatar" color='primary' size={80} radius={40} />}
-            </label>
-            <input id='image' name='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
-            {this.state.file !== '' && <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>}
-          </Group>
-        )
-      }
+              <Avatar className="avatar" size={80} radius={40} src={this.props.app.user.profilePicture} />
+            }
+          </label>
+          <input id='image' name='image' type='file' value={this.state.file} className="avatarInput" onChange={this.handleImage} />
+          {this.state.file !== '' && <Text size="xs">{this.state.file.replace('C:\\fakepath\\', '')}</Text>}
+        </Group>
+      )
     }
   
     renderDescription = () => {
       if (!this.state.editDescription) {
-        if (this.props.user.profileDescription !== '') {
+        if (this.props.app.user.profileDescription !== '') {
           return (
             <>
-              {this.props.profileDescription.length > 40 && this.props.profileDescription.length < 100 ? 
-                <Text sx={{cursor: 'pointer', maxWidth: '200px'}} onClick={() => this.setEdit('description')}>{this.props.user.profileDescription}</Text> :
-                <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('description')}>{this.props.user.profileDescription}</Text>
+              {this.props.userState.profileDescription.length > 40 && this.props.userState.profileDescription.length < 100 ? 
+                <Text sx={{cursor: 'pointer', maxWidth: '200px'}} onClick={() => this.setEdit('description')}>{this.props.app.user.profileDescription}</Text> :
+                <Text sx={{cursor: 'pointer'}} onClick={() => this.setEdit('description')}>{this.props.app.user.profileDescription}</Text>
               }
             </>
           )
@@ -169,7 +140,7 @@ class EditUser extends React.Component<EditProps, EditState> {
         }
       } else {
         return(
-          <Textarea name="profileDescription" radius='md' value={this.props.profileDescription} onChange={this.props.handleChange} />
+          <Textarea name="profileDescription" radius='md' value={this.props.userState.profileDescription} onChange={this.props.handleChange} />
         )
       }
     }
@@ -250,8 +221,8 @@ class EditUser extends React.Component<EditProps, EditState> {
 }
 
 handleUpdate = () => {
-  console.log(this.props.profilePicture);
-  if (this.props.role === 'primary' && this.state.newProfilePic && this.state.stringPrvwSrc !== '') {
+  console.log(this.props.userState.profilePicture);
+  if (this.props.userState.role === 'primary' && this.state.newProfilePic && this.state.stringPrvwSrc !== '') {
     this.updateUserProfilePic(this.state.stringPrvwSrc)
   } else {
     this.updateUserInfo();
@@ -275,17 +246,17 @@ updateUserProfilePic = async (encodedImg: string):Promise<void> => {
       method: 'PUT',
       body: JSON.stringify({
         user: {
-          role: this.props.role,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          email: this.props.email,
+          role: this.props.userState.role,
+          firstName: this.props.userState.firstName,
+          lastName: this.props.userState.lastName,
+          email: this.props.userState.email,
           profilePicture: cloudinary.url,
-          profileDescription: this.props.profileDescription,
+          profileDescription: this.props.userState.profileDescription,
         }
       }),
       headers: new Headers({
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.props.sessionToken}`
+        authorization: `Bearer ${this.props.app.sessionToken}`
       })
     })
     .then(res => {
@@ -304,23 +275,23 @@ updateUserProfilePic = async (encodedImg: string):Promise<void> => {
 
 updateUserInfo = async ():Promise<void> => {
   console.log('update user info')
-  console.log(this.props.profilePicture)
+  console.log(this.props.userState.profilePicture)
   console.log(this.state.newProfilePic);
   await fetch(`${APIURL}/user/edit/${this.state.profileID}`, {
     method: 'PUT',
     body: JSON.stringify({
       user: {
-        role: this.props.role,
-        firstName: this.props.firstName,
-        lastName: this.props.lastName,
-        email: this.props.email,
-        profilePicture: this.props.user.profilePicture,
-        profileDescription: this.props.profileDescription,
+        role: this.props.userState.role,
+        firstName: this.props.userState.firstName,
+        lastName: this.props.userState.lastName,
+        email: this.props.userState.email,
+        profilePicture: this.props.app.user.profilePicture,
+        profileDescription: this.props.userState.profileDescription,
       }
     }),
     headers: new Headers({
       'Content-Type': 'application/json',
-      authorization: `Bearer ${this.props.sessionToken}`
+      authorization: `Bearer ${this.props.app.sessionToken}`
     })
   })
   .then(res => {
@@ -344,7 +315,7 @@ updateUserInfo = async ():Promise<void> => {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.props.sessionToken}`
+        authorization: `Bearer ${this.props.app.sessionToken}`
       })
     })
     .then(res => {
@@ -363,7 +334,7 @@ updateUserInfo = async ():Promise<void> => {
       return res.json()
     })
     .then(res => {
-      this.props.setUser(res);
+      this.props.app.setUser(res);
       console.log(res)
     });
   }
@@ -379,7 +350,7 @@ updateUserInfo = async ():Promise<void> => {
     if(this.state.previewSrc !== prevState.previewSrc ) {
       this.previewImgSrc(this.state.previewSrc);
     }
-    if (this.props.user.userId !== prevProps.user.userId && this.props.firstName !== prevProps.firstName) {
+    if (this.props.app.user.userId !== prevProps.app.user.userId && this.props.userState.firstName !== prevProps.userState.firstName) {
       this.renderComponent();
     }
     if (this.state.inputVisible !== prevState.inputVisible) {
@@ -396,9 +367,9 @@ updateUserInfo = async ():Promise<void> => {
   renderComponent = () => {
     return (
       <Grid sx={{color: '#edf5e1', margin: 'auto'}}>
-      {this.props.user.role !== 'secondary' && 
+      {this.props.app.user.role !== 'secondary' && 
         <Grid.Col>
-          {this.props.profileDescription.length >= 100 ?
+          {this.props.userState.profileDescription.length >= 100 ?
             <Group position="center" direction="column">
               {this.renderAvatar()}
               {this.renderDescription()}
@@ -422,9 +393,9 @@ updateUserInfo = async ():Promise<void> => {
       }
       <Grid.Col>
         <Group mt='lg' position="center">
-          <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.setDelete(true)}>Delete</Button>
-          <Button component={Link} to={`/orders/${this.props.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
-          {this.props.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.user.userId}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
+          <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.app.setDlt(true)}>Delete</Button>
+          <Button component={Link} to={`/orders/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
+          {this.props.app.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
         </Group>
       </Grid.Col>
       <Grid.Col>
@@ -432,9 +403,9 @@ updateUserInfo = async ():Promise<void> => {
 
         </Center>
       </Grid.Col>
-        {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} listingID={this.props.listingID} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
-        }
+        {/* {this.props.dlt && 
+          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
+        } */}
         {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
     </Grid>
     )

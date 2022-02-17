@@ -36,7 +36,7 @@ class Navbar extends React.Component<NavbarProps> {
           <IoMenu />
         </MobileIcon>
         <Group className='navMenu' mr='lg'>
-          {(!localStorage.getItem('Authorization') && window.location.pathname !== '/login' && window.location.pathname !== '/register') && <Button className="navButton" size='lg' radius='lg' component={Link} to='/login' compact>Login or Sign Up</Button>}
+          {!localStorage.getItem('Authorization') && window.location.pathname === '/login' ? '' : !localStorage.getItem('Authorization') && window.location.pathname === '/register' ? '' : !localStorage.getItem('Authorization') && window.location.pathname === '/' ? <Button className="navButton" size='lg' radius='lg' component={Link} to='/login' compact>Login or Sign Up</Button> : ''}
           {(this.props.user.role !== 'secondary' && localStorage.getItem('Authorization')) && <Button className="navButton" size='lg' radius='lg' component={Link} to='/create' compact>Create Listing</Button>}
           {localStorage.getItem('Authorization') && <Button className="navButton" size='lg' radius='lg' onClick={this.props.clearToken} compact>Logout</Button>}
           {localStorage.getItem('Authorization') &&

@@ -8,6 +8,15 @@ import OrdersMap from "./OrdersMap";
 export type OrderProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
+  what: AppProps['what'],
+  response: AppProps['response'],
+  dlt: AppProps['dlt'],
+  endpointID: AppProps['endpointID'],
+  setDlt: AppProps['setDlt'],
+  setWhat: AppProps['setWhat'],
+  clearToken: AppProps['clearToken'],
+  setResponse: AppProps['setResponse'],
+  setEndpointID: AppProps['setEndpointID'],
 }
 
 export type OrderState = {
@@ -48,12 +57,10 @@ class Orders extends React.Component<OrderProps, OrderState> {
       })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         this.state._isMounted && this.setState({
           orders: [...res],
           ordersFetched: true,
         });
-        console.log(res);
       })
     }
   }
@@ -81,7 +88,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
     return (
       <Container>
           {this.state.orders.length < 1 ?
-            <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
+            <Paper sx={{background: '#05386b', padding: '40px 50px'}} radius='lg' mt={200}>
               <Center>
                 <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
               </Center>

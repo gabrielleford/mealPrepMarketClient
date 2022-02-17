@@ -241,8 +241,8 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   
   render(): React.ReactNode {
     return (
-      <Container className='formContainer' mt={150} size={600} padding='lg'>
-        <Paper className='form' sx={{paddingTop: 40, paddingBottom: 40, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>
+      <Container className='formContainer' mt={-30} size={600} padding='lg'>
+        <Paper className='form' sx={{paddingTop: 40, paddingBottom: 20, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>
           <Title align='center' className='formTitle' order={1}>Create New Listing</Title>
           <Grid gutter='lg'>
             <Grid.Col>

@@ -105,7 +105,7 @@ class Login extends React.Component<LoginProps, LoginState> {
 
   render(): React.ReactNode {
     return (
-      <Container className='formContainer' mt={-100} size={600} padding='lg'>
+      <Container className='formContainer' mt={100} size={600} padding='lg'>
         <Paper className='form' sx={{paddingTop: 40, paddingBottom: 40, paddingLeft: 75, paddingRight: 75}} shadow='xl' radius='md'>
           <Title align='center' className='formTitle' order={1}>Login</Title>
           <Grid gutter='lg'>

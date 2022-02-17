@@ -15,7 +15,6 @@ import SugarFree from '../../assets/mealPrepMarketIconSugarFree.png';
 import { Link, Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import { Fulfillment, FulfillmentInput, FulfillmentLabel } from "./ListingElements";
-import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { BsEmojiDizzy, BsEmojiFrown } from 'react-icons/bs';
 import { Alert, Avatar, Badge, Button, Card, Center, Container, Grid, Group, Image, Select, Text, Title } from "@mantine/core";
 import ListingEdit from "./ListingEdit";
@@ -26,12 +25,12 @@ export type ListingProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   what: AppProps['what'],
-  listingEdit: AppProps['listingEdit'],
   dlt: AppProps['dlt'],
   response: AppProps['response'],
+  endpointID: AppProps['endpointID'],
+  setEndpointID: AppProps['setEndpointID'],
   setWhat: AppProps['setWhat'],
-  setListingEdit: AppProps['setListingEdit'],
-  setDelete: AppProps['setDelete'],
+  setDlt: AppProps['setDlt'],
   clearToken: AppProps['clearToken'],
   setPrevPath: AppProps['setPrevPath'],
   setResponse: AppProps['setResponse'],
@@ -255,7 +254,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     this.setState({
       _isMounted: false
     })
-    this.props.setDelete(false);
     this.setState({
       ownerID: '',
     })
@@ -264,9 +262,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
   render(): React.ReactNode {
       return (
         <Container id='listingById' size={700}>
-          {this.props.dlt && 
-            <ConfirmDelete what={this.props.what} dlt={this.props.dlt} listingID={this.state.listingID} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
-          }
           {this.props.user.userId === this.state.ownerID ?
           <ListingEdit app={{...this.props}} listingState={{...this.state}} handleChange={this.handleChange} fetchListing={this.fetchListing} handleNumber={this.handleNumber} /> :
           <Card radius='lg' padding='sm' className="listingCard">
@@ -347,8 +342,6 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           }
           {this.props.response === 200 && this.state._isMounted ?
             <Navigate to='/' replace={true} /> :
-            this.props.listingEdit ?
-            <Navigate to={`/listing/edit/${this.state.listingID}`} replace={true} /> :
             this.state.responseCode === 201 ?
             <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
           }

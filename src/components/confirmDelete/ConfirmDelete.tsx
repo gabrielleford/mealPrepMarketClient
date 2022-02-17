@@ -1,12 +1,20 @@
 import React from "react";
 import APIURL from "../helpers/environments";
-import { Navigate } from "react-router-dom";
+import { Button, Center, Container, Group, Image, Modal, Text, Title } from '@mantine/core';
 import { AppProps } from "../../App";
-import { ListingState } from "../listingById/ListingById";
-import { ButtonDiv } from "../listingById/ListingElements";
-import { CancelButton, ConfirmDeleteDiv, DeleteButton, DeleteContainer, DeleteH1, DeleteP, Gif} from "./DeleteElements";
 
-type GifState = {
+type DeleteProps = {
+  sessionToken: AppProps['sessionToken'],
+  endpointID: AppProps['endpointID'],
+  what: AppProps['what'],
+  dlt: AppProps['dlt'],
+  response: AppProps['response'],
+  setDlt: AppProps['setDlt'],
+  setEndpointID: AppProps['setEndpointID'],
+  setResponse: AppProps['setResponse'],
+}
+
+type DeleteState = {
   number: number,
   max: number,
   min: number,
@@ -16,20 +24,8 @@ type GifState = {
   _isMounted: boolean,
 }
 
-type DeleteProps = {
-  listingID: ListingState['listingID'],
-  user: AppProps['user'],
-  sessionToken: AppProps['sessionToken'],
-  what: AppProps['what'],
-  dlt: AppProps['dlt'],
-  response: AppProps['response'],
-  setDelete: AppProps['setDelete'],
-  clearToken: AppProps['clearToken'],
-  setResponse: AppProps['setResponse'],
-}
-
-class ConfirmDelete extends React.Component<DeleteProps, GifState> {
-  constructor(props: DeleteProps) {
+export default class ConfirmDelete extends React.Component<DeleteProps, DeleteState> {
+  constructor(props:DeleteProps) {
     super(props)
 
     this.state = {
@@ -41,11 +37,6 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
       endpoint: '',
       _isMounted: false,
     }
-
-    this.grabGif = this.grabGif.bind(this);
-    this.setGif = this.setGif.bind(this);
-    this.setWhat = this.setWhat.bind(this);
-    this.delete = this.delete.bind(this);
   }
 
   grabGif = ():void => {
@@ -64,17 +55,17 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     switch(this.props.what) {
       case 'listing':
         this.setState({
-          endpoint: `/listing/delete/${this.props.listingID}`
+          endpoint: `/listing/delete/${this.props.endpointID}`
         });
         break;
       case 'user':
         this.setState({
-          endpoint: `/user/delete/${this.props.user.userId}`
+          endpoint: `/user/delete/${this.props.endpointID}`
         })
         break;
       case 'order':
         this.setState({
-
+          endpoint: `/order/delete/${this.props.endpointID}`
         })
         break;
     }
@@ -90,14 +81,11 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
       })
     })
     .then(res => {
-      this.props.setResponse(res.status);
+      this.state._isMounted && this.props.setResponse(res.status);
       return res.json();
     })
     .then(res => {
-      console.log(res);
-      if (this.props.what === 'user') {
-        this.state._isMounted && this.props.clearToken();
-      }
+      this.state._isMounted && console.log(res);
     })
   }
 
@@ -109,7 +97,7 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     this.setWhat();
   }
 
-  componentDidUpdate(prevProps:Readonly<DeleteProps>, prevState:Readonly<GifState>) {
+  componentDidUpdate(prevProps:Readonly<DeleteProps>, prevState:Readonly<DeleteState>) {
     if (this.state.number !== prevState.number)
     this.setGif(this.state.number);
   }
@@ -118,29 +106,31 @@ class ConfirmDelete extends React.Component<DeleteProps, GifState> {
     this.setState({
       _isMounted: false
     });
-    this.props.setDelete(false);
+    this.props.setDlt(false);
+    this.props.setResponse(0);
   }
 
   render(): React.ReactNode {
+    console.log(this.props.what);
+    console.log(this.props.endpointID);
+    console.log(this.state.endpoint);
     return (
-      <DeleteContainer onClick={() => this.props.setDelete(false)}>
-        <ConfirmDeleteDiv>
-          <DeleteH1>Are you sure?</DeleteH1>
-            <Gif src={this.state.gif} alt='Gif' />
-          <DeleteP>This is <strong>irreversible</strong>.</DeleteP>
-          <ButtonDiv>
-            <DeleteButton onClick={this.delete}>Delete</DeleteButton>
-            <CancelButton onClick={() => this.props.setDelete(false)}>Cancel</CancelButton>
-          </ButtonDiv>
-        </ConfirmDeleteDiv>
-        {this.props.response === 200 ?
-        <Navigate to='/' replace={true} /> :
-        !localStorage.getItem('Authorization') ?
-        <Navigate to='/' replace={true} /> : ''
-        }
-      </DeleteContainer>
+      <Container>
+        <Modal id='modal' radius='md' centered={true} padding='xl' opened={this.props.dlt} onClose={() => this.props.setDlt(false)}>
+            <Center>
+              <Title mt={-50} sx={{color: '#05386b'}} order={1}>Are you sure?</Title>
+            </Center>
+            <Image radius='sm' sx={{margin: '0 auto'}} src={this.state.gif} />
+            <Center>
+              <Text size='xl' sx={{color: '#05386b'}}>This is <strong>irreversible</strong></Text>
+            </Center>
+            <Group mt='xl' position="center">
+              <Button className="formButton" size="lg" radius='md' compact onClick={this.delete}>Delete</Button>
+              <Button className="formButton" size='lg' radius='md' compact onClick={() => this.props.setDlt(false)}>Cancel</Button>
+            </Group>
+        </Modal>
+        {this.props.response === 200 && this.props.setDlt(false)}
+      </Container>
     )
   }
 }
-
-export default ConfirmDelete;

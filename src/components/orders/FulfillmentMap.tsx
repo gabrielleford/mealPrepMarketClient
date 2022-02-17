@@ -75,7 +75,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid justify='space-between' mt={60}>
+      <Grid justify='space-between' mt={100}>
         {this.props.orders[0].id !== '' && this.mapOrders()}
       </Grid>
     )

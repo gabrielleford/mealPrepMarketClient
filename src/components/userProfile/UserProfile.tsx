@@ -3,7 +3,7 @@ import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
 import UserProfileMap from "./UserProfileMap";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Card, Center, Container, Group, Text } from "@mantine/core";
+import { Avatar, Button, Card, Center, Container, Group, Text, Title } from "@mantine/core";
 
 export type UserState = {
   profileOwner: string,
@@ -50,10 +50,8 @@ fetchUserProfile = async ():Promise<void> => {
     })
   })
   .then(res => {
-    console.log(res)
     return res.json()})
-  .then(res => {
-    console.log(res);
+  .then(res => {;
       this.setState({
       listings: [...res.listings],
       profileOwner: res.id,
@@ -69,8 +67,9 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
-  console.log(APIURL);
   this.fetchUserProfile();
+  console.log(this.props.user.userId)
+  console.log(this.props.user);
 }
 
 componentWillUnmount() {
@@ -82,17 +81,26 @@ componentWillUnmount() {
   render(): React.ReactNode {
     return (
       <Container>
-        <Card mt='lg' radius='md' sx={{width: '700px', background: '#05386b'}}>
+        <Card mt={150} radius='md' sx={{width: '700px', background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
           <Group position="center" spacing={60}>
             <Avatar src={this.state.profilePicture} size={150} radius={75} />
             {(this.props.user.userId === this.state.profileOwner && this.state.profileDescription === '' ) ?
+              <>
               <Group direction="column" position="center">
-                <Text sx={{cursor: 'pointer'}} component={Link} to={`/user/${this.state.profileOwner}`}>You don't have a description, yet&#128577;</Text>
-                <Text sx={{cursor: 'pointer'}} mt={-10} component={Link} to={`/user/${this.state.profileOwner}`}>Click me to add one!</Text>
-              </Group> :
+                <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
+                <Text sx={{cursor: 'pointer', color: '#edf5e1'}} component={Link} to={`/user/${this.state.profileOwner}`}>You don't have a description, yet&#128577;</Text>
+                <Text sx={{cursor: 'pointer', color: '#edf5e1'}} mt={-10} component={Link} to={`/user/${this.state.profileOwner}`}>Click me to add one!</Text>
+              </Group>
+              </> :
               this.state.profileDescription.length > 40 && this.state.profileDescription.length < 100 ?
-              <Text sx={{maxWidth: '200px', color: '#edf5e1'}}>{this.state.profileDescription}</Text> :
-              <Text sx={{color: '#edf5e1'}}>{this.state.profileDescription}</Text>
+              <Group direction="column" position="center">
+                <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
+                <Text sx={{maxWidth: '200px', color: '#edf5e1'}}>{this.state.profileDescription}</Text>
+              </Group> :
+              <Group>
+                <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
+                <Text sx={{color: '#edf5e1'}}>{this.state.profileDescription}</Text>
+              </Group>
             }
           </Group>
           {this.props.user.userId === this.state.profileOwner &&

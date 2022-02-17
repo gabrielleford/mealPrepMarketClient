@@ -88,7 +88,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
     return (
       this.state._isMounted && this.props.results.map((listing): JSX.Element => {
         return (
-            <Grid.Col span={!localStorage.getItem('Authorization')? 3 : 5} key={listing.id}>
+            <Grid.Col span={3} key={listing.id}>
               <RouteLink href={`/listing/${listing.id}`}>
                 <Card radius='lg' sx={{background: '#edf5e1'}}>
                   <Center>
@@ -132,7 +132,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid mt={60}>
+      <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 150 : 40} sx={{marginLeft: 'auto', marginRight: 'auto'}}>
         {this.props.results[0].id !== '' && this.mapListings()}
       </Grid>
     )

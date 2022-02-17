@@ -11,11 +11,12 @@ export type UserProps = {
   dlt: AppProps['dlt'],
   sessionToken: AppProps['sessionToken'],
   response: AppProps['response'],
-  listingID: ListingState['listingID'],
+  endpointID: AppProps['endpointID'],
+  setEndpointID: AppProps['setEndpointID'],
   setWhat: AppProps['setWhat'],
   clearToken: AppProps['clearToken'],
   setResponse: AppProps['setResponse'],
-  setDelete: AppProps['setDelete'],
+  setDlt: AppProps['setDlt'],
   setUser: AppProps['setUser'],
 }
 
@@ -93,7 +94,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
     return (
     <Container id='userInfo'>
       <Card id="userCard" radius='lg' sx={{padding: '60px 0', width: '90%', margin: 'auto'}}>
-        <EditUser sessionToken={this.props.sessionToken} user={this.props.user} what={this.props.what} dlt={this.props.dlt} response={this.props.response} setWhat={this.props.setWhat} setDelete={this.props.setDelete} clearToken={this.props.clearToken} setResponse={this.props.setResponse} listingID={this.props.listingID} changeRole={this.changeRole} role={this.state.role} firstName={this.state.firstName} lastName={this.state.lastName} email={this.state.email} profileDescription={this.state.profileDescription} profilePicture={this.state.profileDescription} handleChange={this.handleChange} setUser={this.props.setUser}  />
+        <EditUser app={{...this.props}} changeRole={this.changeRole} handleChange={this.handleChange} userState={{...this.state}} />
       </Card>
       {
         !localStorage.getItem('Authorization') &&
