@@ -97,9 +97,9 @@ class ListingEdit extends React.Component<EditProps, EditState> {
     } else {
       return(
         <Group mt='xl' direction="column" position="center">
-          <Textarea sx={{cursor: 'pointer', width:'400px'}} name='description' placeholder={`$${this.props.listingState.description} USD`} radius='md' invalid={this.props.listingState.descriptionErr ? true : false} required value={this.props.listingState.description} onChange={this.props.handleChange} />
-          <NumberInput name='price' placeholder={this.props.listingState.priceStr} radius='md' invalid={this.props.listingState.priceErr ? true : false} required hideControls value={this.props.listingState.price} onChange={this.props.handleNumber} />
-        </Group>
+        <Textarea name='description' placeholder={this.props.listingState.description} radius='md' invalid={this.props.listingState.descriptionErr ? true : false} required value={this.props.listingState.description} onChange={this.props.handleChange} />
+        <NumberInput name='price' placeholder={this.props.listingState.priceStr} radius='md' invalid={this.props.listingState.priceErr ? true : false} required hideControls value={this.props.listingState.price} onChange={this.props.handleNumber} />
+      </Group>
       )
     }
   }
@@ -286,7 +286,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
         <Center>
           {this.renderDescription()}
         </Center>
-        {this.props.listingState.description.length > 255 && 
+        {(this.props.listingState.description.length > 255 && this.state.inputVisible === false) &&
         <Center>
           {this.renderPrice()}
         </Center>
