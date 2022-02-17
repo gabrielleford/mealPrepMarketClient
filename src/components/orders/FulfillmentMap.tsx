@@ -1,6 +1,6 @@
 import { Badge, Card, Center, Grid, Group, Text, Title } from "@mantine/core";
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FulfillState } from "./Fulfillment";
 
 
@@ -34,7 +34,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         return (
           <Grid.Col span={4} key={order.id}>
-              <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} onClick={() => this.setRoute(order.listingId)}>
+              <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} component={Link} to={`/listing/${order.listingId}`} replace={true}>
                 <Center>
                   <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{order.listing.title}</Title>
                 </Center>
@@ -80,10 +80,10 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
   }
 
   render(): React.ReactNode {
+    console.log(this.state.route);
     return (
       <Grid justify='space-between' mt={100}>
         {this.props.orders[0].id !== '' && this.mapOrders()}
-        {this.state.route !== '' && <Navigate to={`/listing/${this.state.route}`} replace={true} />}
       </Grid>
     )
   }

@@ -314,7 +314,6 @@ class ListingEdit extends React.Component<EditProps, EditState> {
           <Alert icon={<BsEmojiDizzy/>} title='Oops!' color='red' radius='md' withCloseButton onClose={() => this.setState({responseCode: 0})}>{this.state.errorMessage}</Alert> : ''
         }
         {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}
-        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
         {this.props.app.response === 200 && <Navigate to={`/profile/${this.props.listingState.ownerID}`} replace={true} />}
       </Card>
     )

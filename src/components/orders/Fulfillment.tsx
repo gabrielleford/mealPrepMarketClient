@@ -1,9 +1,9 @@
 import React from "react";
 import APIURL from "../helpers/environments";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
 import FulfillmentMap from "./FulfillmentMap";
-import { Center, Container, Paper, Text, Title } from "@mantine/core";
+import { Center, Container, Paper, Title } from "@mantine/core";
 import { BannerH1 } from "../landing/LandingElements";
 import { Banner } from "./OrdersElements";
 
@@ -107,10 +107,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
         {this.state.orders.length < 1 ?
           <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
             <Center>
-              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
-            </Center>
-            <Center>
-              <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/'>Check out what our wonderful meal preppers have to offer!</Text>
+              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders to fulfill, yet!&#128577;</Title>
             </Center>
           </Paper> :
           <FulfillmentMap orders={this.state.orders} />

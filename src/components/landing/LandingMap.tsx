@@ -13,12 +13,11 @@ import SoyFree from '../../assets/mealPrepMarketLightIconSoyF.png';
 import SugarFree from '../../assets/mealPrepMarketLightIconSF.png';
 import { LandingState } from "./Landing";
 import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, Title } from "@mantine/core";
-import { Navigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 type MapState = {
   divClicked: boolean,
   _isMounted: boolean,
-  route: string,
 }
 
 type MapProps = {
@@ -34,7 +33,6 @@ class LandingMap extends React.Component<MapProps, MapState> {
     this.state = {
       divClicked: false,
       _isMounted: false,
-      route: '',
     }
 
     this.mapListings = this.mapListings.bind(this);
@@ -86,18 +84,12 @@ class LandingMap extends React.Component<MapProps, MapState> {
     )
   }
 
-  setRoute = (id: string) => {
-    this.setState({
-      route: id
-    })
-  }
-
   mapListings = () => {
     return (
       this.state._isMounted && this.props.results.map((listing): JSX.Element => {
         return (
             <Grid.Col span={3} key={listing.id}>
-                <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} onClick={() => this.setRoute(listing.id)}>
+                <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >
                   <Center>
                     <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
                   </Center>
@@ -140,7 +132,6 @@ class LandingMap extends React.Component<MapProps, MapState> {
     return (
       <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 150 : 40} sx={{marginLeft: 'auto', marginRight: 'auto'}}>
         {this.props.results[0].id !== '' && this.mapListings()}
-        {this.state.route !== '' && <Navigate to={`/listing/${this.state.route}`} replace={true} />}
       </Grid>
     )
   }
