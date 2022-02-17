@@ -1,6 +1,6 @@
 import { Badge, Card, Center, Grid, Group, Text, Title } from "@mantine/core";
 import React from "react";
-import { RouteLink } from "../ReusableElements";
+import { Navigate } from "react-router-dom";
 import { FulfillState } from "./Fulfillment";
 
 
@@ -10,6 +10,7 @@ type FulfillMapProps = {
 
 type FulfillMapState = {
   _isMounted: boolean,
+  route: string,
 }
 
 class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
@@ -18,7 +19,14 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 
     this.state = {
       _isMounted: false,
+      route: '',
     }
+  }
+
+  setRoute = (id: string) => {
+    this.setState({
+      route: id
+    })
   }
 
   mapOrders = () => {
@@ -26,8 +34,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         return (
           <Grid.Col span={4} key={order.id}>
-            <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${order.listingId}`}>
-              <Card radius='lg' sx={{background: '#edf5e1'}}>
+              <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} onClick={() => this.setRoute(order.listingId)}>
                 <Center>
                   <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{order.listing.title}</Title>
                 </Center>
@@ -47,7 +54,6 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
                   <Text className='cardText'>{order.fulfillmentMethod.charAt(0).toUpperCase() + order.fulfillmentMethod.slice(1)}</Text>
                 </Group>
               </Card>
-            </RouteLink>
           </Grid.Col>
         )
       })
@@ -77,6 +83,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
     return (
       <Grid justify='space-between' mt={100}>
         {this.props.orders[0].id !== '' && this.mapOrders()}
+        {this.state.route !== '' && <Navigate to={`/listing/${this.state.route}`} replace={true} />}
       </Grid>
     )
   }

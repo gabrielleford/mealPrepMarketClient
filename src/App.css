@@ -132,6 +132,7 @@ body {
 .listingTitle {
   color: #05386b;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .listingText {

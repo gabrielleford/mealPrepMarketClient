@@ -1,13 +1,14 @@
-import { Badge, Button, Card, Center, Grid, Group, Image, Text, Title } from "@mantine/core";
+import { Badge, Button, Card, Center, Container, Grid, Group, Image, Text, Title } from "@mantine/core";
 import React from "react";
+import { Navigate } from "react-router-dom";
 import ConfirmDelete from "../confirmDelete/ConfirmDelete";
-import { RouteLink } from "../ReusableElements";
 import { OrderProps, OrderState } from "./Orders";
 
 type OrderMapState = {
   orderID: string,
   deleted: boolean,
   _isMounted: boolean,
+  route: string,
 }
 
 type OrderMapProps = {
@@ -24,7 +25,14 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
       orderID: '',
       deleted: false,
       _isMounted: false,
+      route: '',
     }
+  }
+
+  setRoute = (id: string) => {
+    this.setState({
+      route: id
+    })
   }
 
   orderMap = () => {
@@ -33,7 +41,7 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
         return(
           <Grid.Col key={order.id} span={4}>
             <Card key={order.id}>
-              <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${order.listing.id}`}>
+              <Container padding={0} sx={{cursor: 'pointer'}} onClick={() => this.setRoute(order.listing.id)}>
                 <Title className="listingTitle" align="center" order={1}>{order.listing.title}</Title>
                 <Center>
                   <Image width={275} height={275} radius={10} src={order.listing.image} />
@@ -44,7 +52,7 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
                     <Text className='cardText' size="lg" mt='md'><Badge variant='outline' radius='sm' size="lg" color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Delivery Method</Badge> {order.fulfillmentMethod.charAt(0).toUpperCase() + order.fulfillmentMethod.slice(1)}</Text>
                   </Group>
                 </Center>
-              </RouteLink>
+              </Container>
               <Center mt='lg'>
                 <Button className="darkButton" size="lg" radius='md' compact 
                   onClick={() => {
@@ -85,6 +93,7 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
     return (
       <Grid mt='xl'>
       {this.props.orders && this.orderMap()}
+      {this.state.route !== '' && <Navigate to={`/listing/${this.state.route}`} replace={true} />}
       </Grid>
     )
   }

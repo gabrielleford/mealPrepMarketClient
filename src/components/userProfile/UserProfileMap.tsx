@@ -12,14 +12,15 @@ import GlutenFree from '../../assets/mealPrepMarketLightIconGF.png';
 import NutFree from '../../assets/mealPrepMarketLightIconNF.png';
 import SoyFree from '../../assets/mealPrepMarketLightIconSoyF.png';
 import SugarFree from '../../assets/mealPrepMarketLightIconSF.png';
-import { RouteLink } from "../ReusableElements";
 import { UserState } from "./UserProfile";
+import { Navigate } from "react-router-dom";
 
 let tagSrc:string = '';
 
 type UserMapState = {
   divClicked: boolean,
   _isMounted: boolean,
+  route: string,
 }
 
 type UserMapProps = {
@@ -33,6 +34,7 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
     this.state = {
       divClicked: false,
       _isMounted: false,
+      route: '',
     }
 
     this.mapListings = this.mapListings.bind(this);
@@ -84,13 +86,18 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
     )
   }
 
+  setRoute = (id: string) => {
+    this.setState({
+      route: id
+    })
+  }
+
   mapListings = () => {
     return(
       this.state._isMounted && this.props.listings.map((listing):JSX.Element => {
         return(
           <Grid.Col span={3} key={listing.id}>
-          <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${listing.id}`}>
-            <Card radius='lg' sx={{background: '#edf5e1'}}>
+            <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} onClick={() => this.setRoute(listing.id)}>
               <Center>
                 <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
               </Center>
@@ -111,7 +118,6 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
                 </Group>
               }
             </Card>
-          </RouteLink>
         </Grid.Col>
         )
       })
@@ -135,6 +141,7 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
     return (
       <Grid mt='xl'>
         {this.props.listings && this.mapListings()}
+        {this.state.route !== '' && <Navigate to={`/listing/${this.state.route}`} replace={true} />}
       </Grid>
     )
   }
