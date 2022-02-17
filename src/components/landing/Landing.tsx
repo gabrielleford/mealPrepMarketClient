@@ -8,7 +8,10 @@ import { Container } from "@mantine/core";
 export type LandingProps = {
   sessionToken: AppProps['sessionToken'],
   setPrevPath: AppProps['setPrevPath'],
+  setDlt: AppProps['setDlt'],
+  setEndpointID: AppProps['setEndpointID'],
   setResponse: AppProps['setResponse'],
+  setWhat: AppProps['setWhat'],
 }
 
 export type LandingState = {
@@ -58,9 +61,12 @@ class Landing extends React.Component<LandingProps, LandingState> {
     this.setState({
       _isMounted: true
     });
-    this.props.setResponse(0);
     this.props.setPrevPath('/');
     this.fetchListings();
+    this.props.setDlt(false);
+    this.props.setEndpointID('');
+    this.props.setResponse(0);
+    this.props.setWhat('');
   }
 
   componentWillUnmount() {

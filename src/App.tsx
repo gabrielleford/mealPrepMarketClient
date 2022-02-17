@@ -93,6 +93,8 @@ const App: React.FunctionComponent = () => {
     setSessionToken('');
     setWhat('');
     setDlt(false);
+    setResponse(0);
+    setEndpointID('');
     setPrevPath('/');
     setUser({
       userId: '',
@@ -175,6 +177,9 @@ const App: React.FunctionComponent = () => {
                     sessionToken={sessionToken}
                     setPrevPath={setPrevPath}
                     setResponse={setResponse}
+                    setEndpointID={setEndpointID}
+                    setDlt={setDlt}
+                    setWhat={setWhat}
                   />} 
                 />
                 <Route path='/register' element={
@@ -235,6 +240,10 @@ const App: React.FunctionComponent = () => {
                 <Route path='/profile/:id' element={
                   <UserProfile
                     user={user}
+                    setEndpointID={setEndpointID}
+                    setDlt={setDlt}
+                    setWhat={setWhat}
+                    setResponse={setResponse}
                   />}
                 />
                 <Route path='/orders/:id' element={

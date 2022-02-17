@@ -23,6 +23,10 @@ export type UserState = {
 
 type UserProps = {
   user: AppProps['user'],
+  setDlt: AppProps['setDlt'],
+  setEndpointID: AppProps['setEndpointID'],
+  setResponse: AppProps['setResponse'],
+  setWhat: AppProps['setWhat'],
 }
 
 class UserProfile extends React.Component<UserProps, UserState> {
@@ -68,8 +72,10 @@ componentDidMount() {
     _isMounted: true
   });
   this.fetchUserProfile();
-  console.log(this.props.user.userId)
-  console.log(this.props.user);
+  this.props.setDlt(false);
+  this.props.setEndpointID('');
+  this.props.setResponse(0);
+  this.props.setWhat('');
 }
 
 componentWillUnmount() {

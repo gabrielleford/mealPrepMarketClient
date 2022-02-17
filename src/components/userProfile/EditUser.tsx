@@ -2,7 +2,6 @@ import React, { ChangeEvent } from "react";
 import APIURL from "../helpers/environments";
 import { Buffer } from "buffer";
 import { Link, Navigate } from "react-router-dom";
-import { ListingState } from "../listingById/ListingById";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 import { Avatar, Button, Center, Grid, Group, Input, Text, Textarea } from "@mantine/core";
 import { UserState, UserProps } from "./UserInfo";
@@ -18,7 +17,6 @@ type EditProps = {
 
 type EditState = {
   file: string,
-  profileID: string,
   previewSrc: string | ArrayBuffer | null,
   stringPrvwSrc: string,
   newProfilePic: boolean,
@@ -36,7 +34,6 @@ class EditUser extends React.Component<EditProps, EditState> {
 
     this.state = {
       file: '',
-      profileID: window.location.pathname.slice(6, 42),
       previewSrc: '',
       stringPrvwSrc: '',
       newProfilePic: false,
@@ -242,7 +239,7 @@ updateUserProfilePic = async (encodedImg: string):Promise<void> => {
     const cloudinary = await res.json();
     console.log(cloudinary);
 
-    await fetch(`${APIURL}/user/edit/${this.state.profileID}`, {
+    await fetch(`${APIURL}/user/edit/${this.props.userState.profileID}`, {
       method: 'PUT',
       body: JSON.stringify({
         user: {
@@ -277,7 +274,7 @@ updateUserInfo = async ():Promise<void> => {
   console.log('update user info')
   console.log(this.props.userState.profilePicture)
   console.log(this.state.newProfilePic);
-  await fetch(`${APIURL}/user/edit/${this.state.profileID}`, {
+  await fetch(`${APIURL}/user/edit/${this.props.userState.profileID}`, {
     method: 'PUT',
     body: JSON.stringify({
       user: {
@@ -311,7 +308,7 @@ updateUserInfo = async ():Promise<void> => {
 }
 
   getUpdatedUser = async ():Promise<void> => {
-    await fetch(`${APIURL}/user/userInfo/${this.state.profileID}`, {
+    await fetch(`${APIURL}/user/userInfo/${this.props.userState.profileID}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -344,6 +341,8 @@ updateUserInfo = async ():Promise<void> => {
     this.setState({
       _isMounted: true,
     })
+    this.props.app.setWhat('user')
+    this.props.app.setEndpointID(this.props.userState.profileID)
   }
 
   componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
@@ -403,10 +402,8 @@ updateUserInfo = async ():Promise<void> => {
 
         </Center>
       </Grid.Col>
-        {/* {this.props.dlt && 
-          <ConfirmDelete what={this.props.what} dlt={this.props.dlt} sessionToken={this.props.sessionToken} user={this.props.user} setDelete={this.props.setDelete} clearToken={this.props.clearToken} response={this.props.response} setResponse={this.props.setResponse} />
-        } */}
-        {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
+      {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}
+      {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
     </Grid>
     )
   }

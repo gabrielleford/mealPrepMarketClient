@@ -70,6 +70,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
       _isMounted: true
     });
     this.fetchOrders();
+    this.props.setWhat('order');
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {
@@ -96,7 +97,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
                 <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/'>Check out what our wonderful meal preppers have to offer!</Text>
               </Center>
             </Paper> :
-            <OrdersMap orders={this.state.orders} sessionToken={this.props.sessionToken} fetchOrders={this.fetchOrders} />
+            <OrdersMap orders={this.state.orders} app={{...this.props}} fetchOrders={this.fetchOrders} />
           }
           {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
       </Container>

@@ -340,9 +340,8 @@ class ListingById extends React.Component<ListingProps, ListingState> {
               }
           </Card>
           }
-          {this.props.response === 200 && this.state._isMounted ?
-            <Navigate to='/' replace={true} /> :
-            this.state.responseCode === 201 ?
+          {
+            this.state.responseCode === 201 && this.state._isMounted ?
             <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
           }
         </Container>

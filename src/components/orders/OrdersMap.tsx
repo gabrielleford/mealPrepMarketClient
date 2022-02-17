@@ -1,7 +1,6 @@
 import { Badge, Button, Card, Center, Grid, Group, Image, Text, Title } from "@mantine/core";
 import React from "react";
-import { Navigate } from "react-router-dom";
-import APIURL from "../helpers/environments";
+import ConfirmDelete from "../confirmDelete/ConfirmDelete";
 import { RouteLink } from "../ReusableElements";
 import { OrderProps, OrderState } from "./Orders";
 
@@ -12,8 +11,8 @@ type OrderMapState = {
 }
 
 type OrderMapProps = {
-  orders: OrderState['orders']
-  sessionToken: OrderProps['sessionToken'],
+  orders: OrderState['orders'],
+  app: OrderProps,
   fetchOrders: () => Promise<void>,
 }
 
@@ -28,31 +27,13 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
     }
   }
 
-  cancelOrder = async (id: string):Promise<void> => {
-    await fetch(`${APIURL}/order/${id}`, {
-      method: 'DELETE',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${this.props.sessionToken}`
-      })
-    })
-    .then(res => {
-      console.log(res)
-      this.setState({
-        deleted: !this.state.deleted
-      })
-    })
-    .catch(error => console.log(error))
-  }
-
   orderMap = () => {
     return (
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
-        console.log(order.id);
         return(
           <Grid.Col key={order.id} span={4}>
-            <RouteLink href={`/listing/${order.listing.id}`}>
-              <Card key={order.id}>
+            <Card key={order.id}>
+              <RouteLink href={`/listing/${order.listing.id}`}>
                 <Title className="listingTitle" align="center" order={1}>{order.listing.title}</Title>
                 <Center>
                   <Image width={275} height={275} radius={10} src={order.listing.image} />
@@ -63,12 +44,15 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
                     <Text className='cardText' size="lg" mt='md'><Badge variant='outline' radius='sm' size="lg" color='secondary' sx={{paddingLeft: '3px', paddingRight: '3px'}}>Delivery Method</Badge> {order.fulfillmentMethod.charAt(0).toUpperCase() + order.fulfillmentMethod.slice(1)}</Text>
                   </Group>
                 </Center>
-                <Center mt='lg'>
-                  <Button className="darkButton" size="lg" radius='md' compact>Cancel Order</Button>
-                </Center>
-              </Card>
-            </RouteLink>
-            {this.props.orders.length < 1 && <Navigate to='/' replace={true} />}
+              </RouteLink>
+              <Center mt='lg'>
+                <Button className="darkButton" size="lg" radius='md' compact 
+                  onClick={() => {
+                    this.props.app.setEndpointID(order.id)
+                    this.props.app.setDlt(true)}}>Cancel Order</Button>
+              </Center>
+            </Card>
+            {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}
           </Grid.Col>
         )
       })
@@ -82,9 +66,12 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
   }
 
   componentDidUpdate(prevProps:Readonly<OrderMapProps>, prevState:Readonly<OrderMapState>) {
-    if (this.state.deleted !== prevState.deleted){
+    if (this.props.app.response !== prevProps.app.response && this.props.app.response === 200){
       this.props.fetchOrders();
       this.orderMap();
+      this.props.app.setResponse(0);
+      this.props.app.setDlt(false);
+      this.props.app.setEndpointID('');
     }
   }
 
@@ -104,5 +91,3 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
 }
 
 export default OrdersMap;
-
-{/*<CancelOrder onClick={() => this.cancelOrder(order.id)}>*/}

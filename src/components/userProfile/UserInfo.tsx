@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { AppProps } from "../../App";
-import { ListingState } from "../listingById/ListingById";
 import { Card, Container } from "@mantine/core";
 import EditUser from "./EditUser";
 

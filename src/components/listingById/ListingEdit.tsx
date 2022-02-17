@@ -256,6 +256,7 @@ class ListingEdit extends React.Component<EditProps, EditState> {
       _isMounted: true
     })
     this.props.app.setWhat('listing');
+    this.props.app.setEndpointID(this.props.listingState.listingID);
   }
 
   componentDidUpdate(prevProps:Readonly<EditProps>, prevState:Readonly<EditState>) {
@@ -305,16 +306,16 @@ class ListingEdit extends React.Component<EditProps, EditState> {
           </Group>
         }
         <Group mt='lg' mb='lg' position="center">
-          <Button className="formButton" size="lg" radius='md' compact onClick={() => console.log('delete')}>Delete</Button>
+          <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.app.setDlt(true)}>Delete</Button>
         </Group>
         {this.state.responseCode === 500 ?
           <Alert icon={<BsEmojiFrown/>} title='Sorry' color='red' radius='md' withCloseButton onClose={() => this.setState({responseCode: 0})}>Internal Error</Alert> :
         this.state.responseCode === 400 ?
           <Alert icon={<BsEmojiDizzy/>} title='Oops!' color='red' radius='md' withCloseButton onClose={() => this.setState({responseCode: 0})}>{this.state.errorMessage}</Alert> : ''
         }
-        {/* {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse}/>} */}
+        {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}
         {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
-        {/* {this.props.app.response === 200 && <Navigate to='/listings' replace={true} />} */}
+        {this.props.app.response === 200 && <Navigate to={`/profile/${this.props.listingState.ownerID}`} replace={true} />}
       </Card>
     )
   }

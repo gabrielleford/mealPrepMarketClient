@@ -12,6 +12,7 @@ type DeleteProps = {
   setDlt: AppProps['setDlt'],
   setEndpointID: AppProps['setEndpointID'],
   setResponse: AppProps['setResponse'],
+  clearToken: AppProps['clearToken'],
 }
 
 type DeleteState = {
@@ -72,7 +73,6 @@ export default class ConfirmDelete extends React.Component<DeleteProps, DeleteSt
   }
 
   delete = async ():Promise<void> => {
-    console.log(`${this.props.what} deleted`);
     await fetch(`${APIURL}${this.state.endpoint}`, {
       method: 'DELETE',
       headers: new Headers({
@@ -85,6 +85,9 @@ export default class ConfirmDelete extends React.Component<DeleteProps, DeleteSt
       return res.json();
     })
     .then(res => {
+      if (this.props.what === 'user') {
+        this.props.clearToken()
+      }
       this.state._isMounted && console.log(res);
     })
   }
@@ -106,14 +109,9 @@ export default class ConfirmDelete extends React.Component<DeleteProps, DeleteSt
     this.setState({
       _isMounted: false
     });
-    this.props.setDlt(false);
-    this.props.setResponse(0);
   }
 
   render(): React.ReactNode {
-    console.log(this.props.what);
-    console.log(this.props.endpointID);
-    console.log(this.state.endpoint);
     return (
       <Container>
         <Modal id='modal' radius='md' centered={true} padding='xl' opened={this.props.dlt} onClose={() => this.props.setDlt(false)}>
@@ -129,7 +127,6 @@ export default class ConfirmDelete extends React.Component<DeleteProps, DeleteSt
               <Button className="formButton" size='lg' radius='md' compact onClick={() => this.props.setDlt(false)}>Cancel</Button>
             </Group>
         </Modal>
-        {this.props.response === 200 && this.props.setDlt(false)}
       </Container>
     )
   }
