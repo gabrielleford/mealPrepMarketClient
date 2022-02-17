@@ -96,11 +96,9 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
 
   render(): React.ReactNode {
     return (
-      <>
-      <Grid>
+      <Grid mt='xl'>
       {this.orderMap()}
       </Grid>
-      </>
     )
   }
 }
