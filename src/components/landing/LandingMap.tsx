@@ -89,7 +89,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
       this.state._isMounted && this.props.results.map((listing): JSX.Element => {
         return (
             <Grid.Col span={3} key={listing.id}>
-              <RouteLink href={`/listing/${listing.id}`}>
+              <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${listing.id}`}>
                 <Card radius='lg' sx={{background: '#edf5e1'}}>
                   <Center>
                     <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>

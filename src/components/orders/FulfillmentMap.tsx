@@ -26,7 +26,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         return (
           <Grid.Col span={4} key={order.id}>
-            <RouteLink href={`/listing/${order.listingId}`}>
+            <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${order.listingId}`}>
               <Card radius='lg' sx={{background: '#edf5e1'}}>
                 <Center>
                   <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{order.listing.title}</Title>

@@ -33,7 +33,7 @@ class OrdersMap extends React.Component<OrderMapProps, OrderMapState> {
         return(
           <Grid.Col key={order.id} span={4}>
             <Card key={order.id}>
-              <RouteLink href={`/listing/${order.listing.id}`}>
+              <RouteLink href={`https://mealprepmarket.herokuapp.com/listing/${order.listing.id}`}>
                 <Title className="listingTitle" align="center" order={1}>{order.listing.title}</Title>
                 <Center>
                   <Image width={275} height={275} radius={10} src={order.listing.image} />
