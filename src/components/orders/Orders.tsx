@@ -12,6 +12,7 @@ export type OrderProps = {
   response: AppProps['response'],
   dlt: AppProps['dlt'],
   endpointID: AppProps['endpointID'],
+  mapInfo: AppProps['mapInfo'],
   setDlt: AppProps['setDlt'],
   setWhat: AppProps['setWhat'],
   clearToken: AppProps['clearToken'],
@@ -69,7 +70,9 @@ class Orders extends React.Component<OrderProps, OrderState> {
     this.setState({
       _isMounted: true
     });
-    this.fetchOrders();
+    if (this.props.mapInfo.orders.length > 0) {
+      this.fetchOrders();
+    }
     this.props.setWhat('order');
   }
 
@@ -88,7 +91,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   render(): React.ReactNode {
     return (
       <Container>
-          {this.state.orders.length < 1 ?
+          {this.props.mapInfo.orders.length < 1 ?
             <Paper sx={{background: '#05386b', padding: '40px 50px'}} radius='lg' mt={200}>
               <Center>
                 <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>

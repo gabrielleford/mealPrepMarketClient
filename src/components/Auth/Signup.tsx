@@ -173,7 +173,6 @@ class Signup extends React.Component<SignupProps, SignupState> {
       return res.json()
     })
     .then(json => {
-      console.log(json);
       if (this.state.responseCode === 201) {
         this.state._isMounted && this.setState({
           user: json.user.id,

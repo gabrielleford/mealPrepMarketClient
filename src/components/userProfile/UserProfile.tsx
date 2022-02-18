@@ -3,7 +3,7 @@ import APIURL from "../helpers/environments";
 import { AppProps } from "../../App";
 import UserProfileMap from "./UserProfileMap";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Card, Center, Container, Group, Text, Title } from "@mantine/core";
+import { Avatar, Button, Card, Center, Container, Group, Paper, Text, Title } from "@mantine/core";
 
 export type UserState = {
   profileOwner: string,
@@ -23,6 +23,7 @@ export type UserState = {
 
 type UserProps = {
   user: AppProps['user'],
+  mapInfo: AppProps['mapInfo'],
   setDlt: AppProps['setDlt'],
   setEndpointID: AppProps['setEndpointID'],
   setResponse: AppProps['setResponse'],
@@ -71,7 +72,9 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
-  this.fetchUserProfile();
+  if (this.props.mapInfo.listings.length > 0) {
+    this.fetchUserProfile();
+  }
   this.props.setDlt(false);
   this.props.setEndpointID('');
   this.props.setResponse(0);
@@ -87,7 +90,7 @@ componentWillUnmount() {
   render(): React.ReactNode {
     return (
       <Container>
-        <Card mt={150} radius='md' sx={{width: '700px', background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
+        <Card mt={150} radius='lg' sx={{width: '700px', background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
           <Group position="center" spacing={60}>
             <Avatar src={this.state.profilePicture} size={150} radius={75} />
             {(this.props.user.userId === this.state.profileOwner && this.state.profileDescription === '' ) ?
@@ -115,7 +118,17 @@ componentWillUnmount() {
             </Center>
           }
         </Card>
-        <UserProfileMap listings={this.state.listings}/>
+        {this.props.mapInfo.listings.length > 0 ? 
+          <UserProfileMap listings={this.state.listings}/> :
+          <Paper sx={{background: '#05386b', padding: '40px 50px', margin: '0 auto'}} radius='lg' mt={50}>
+          <Center>
+            <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
+          </Center>
+          <Center>
+            <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/create'>Create your first listing!</Text>
+          </Center>
+        </Paper>
+        }
       </Container>
     )
   }

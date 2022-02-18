@@ -10,6 +10,7 @@ import { Banner } from "./OrdersElements";
 export type FulfillProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
+  mapInfo: AppProps['mapInfo'],
 }
 
 export type FulfillState = {
@@ -82,7 +83,9 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     this.setState({
       _isMounted: true
     })
-    this.fetchOrders();
+    if (this.props.mapInfo.orders.length > 0) {
+      this.fetchOrders();
+    }
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {
@@ -103,10 +106,10 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
         <Banner>
           <BannerH1>Fulfillment</BannerH1>
         </Banner>
-        {this.state.orders.length < 1 ?
-          <Paper sx={{background: '#05386b', padding: '40px 50px'}} mt={90}>
+        {this.props.mapInfo.orders.length < 1 ?
+          <Paper sx={{background: '#05386b', padding: '40px 50px'}} radius='lg' mt={90}>
             <Center>
-              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders to fulfill, yet!&#128577;</Title>
+              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You don't have any orders to fulfill, yet!&#128577;</Title>
             </Center>
           </Paper> :
           <FulfillmentMap orders={this.state.orders} />

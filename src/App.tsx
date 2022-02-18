@@ -35,6 +35,7 @@ export type AppProps = {
   prevPath: string,
   popoverOpen: boolean,
   response: number,
+  mapInfo: {orders: {}[], listings: {}[], fulfillment: {}[]}
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -47,7 +48,7 @@ export type AppProps = {
     email: string,
     profilePicture: string,
     profileDescription: string,
-    role: string
+    role: string,
   }) => void,
   setWhat: (what: string) => void,
   setDlt: (del: boolean) => void,
@@ -66,6 +67,7 @@ const App: React.FunctionComponent = () => {
   const [prevPath, setPrevPath] = useState<string>('/');
   const [endpointID, setEndpointID] = useState<string>('');
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+  const [mapInfo, setMapInfo] = useState<{orders: {}[], listings: {}[], fulfillment: {}[]}> ({orders: [], listings: [], fulfillment: []})
   const [response, setResponse] = useState<number>(0);
   const [user, setUser] = useState<{
     userId: string,
@@ -74,14 +76,15 @@ const App: React.FunctionComponent = () => {
     email: string,
     profilePicture: string,
     profileDescription: string,
-    role: string}>({
+    role: string,}>({
       userId: '',
       firstName: '', 
       lastName: '', 
       email: '', 
       profilePicture: '', 
       profileDescription: '', 
-      role: ''});
+      role: '',
+    });
 
   const updateToken = (newToken:string) => {
     localStorage.setItem('Authorization', newToken);
@@ -103,7 +106,7 @@ const App: React.FunctionComponent = () => {
       email: '', 
       profilePicture: '', 
       profileDescription: '', 
-      role: ''});
+      role: '',});
   }
 
   useEffect(() => {
@@ -127,6 +130,19 @@ const App: React.FunctionComponent = () => {
           })
           .then(() => user)
           .catch(error => console.log(error))
+
+          await fetch(`${APIURL}/user/checkOrders`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${sessionToken}`
+            }
+          })
+          .then(res => res.json())
+          .then(res => {
+            console.log(res);
+            setMapInfo(res);
+          })
         } else if (user.userId !== '' && sessionToken === '') {
           setUser({
             userId: '',
@@ -135,7 +151,7 @@ const App: React.FunctionComponent = () => {
             email: '', 
             profilePicture: '', 
             profileDescription: '', 
-            role: ''});
+            role: '',});
         }
       }
 
@@ -240,6 +256,7 @@ const App: React.FunctionComponent = () => {
                 <Route path='/profile/:id' element={
                   <UserProfile
                     user={user}
+                    mapInfo={mapInfo}
                     setEndpointID={setEndpointID}
                     setDlt={setDlt}
                     setWhat={setWhat}
@@ -254,6 +271,7 @@ const App: React.FunctionComponent = () => {
                     what={what}
                     dlt={dlt}
                     response={response}
+                    mapInfo={mapInfo}
                     setDlt={setDlt}
                     setWhat={setWhat}
                     clearToken={clearToken}
@@ -265,6 +283,7 @@ const App: React.FunctionComponent = () => {
                   <Fulfillment
                     user={user}
                     sessionToken={sessionToken}
+                    mapInfo={mapInfo}
                   />}
                 />
               </Routes>

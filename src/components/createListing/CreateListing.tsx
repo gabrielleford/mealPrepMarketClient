@@ -128,6 +128,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     if (this.state.tags.includes(e.target.id)) {
       checkedTags = checkedTags.filter(tag => tag !== e.target.id)
     }
+    checkedTags = checkedTags.sort();
     this.setState({
       tags: checkedTags
     })
@@ -240,6 +241,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   }
   
   render(): React.ReactNode {
+    console.log(this.state.tags);
     return (
       <Container className='formContainer' mt={-30} size={600} padding='lg'>
         <Paper className='form' sx={{paddingTop: 40, paddingBottom: 20, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>

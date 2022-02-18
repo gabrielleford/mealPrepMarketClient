@@ -30,6 +30,17 @@ export const Banner = styled.div<Props>`
   }
 `
 
+export const FilterBar = styled.div`
+  position: relative;
+  left: calc(-50vw + 50%);
+  margin-top: -1rem;
+  width: 100vw;
+  padding: 0.5rem 0 1.4rem 0;
+  background: #05386b;
+  color: #edf5e1;
+  text-align: center;
+`
+
 export const BannerH1 = styled.h1`
   font-weight: 400;
   transition: 0.2s ease-in-out;

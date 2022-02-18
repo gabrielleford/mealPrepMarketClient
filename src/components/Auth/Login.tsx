@@ -75,7 +75,6 @@ class Login extends React.Component<LoginProps, LoginState> {
       return res.json()
     })
     .then(json => {
-      console.log(this.state.responseCode);
       if (this.state.responseCode === 201) {
         this.props.updateToken(json.sessionToken);
         this.props.setSessionToken(json.sessionToken)
