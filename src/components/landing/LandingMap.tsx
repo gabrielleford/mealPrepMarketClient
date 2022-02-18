@@ -22,6 +22,7 @@ type MapState = {
 
 type MapProps = {
   results: LandingState['results'],
+  tags: LandingState['tags'],
 }
 
 let tagSrc:string = '';
@@ -86,32 +87,34 @@ class LandingMap extends React.Component<MapProps, MapState> {
 
   mapListings = () => {
     return (
-      this.state._isMounted && this.props.results.map((listing): JSX.Element => {
-        return (
-            <Grid.Col span={3} key={listing.id}>
-                <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >
-                  <Center>
-                    <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
-                  </Center>
-                  <CardSection>
-                    <Image src={listing.image} alt={listing.title} width={400} height={250}/>
-                  </CardSection>
-                  <Center>
-                    <Badge mt='sm' size="lg" variant="filled" color='secondary'>${listing.price} USD</Badge>
-                  </Center>
-                  {listing.tag.length > 0 &&                  
-                    <Group mt='lg' position="center">
-                      {listing.tag.map(tag => {
-                        this.tagImages(tag)
-                        return(
-                          <Avatar key={tag} src={tagSrc} alt={tag} />
-                        )
-                      })}
-                    </Group>
-                  }
-                </Card>
-            </Grid.Col>
-        )
+      this.state._isMounted && this.props.results.map((listing) => {
+        if (this.props.tags.every(filter => listing.tag.includes(filter))) {
+          return (
+              <Grid.Col span={3} key={listing.id}>
+                  <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >
+                    <Center>
+                      <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
+                    </Center>
+                    <CardSection>
+                      <Image src={listing.image} alt={listing.title} width={400} height={250}/>
+                    </CardSection>
+                    <Center>
+                      <Badge mt='sm' size="lg" variant="filled" color='secondary'>${listing.price} USD</Badge>
+                    </Center>
+                    {listing.tag.length > 0 &&                  
+                      <Group mt='lg' position="center">
+                        {listing.tag.map(tag => {
+                          this.tagImages(tag)
+                          return(
+                            <Avatar key={tag} src={tagSrc} alt={tag} />
+                          )
+                        })}
+                      </Group>
+                    }
+                  </Card>
+              </Grid.Col>
+          )
+        }
       })
     )
   }
@@ -130,7 +133,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 150 : 40} sx={{marginLeft: 'auto', marginRight: 'auto'}}>
+      <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 15 : 10} sx={{marginLeft: 'auto', marginRight: 'auto'}}>
         {this.props.results[0].id !== '' && this.mapListings()}
       </Grid>
     )

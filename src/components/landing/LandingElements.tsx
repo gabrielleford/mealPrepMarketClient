@@ -16,6 +16,7 @@ export const Banner = styled.div<Props>`
   background: #05386b;
   color: #edf5e1;
   text-align: center;
+  /* border-bottom: 7px solid #edf5e1; */
 
   @media screen and (max-width: 1407px) and (min-width: 1216px) {
     margin-top: 5rem;
@@ -28,17 +29,6 @@ export const Banner = styled.div<Props>`
   @media screen and (max-width: 1032px) and (min-width: 769px) {
     margin-top: 5rem;
   }
-`
-
-export const FilterBar = styled.div`
-  position: relative;
-  left: calc(-50vw + 50%);
-  margin-top: -1rem;
-  width: 100vw;
-  padding: 0.5rem 0 1.4rem 0;
-  background: #05386b;
-  color: #edf5e1;
-  text-align: center;
 `
 
 export const BannerH1 = styled.h1`
@@ -77,5 +67,33 @@ export const BannerButton = styled(Link)`
 
   @media screen and (max-width: 480px) {
     font-size: 0.8rem;
+  }
+`
+
+export const FilterBar = styled.div<Props>`
+  position: relative;
+  left: calc(-50vw + 50%);
+  margin-top: ${props => (props.sessionToken ? '-1rem' : '0rem' )} ;
+  width: 100vw;
+  padding: 0.5rem 0 1.4rem 0;
+  background: #05386b;
+  color: #edf5e1;
+  text-align: center;
+`
+
+export const TagLabel = styled.label`
+  border-bottom: solid 2px transparent;
+  transition: all 0.2 ease-in-out;
+
+  &:hover {
+    border-bottom: solid 2px #8ee4af;
+  }
+`
+
+export const CreateInput = styled.input`
+  display: none;
+
+  &:checked + ${TagLabel} {
+  border-bottom: solid 2px #5cdb95;
   }
 `
