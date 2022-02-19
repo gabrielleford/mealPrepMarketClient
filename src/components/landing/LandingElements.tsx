@@ -79,6 +79,7 @@ export const FilterBar = styled.div<Props>`
   color: #05386b;
   background: #edf5e1;
   text-align: center;
+  margin-bottom: 2rem;
 
   @media screen and (max-width: 1407px) {
     margin-top: ${props => (props.sessionToken ? '-2rem': '0')}
