@@ -1,10 +1,9 @@
 import React from "react";
 import APIURL from "../helpers/environments";
-import { Link } from "react-router-dom";
 import { AppProps } from "../../App";
 import LandingMap from "./LandingMap";
 import { Banner, BannerButton, BannerH1, BannerP, FilterBar } from './LandingElements'
-import { Button, Container, Group } from "@mantine/core";
+import { Container, Group } from "@mantine/core";
 import { CreateInput, TagLabel } from "./LandingElements";
 import Filter from "../filterAside/FilterAside";
 
