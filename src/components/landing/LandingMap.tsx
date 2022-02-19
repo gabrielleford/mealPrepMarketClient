@@ -12,7 +12,7 @@ import NutFree from '../../assets/mealPrepMarketLightIconNF.png';
 import SoyFree from '../../assets/mealPrepMarketLightIconSoyF.png';
 import SugarFree from '../../assets/mealPrepMarketLightIconSF.png';
 import { LandingState } from "./Landing";
-import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, Title } from "@mantine/core";
+import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, MediaQuery, Title } from "@mantine/core";
 import { Link} from "react-router-dom";
 
 let fixedCheckedTags: string[] = [];
@@ -108,7 +108,8 @@ class LandingMap extends React.Component<MapProps, MapState> {
         this.fixCheckedTags();
         if (fixedCheckedTags.every(filter => listing.tag.includes(filter))) {
           return (
-              <Grid.Col span={3} key={listing.id}>
+            <MediaQuery query="(min-width: 1201px) and (max-width: 1400px)" styles={{maxWidth: '375px', transition: 'all 0.2s ease-in-out'}}>
+              <Grid.Col ml='auto' mr='auto' className='landingGrid' span={4} md={4} lg={3} xl={2} key={listing.id}>
                   <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >
                     <Center>
                       <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
@@ -131,6 +132,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
                     }
                   </Card>
               </Grid.Col>
+            </MediaQuery>
           )
         }
       })
