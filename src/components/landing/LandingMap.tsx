@@ -15,6 +15,9 @@ import { LandingState } from "./Landing";
 import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, Title } from "@mantine/core";
 import { Link} from "react-router-dom";
 
+let fixedCheckedTags: string[] = [];
+const dashRegex: RegExp = /-/g;
+
 type MapState = {
   divClicked: boolean,
   _isMounted: boolean,
@@ -85,10 +88,25 @@ class LandingMap extends React.Component<MapProps, MapState> {
     )
   }
 
+  fixCheckedTags = () => {
+    fixedCheckedTags = this.props.tags.map(tag => {
+      tag = tag.replaceAll(dashRegex, ' ')
+      tag = tag.charAt(0).toUpperCase() + tag.slice(1)
+      return (
+        tag
+      )
+    })
+
+    return (
+      fixedCheckedTags
+    )
+  }
+
   mapListings = () => {
     return (
       this.state._isMounted && this.props.results.map((listing) => {
-        if (this.props.tags.every(filter => listing.tag.includes(filter))) {
+        this.fixCheckedTags();
+        if (fixedCheckedTags.every(filter => listing.tag.includes(filter))) {
           return (
               <Grid.Col span={3} key={listing.id}>
                   <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >

@@ -35,7 +35,9 @@ export type AppProps = {
   prevPath: string,
   popoverOpen: boolean,
   response: number,
+  filterOpen: boolean,
   mapInfo: {orders: {}[], listings: {}[], fulfillment: {}[]}
+  windowPath: string,
   clearToken: () => void,
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
@@ -57,6 +59,8 @@ export type AppProps = {
   setPopoverOpen: (popoverOpened: boolean) => void,
   setResponse: (response: number) => void,
   setEndpointID: (endpointID: string) => void,
+  setFilterOpen: (filter: boolean) => void,
+  setWindowPath: (windowPath: string) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -69,6 +73,8 @@ const App: React.FunctionComponent = () => {
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [mapInfo, setMapInfo] = useState<{orders: {}[], listings: {}[], fulfillment: {}[]}> ({orders: [], listings: [], fulfillment: []})
   const [response, setResponse] = useState<number>(0);
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const [windowPath, setWindowPath] = useState<string>('');
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -140,7 +146,6 @@ const App: React.FunctionComponent = () => {
           })
           .then(res => res.json())
           .then(res => {
-            console.log(res);
             setMapInfo(res);
           })
         } else if (user.userId !== '' && sessionToken === '') {
@@ -173,11 +178,14 @@ const App: React.FunctionComponent = () => {
         <Router>
           <div id='allContent'>
             <Navbar 
-              clearToken={clearToken} 
-              setSessionToken={setSessionToken} 
               sessionToken={sessionToken} 
               user={user}
               isOpen={isOpen}
+              filterOpen={filterOpen}
+              windowPath={windowPath}
+              setFilterOpen={setFilterOpen}
+              clearToken={clearToken} 
+              setSessionToken={setSessionToken} 
               setIsOpen={setIsOpen}
             />
             <Sidebar
@@ -186,11 +194,15 @@ const App: React.FunctionComponent = () => {
               setIsOpen={setIsOpen}
               clearToken={clearToken}
             />
+
             <Container mt={130} mb={100} fluid={true}>
               <Routes>
                 <Route path='/' element={
                   <Landing
                     sessionToken={sessionToken}
+                    filterOpen={filterOpen}
+                    setFilterOpen={setFilterOpen}
+                    setWindowPath={setWindowPath}
                     setPrevPath={setPrevPath}
                     setResponse={setResponse}
                     setEndpointID={setEndpointID}
@@ -200,10 +212,11 @@ const App: React.FunctionComponent = () => {
                 />
                 <Route path='/register' element={
                   <Signup
-                    updateToken={updateToken}
-                    sessionToken={sessionToken}
-                    prevPath={prevPath}
-                    popoverOpen={popoverOpen}
+                  sessionToken={sessionToken}
+                  prevPath={prevPath}
+                  popoverOpen={popoverOpen}
+                  setWindowPath={setWindowPath}
+                  updateToken={updateToken}
                     setSessionToken={setSessionToken}
                     setPopoverOpen={setPopoverOpen}
                   />} 
@@ -212,6 +225,7 @@ const App: React.FunctionComponent = () => {
                   <Login 
                     sessionToken={sessionToken}
                     prevPath={prevPath}
+                    setWindowPath={setWindowPath}
                     updateToken={updateToken}
                     setSessionToken={setSessionToken}
                   />} 
@@ -245,6 +259,7 @@ const App: React.FunctionComponent = () => {
                     response={response}
                     user={user}
                     endpointID={endpointID}
+                    setWindowPath={setWindowPath}
                     setEndpointID={setEndpointID}
                     setWhat={setWhat}
                     setDlt={setDlt}

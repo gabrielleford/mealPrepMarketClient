@@ -10,6 +10,7 @@ import { Alert, Button, Center, Container, Grid, Input, Paper, PasswordInput, Te
 export type LoginProps = {
   sessionToken: AppProps['sessionToken'],
   prevPath: AppProps['prevPath'],
+  setWindowPath: AppProps['setWindowPath'],
   updateToken: AppProps['updateToken'],
   setSessionToken: AppProps['setSessionToken'],
 }

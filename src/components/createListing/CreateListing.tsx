@@ -21,6 +21,7 @@ import { CreateInput, TagLabel } from "./CreateListingElements";
 import { Alert, Button, Center, Container, Grid, Group, Image, Input, NumberInput, Paper, Text, Textarea, Title } from '@mantine/core';
 
 const lineBreakRegex: RegExp = /\n/g;
+const dashRegex: RegExp = /-/g;
 
 export type CreateState = {
   title: string,
@@ -128,9 +129,19 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     if (this.state.tags.includes(e.target.id)) {
       checkedTags = checkedTags.filter(tag => tag !== e.target.id)
     }
-    checkedTags = checkedTags.sort();
+
+  const fixedCheckedTags = checkedTags.map(tag => {
+      tag = tag.replaceAll(dashRegex, ' ')
+      tag = tag.charAt(0).toUpperCase() + tag.slice(1)
+      return (
+        tag
+      )
+    })
+
+    fixedCheckedTags.sort()
+
     this.setState({
-      tags: checkedTags
+      tags: fixedCheckedTags
     })
   }
 
@@ -241,7 +252,6 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   }
   
   render(): React.ReactNode {
-    console.log(this.state.tags);
     return (
       <Container className='formContainer' mt={-30} size={600} padding='lg'>
         <Paper className='form' sx={{paddingTop: 40, paddingBottom: 20, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>
@@ -311,52 +321,52 @@ class TagRender extends React.Component<TagProps> {
   render(): React.ReactNode {
     return (
       <>
-      <CreateInput id='Keto' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Keto">
+      <CreateInput id='keto' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="keto">
         <Image className="tagImg" width={80} height={80} src={Keto} />
       </TagLabel>
-      <CreateInput id='Low Carb' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Low Carb">
+      <CreateInput id='low-Carb' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="low-Carb">
         <Image className="tagImg" width={80} height={80} src={LowCarb} />
       </TagLabel>
-      <CreateInput id='Mediterranean' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Mediterranean">
+      <CreateInput id='mediterranean' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="mediterranean">
         <Image className="tagImg" width={80} height={80} src={Mediterranean} />
       </TagLabel>
-      <CreateInput id='Paleo' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Paleo">
+      <CreateInput id='paleo' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="paleo">
         <Image className="tagImg" width={80} height={80} src={Paleo} />
       </TagLabel>
-      <CreateInput id='Vegan' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Vegan">
+      <CreateInput id='vegan' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="vegan">
         <Image className="tagImg" width={80} height={80} src={Vegan} />
       </TagLabel>
-      <CreateInput id='Vegetarian' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Vegetarian">
+      <CreateInput id='vegetarian' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="vegetarian">
         <Image className="tagImg" width={80} height={80} src={Vegetarian} />
       </TagLabel>
-      <CreateInput id='Dairy Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Dairy Free">
+      <CreateInput id='dairy-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="dairy-Free">
         <Image className="tagImg" width={80} height={80} src={DairyFree} />
       </TagLabel>
-      <CreateInput id='Egg Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Egg Free">
+      <CreateInput id='egg-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="egg-Free">
         <Image className="tagImg" width={80} height={80} src={EggFree} />
       </TagLabel>
-      <CreateInput id='Gluten Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Gluten Free">
+      <CreateInput id='gluten-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="gluten-Free">
         <Image className="tagImg" width={80} height={80} src={GlutenFree} />
       </TagLabel>
-      <CreateInput id='Nut Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Nut Free">
+      <CreateInput id='nut-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="nut-Free">
         <Image className="tagImg" width={80} height={80} src={NutFree} />
       </TagLabel>
-      <CreateInput id='Soy Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Soy Free">
+      <CreateInput id='soy-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="soy-Free">
         <Image className="tagImg" width={80} height={80} src={SoyFree} />
       </TagLabel>
-      <CreateInput id='Sugar Free' type='checkbox' onChange={this.props.handleTag}/>
-      <TagLabel htmlFor="Sugar Free">
+      <CreateInput id='sugar-Free' type='checkbox' onChange={this.props.handleTag}/>
+      <TagLabel htmlFor="sugar-Free">
         <Image className="tagImg" width={80} height={80} src={SugarFree} />
       </TagLabel>
       </>

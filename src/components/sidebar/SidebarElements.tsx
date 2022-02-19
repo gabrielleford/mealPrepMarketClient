@@ -28,7 +28,7 @@ export const SidebarContainer = styled.aside<SidebarProps>`
 export const Icon = styled.div`
   position: absolute;
   top: 1rem;
-  right: 2.5rem;
+  right: 3.5rem;
   font-size: 2rem;
   color: #5cdb95;
   cursor: pointer;

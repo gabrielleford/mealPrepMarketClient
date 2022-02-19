@@ -75,10 +75,22 @@ export const FilterBar = styled.div<Props>`
   left: calc(-50vw + 50%);
   margin-top: ${props => (props.sessionToken ? '-1rem' : '0rem' )} ;
   width: 100vw;
-  padding: 0.5rem 0 1.4rem 0;
-  background: #05386b;
-  color: #edf5e1;
+  padding: 1px 0 0.8rem 0;
+  color: #05386b;
+  background: #edf5e1;
   text-align: center;
+
+  @media screen and (max-width: 1407px) {
+    margin-top: ${props => (props.sessionToken ? '-2rem': '0')}
+  }
+
+  @media screen and (max-width: 1032px) {
+    margin-top: ${props => (props.sessionToken ? '-3rem': '0')}
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none
+  }
 `
 
 export const TagLabel = styled.label`
@@ -87,6 +99,10 @@ export const TagLabel = styled.label`
 
   &:hover {
     border-bottom: solid 2px #8ee4af;
+  }
+
+  @media screen and (max-width: 1032px) {
+    font-size: 0.9rem;
   }
 `
 

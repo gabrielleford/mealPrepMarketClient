@@ -28,6 +28,7 @@ export type ListingProps = {
   dlt: AppProps['dlt'],
   response: AppProps['response'],
   endpointID: AppProps['endpointID'],
+  setWindowPath: AppProps['setWindowPath'],
   setEndpointID: AppProps['setEndpointID'],
   setWhat: AppProps['setWhat'],
   setDlt: AppProps['setDlt'],

@@ -28,6 +28,7 @@ export type SignupProps = {
   sessionToken: AppProps['sessionToken'],
   prevPath: AppProps['prevPath'],
   popoverOpen: AppProps['popoverOpen'],
+  setWindowPath: AppProps['setWindowPath'],
   updateToken: AppProps['updateToken'],
   setSessionToken: AppProps['setSessionToken'],
   setPopoverOpen: AppProps['setPopoverOpen'],

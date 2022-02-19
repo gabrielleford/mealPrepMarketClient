@@ -138,6 +138,7 @@ export const TagLabel = styled.label`
 
 export const CreateInput = styled.input`
   display: none;
+  
 
   &:checked + ${TagLabel} {
   background: rgba(92, 219, 149, 0.3);
