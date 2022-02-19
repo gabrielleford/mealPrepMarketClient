@@ -101,7 +101,7 @@ body {
 .form {
   font-family: 'Open Sans', sans-serif;
   background: #05386b;
-  margin-top: 12rem;
+  margin-top: 10rem;
 }
 
 .formTitle {
@@ -250,12 +250,19 @@ body {
 
 /* * Media Queries * */
 @media screen and (min-width: 1216px) and (max-width: 1407px) {
+  .form {
+    margin-top: 1rem;
+  }
   .listingCard {
     margin-top: 11rem;
   }
 }
 
 @media screen and (min-width: 1033px) and (max-width: 1215px) {
+  .form {
+    margin-top: -1rem;
+  }
+
   .listingCard {
     margin-top: 9.5rem;
   }
@@ -263,6 +270,9 @@ body {
 
 
 @media screen and (min-width: 769px) and (max-width: 1032px) {
+  .form {
+    margin-top: -2rem;
+  }
   .listingCard {
     margin-top: 8rem;
   }
