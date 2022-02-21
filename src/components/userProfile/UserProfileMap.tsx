@@ -1,4 +1,4 @@
-import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, Title } from "@mantine/core";
+import { Avatar, Badge, Card, Center, Grid, Group, Image, Title } from "@mantine/core";
 import React from "react";
 import Keto from '../../assets/mealPrepMarketLightIconK.png';
 import LowCarb from '../../assets/mealPrepMarketLightIconLC.png';
@@ -88,14 +88,14 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
     return(
       this.state._isMounted && this.props.listings.map((listing):JSX.Element => {
         return(
-          <Grid.Col span={3} key={listing.id}>
+          <Grid.Col sx={{margin: '0 auto'}} span={8} xs={8} sm={10} md={4} lg={4} xl={4} key={listing.id}>
             <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} component={Link} to={`/listing/${listing.id}`} replace={true}>
               <Center>
-                <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
+                <Title sx={{fontWeight: '400', color: '#05386b'}} order={2}>{listing.title}</Title>
               </Center>
-              <CardSection>
-                <Image src={listing.image} alt={listing.title} width={250} height={150}/>
-              </CardSection>
+              <Center>
+                <Image src={listing.image} alt={listing.title} width={300} height={200} style={{margin: '0 auto'}}/>
+              </Center>
               <Center>
                 <Badge mt='sm' size="lg" variant="filled" color='secondary'>${listing.price} USD</Badge>
               </Center>
@@ -131,7 +131,7 @@ class UserProfileMap extends React.Component<UserMapProps, UserMapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid mt='xl'>
+      <Grid mt='xl' style={{marginLeft: 'auto', marginRight: 'auto'}}>
         {this.props.listings && this.mapListings()}
       </Grid>
     )

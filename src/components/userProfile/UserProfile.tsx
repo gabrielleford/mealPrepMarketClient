@@ -92,7 +92,7 @@ componentWillUnmount() {
   render(): React.ReactNode {
     return (
       <Container>
-        <Card mt={150} radius='lg' sx={{width: '700px', background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
+        <Card mt={150} id='userProfileCard' radius='lg' sx={{background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
           <Group position="center" spacing={60}>
             <Avatar src={this.state.profilePicture} size={150} radius={75} />
             {(this.props.user.userId === this.state.profileID && this.state.profileDescription === '' ) ?
