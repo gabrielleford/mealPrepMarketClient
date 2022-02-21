@@ -19,15 +19,19 @@ export const Banner = styled.div<Props>`
   /* border-bottom: 7px solid #edf5e1; */
 
   @media screen and (max-width: 1407px) and (min-width: 1216px) {
-    margin-top: 5rem;
+    margin-top: -1.5rem;
   }
 
   @media screen and (max-width: 1215px) and (min-width: 1033px) {
-    margin-top: 6.5rem;
+    margin-top: -2rem;
   }
 
   @media screen and (max-width: 1032px) and (min-width: 769px) {
-    margin-top: 5rem;
+    margin-top: -3rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-top: -4.5rem;
   }
 `
 

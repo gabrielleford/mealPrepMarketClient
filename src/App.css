@@ -34,7 +34,6 @@ html {
   flex-direction: column;
 }
 
-/* TODO: Fix size of background */
 body {
   font-family: 'Open Sans', sans-serif!important;
   background: url('./assets/mealPrepMarketBackgroundDesktop.png') center center;
@@ -126,7 +125,7 @@ body {
 
 .listingCard {
   background: #edf5e1;
-  margin-top: 2rem;
+  margin-top: 10rem;
 }
 
 .listingTitle {
@@ -254,7 +253,7 @@ body {
     margin-top: 1rem;
   }
   .listingCard {
-    margin-top: 11rem;
+    margin-top: 9.5rem;
   }
 }
 
@@ -264,7 +263,7 @@ body {
   }
 
   .listingCard {
-    margin-top: 9.5rem;
+    margin-top: 8.5rem;
   }
 }
 
@@ -274,7 +273,7 @@ body {
     margin-top: -2rem;
   }
   .listingCard {
-    margin-top: 8rem;
+    margin-top: -0.5rem;
   }
 }
 
@@ -302,7 +301,7 @@ body {
   }
 
   .listingCard {
-    margin-top: -1rem;
+    margin-top: -2.5rem;
   }
 
   #userInfo {

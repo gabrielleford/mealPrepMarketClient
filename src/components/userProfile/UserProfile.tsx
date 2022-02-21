@@ -72,7 +72,9 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
-  if (this.props.mapInfo.listings.length > 0) {
+  if (this.props.mapInfo.listings.length > 0 && this.props.user.userId === this.state.profileID) {
+    this.fetchUserProfile();
+  } else {
     this.fetchUserProfile();
   }
   this.props.setDlt(false);
@@ -93,7 +95,7 @@ componentWillUnmount() {
         <Card mt={150} radius='lg' sx={{width: '700px', background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
           <Group position="center" spacing={60}>
             <Avatar src={this.state.profilePicture} size={150} radius={75} />
-            {(this.props.user.userId === this.state.profileOwner && this.state.profileDescription === '' ) ?
+            {(this.props.user.userId === this.state.profileID && this.state.profileDescription === '' ) ?
               <>
               <Group direction="column" position="center">
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
@@ -106,28 +108,29 @@ componentWillUnmount() {
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
                 <Text sx={{maxWidth: '200px', color: '#edf5e1'}}>{this.state.profileDescription}</Text>
               </Group> :
+              this.props.user.userId !== this.state.profileID ?
               <Group>
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
                 <Text sx={{color: '#edf5e1'}}>{this.state.profileDescription}</Text>
-              </Group>
+              </Group> : ''
             }
           </Group>
-          {this.props.user.userId === this.state.profileOwner &&
+          {this.props.user.userId === this.state.profileID &&
             <Center>
               <Button className="formButton" radius='md' component={Link} to={`/user/${this.state.profileOwner}`} compact>Edit My Profile</Button>
             </Center>
           }
         </Card>
-        {this.props.mapInfo.listings.length > 0 ? 
-          <UserProfileMap listings={this.state.listings}/> :
+        {(this.props.mapInfo.listings.length < 1 && this.props.user.userId === this.state.profileOwner) ? 
           <Paper sx={{background: '#05386b', padding: '40px 50px', margin: '0 auto'}} radius='lg' mt={50}>
-          <Center>
-            <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>
-          </Center>
-          <Center>
-            <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/create'>Create your first listing!</Text>
-          </Center>
-        </Paper>
+            <Center>
+              <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't created any listings, yet!&#128577;</Title>
+            </Center>
+            <Center>
+              <Text mt='lg' size='lg' id='noOrdersText' component={Link} to='/create'>Create your first listing!</Text>
+            </Center>
+          </Paper>:
+          <UserProfileMap listings={this.state.listings}/> 
         }
       </Container>
     )
