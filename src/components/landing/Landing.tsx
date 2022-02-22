@@ -57,7 +57,6 @@ class Landing extends React.Component<LandingProps, LandingState> {
     this.setState({
       tags: checkedTags
     })
-    console.log(checkedTags)
   }
 
   fetchListings = async ():Promise<void> => {

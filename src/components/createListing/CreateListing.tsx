@@ -265,7 +265,9 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
               <Center>
                 <Text size='xs' sx={{color: '#edf5e1'}}>{this.state.image.replace('C:\\fakepath\\', '')}</Text>
               </Center>
-              {this.state.stringPrvwSrc && <Image width={400} height={250} src={this.state.stringPrvwSrc} />}
+              <Center>
+                {this.state.stringPrvwSrc && <Image width={400} height={250} src={this.state.stringPrvwSrc} />}
+              </Center>
             </Grid.Col>
             <Grid.Col>
                 <Input name='title' placeholder='Title' radius='md' invalid={this.state.titleErr ? true : false} required value={this.state.title} onChange={this.handleChange} />

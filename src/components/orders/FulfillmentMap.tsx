@@ -25,7 +25,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
     return (
       this.state._isMounted && this.props.orders.map((order):JSX.Element => {
         return (
-          <Grid.Col span={4} key={order.id}>
+          <Grid.Col span={8} sm={4} md={4} lg={4} xl={4} key={order.id} ml='auto' mr='auto'>
               <Card radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} component={Link} to={`/listing/${order.listingId}`} replace={true}>
                 <Center>
                   <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{order.listing.title}</Title>
@@ -73,7 +73,7 @@ class FulfillmentMap extends React.Component<FulfillMapProps, FulfillMapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid justify='space-between' mt={100}>
+      <Grid gutter='lg' mt={100} ml='auto' mr='auto'>
         {this.props.orders[0].id !== '' && this.mapOrders()}
       </Grid>
     )

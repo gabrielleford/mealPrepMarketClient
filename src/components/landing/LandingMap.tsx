@@ -153,7 +153,7 @@ class LandingMap extends React.Component<MapProps, MapState> {
 
   render(): React.ReactNode {
     return (
-      <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 15 : 10} sx={{marginLeft: 'auto', marginRight: 'auto'}}>
+      <Grid gutter={100} mt={localStorage.getItem('Authorization') ? 15 : 10}>
         {this.props.results[0].id !== '' && this.mapListings()}
       </Grid>
     )

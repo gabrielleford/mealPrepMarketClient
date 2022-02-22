@@ -146,6 +146,7 @@ const App: React.FunctionComponent = () => {
           })
           .then(res => res.json())
           .then(res => {
+            console.log(res)
             setMapInfo(res);
           })
         } else if (user.userId !== '' && sessionToken === '') {

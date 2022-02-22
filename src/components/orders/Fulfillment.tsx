@@ -83,7 +83,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     this.setState({
       _isMounted: true
     })
-    if (this.props.mapInfo.orders.length > 0) {
+    if (this.props.mapInfo.fulfillment.length > 0) {
       this.fetchOrders();
     }
   }
@@ -106,7 +106,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
         <Banner>
           <BannerH1>Fulfillment</BannerH1>
         </Banner>
-        {this.props.mapInfo.orders.length < 1 ?
+        {this.props.mapInfo.fulfillment.length < 1 ?
           <Paper sx={{background: '#05386b', padding: '40px 50px'}} radius='lg' mt={90}>
             <Center>
               <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You don't have any orders to fulfill, yet!&#128577;</Title>

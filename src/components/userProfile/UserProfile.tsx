@@ -72,6 +72,7 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
+  console.log(this.props.mapInfo)
   if (this.props.mapInfo.listings.length > 0 && this.props.user.userId === this.state.profileID) {
     this.fetchUserProfile();
   } else {
@@ -108,16 +109,15 @@ componentWillUnmount() {
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
                 <Text sx={{maxWidth: '200px', color: '#edf5e1'}}>{this.state.profileDescription}</Text>
               </Group> :
-              this.props.user.userId !== this.state.profileID ?
-              <Group>
+              <Group direction="column">
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
                 <Text sx={{color: '#edf5e1'}}>{this.state.profileDescription}</Text>
-              </Group> : ''
+              </Group>
             }
           </Group>
           {this.props.user.userId === this.state.profileID &&
             <Center>
-              <Button className="formButton" radius='md' component={Link} to={`/user/${this.state.profileOwner}`} compact>Edit My Profile</Button>
+              <Button className="formButton" radius='md' mt='md' component={Link} to={`/user/${this.state.profileOwner}`} compact>Edit My Profile</Button>
             </Center>
           }
         </Card>

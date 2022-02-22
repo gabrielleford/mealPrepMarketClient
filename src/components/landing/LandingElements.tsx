@@ -10,6 +10,7 @@ export const Banner = styled.div<Props>`
   display: ${props => (props.sessionToken ? 'none' : 'block' )};
   position: relative;
   left: calc(-50vw + 50%);
+  margin-left: -0.5rem;
   margin-top: -1rem;
   width: 100vw;
   padding: 0.5rem 0 1.4rem 0;
@@ -77,6 +78,7 @@ export const BannerButton = styled(Link)`
 export const FilterBar = styled.div<Props>`
   position: relative;
   left: calc(-50vw + 50%);
+  margin-left: -0.5rem;
   margin-top: ${props => (props.sessionToken ? '-1rem' : '0rem' )} ;
   width: 100vw;
   padding: 1px 0 0.8rem 0;
