@@ -42,7 +42,6 @@ export type AppProps = {
   updateToken: (newToken: string) => void,
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
-  setListingEdit: (listingEdit: boolean) => void,
   setUser: (user: {
     userId: string,
     firstName: string,
@@ -61,6 +60,7 @@ export type AppProps = {
   setEndpointID: (endpointID: string) => void,
   setFilterOpen: (filter: boolean) => void,
   setWindowPath: (windowPath: string) => void,
+  setMapInfo: (mapInfo: {orders: {}[], listings: {}[], fulfillment: {}[]}) => void,
 }
 
 const App: React.FunctionComponent = () => {
@@ -277,6 +277,8 @@ const App: React.FunctionComponent = () => {
                   <UserProfile
                     user={user}
                     mapInfo={mapInfo}
+                    sessionToken={sessionToken}
+                    setMapInfo={setMapInfo}
                     setWindowPath={setWindowPath}
                     setEndpointID={setEndpointID}
                     setDlt={setDlt}
@@ -293,6 +295,7 @@ const App: React.FunctionComponent = () => {
                     dlt={dlt}
                     response={response}
                     mapInfo={mapInfo}
+                    setMapInfo={setMapInfo}
                     setWindowPath={setWindowPath}
                     setDlt={setDlt}
                     setWhat={setWhat}
@@ -306,6 +309,7 @@ const App: React.FunctionComponent = () => {
                     user={user}
                     sessionToken={sessionToken}
                     mapInfo={mapInfo}
+                    setMapInfo={setMapInfo}
                     setWindowPath={setWindowPath}
                   />}
                 />

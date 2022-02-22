@@ -24,6 +24,8 @@ export type UserState = {
 type UserProps = {
   user: AppProps['user'],
   mapInfo: AppProps['mapInfo'],
+  sessionToken: AppProps['sessionToken'],
+  setMapInfo: AppProps['setMapInfo'],
   setWindowPath: AppProps['setWindowPath'],
   setDlt: AppProps['setDlt'],
   setEndpointID: AppProps['setEndpointID'],
@@ -69,11 +71,28 @@ fetchUserProfile = async ():Promise<void> => {
   .catch(error => console.log(error))
 }
 
+fetchMapInfo = async ():Promise<void> => {
+  await fetch(`${APIURL}/user/checkOrders`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.props.sessionToken}`
+    }
+  })
+  .then(res => res.json())
+  .then(res => {
+    console.log(res)
+    this.props.setMapInfo(res);
+  })
+}
+
 componentDidMount() {
   this.setState({
     _isMounted: true
   });
-  console.log(this.props.mapInfo)
+  if (this.props.user.userId === this.state.profileID) {
+    this.fetchMapInfo();
+  }
   if (this.props.mapInfo.listings.length > 0 && this.props.user.userId === this.state.profileID) {
     this.fetchUserProfile();
   } else {

@@ -13,6 +13,7 @@ export type OrderProps = {
   dlt: AppProps['dlt'],
   endpointID: AppProps['endpointID'],
   mapInfo: AppProps['mapInfo'],
+  setMapInfo: AppProps['setMapInfo'],
   setWindowPath: AppProps['setWindowPath'],
   setDlt: AppProps['setDlt'],
   setWhat: AppProps['setWhat'],
@@ -67,10 +68,26 @@ class Orders extends React.Component<OrderProps, OrderState> {
     }
   }
 
+  fetchMapInfo = async ():Promise<void> => {
+    await fetch(`${APIURL}/user/checkOrders`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.sessionToken}`
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      this.props.setMapInfo(res);
+    })
+  }
+
   componentDidMount() {
     this.setState({
       _isMounted: true
     });
+    this.fetchMapInfo();
     if (this.props.mapInfo.orders.length > 0) {
       this.fetchOrders();
     }

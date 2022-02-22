@@ -11,6 +11,7 @@ export type FulfillProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   mapInfo: AppProps['mapInfo'],
+  setMapInfo: AppProps['setMapInfo'],
   setWindowPath: AppProps['setWindowPath'],
 }
 
@@ -80,10 +81,26 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     }
   }
 
+  fetchMapInfo = async ():Promise<void> => {
+    await fetch(`${APIURL}/user/checkOrders`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.sessionToken}`
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      this.props.setMapInfo(res);
+    })
+  }
+
   componentDidMount() {
     this.setState({
       _isMounted: true
     })
+    this.fetchMapInfo();
     if (this.props.mapInfo.fulfillment.length > 0) {
       this.fetchOrders();
     }
