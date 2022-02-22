@@ -265,7 +265,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
   render(): React.ReactNode {
       return (
         <Container id='listingById' size={700}>
-          {this.props.user.userId === this.state.ownerID ?
+          {this.props.user.id === this.state.ownerID ?
           <ListingEdit app={{...this.props}} listingState={{...this.state}} handleChange={this.handleChange} fetchListing={this.fetchListing} handleNumber={this.handleNumber} /> :
           <Card radius='lg' padding='sm' className="listingCard">
               <Title className="listingTitle" align="center" order={1}>{this.state.title}</Title>
@@ -345,7 +345,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
           }
           {
             this.state.responseCode === 201 && this.state._isMounted ?
-            <Navigate to={`/orders/${this.props.user.userId}`} replace={true} /> : ''
+            <Navigate to={`/orders/${this.props.user.id}`} replace={true} /> : ''
           }
         </Container>
       )

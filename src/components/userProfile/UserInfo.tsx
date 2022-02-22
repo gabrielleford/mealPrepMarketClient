@@ -115,7 +115,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
   }
 
   componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>) {
-    if (this.props.user.userId !== prevProps.user.userId && this.props.user.userId !== '') {
+    if (this.props.user.id !== prevProps.user.id && this.props.user.id !== '') {
       this.renderComponent()
       this.setState({
         role: this.props.user.role,

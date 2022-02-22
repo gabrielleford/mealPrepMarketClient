@@ -91,10 +91,10 @@ componentDidMount() {
     _isMounted: true
   });
   window.scrollTo(0, 0);
-  if (this.props.user.userId === this.state.profileID) {
+  if (this.props.user.id === this.state.profileID) {
     this.fetchMapInfo();
   }
-  if (this.props.mapInfo.listings.length > 0 && this.props.user.userId === this.state.profileID) {
+  if (this.props.mapInfo.listings.length > 0 && this.props.user.id === this.state.profileID) {
     this.fetchUserProfile();
   } else {
     this.fetchUserProfile();
@@ -107,7 +107,7 @@ componentDidMount() {
 }
 
 componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>) {
-  if (this.props.user.userId !== prevProps.user.userId && this.props.user.userId !== undefined) {
+  if (this.props.user.id !== prevProps.user.id && this.props.user.id !== undefined) {
     this.fetchMapInfo();
     this.fetchUserProfile();
   }
@@ -129,7 +129,7 @@ componentWillUnmount() {
         <Card mt={150} id='userProfileCard' radius='lg' sx={{background: '#05386b', marginLeft: 'auto', marginRight: 'auto'}}>
           <Group position="center" spacing={60}>
             <Avatar src={this.state.profilePicture} size={150} radius={75} />
-            {(this.props.user.userId === this.state.profileID && this.state.profileDescription === '' ) ?
+            {(this.props.user.id === this.state.profileID && this.state.profileDescription === '' ) ?
               <>
               <Group direction="column" position="center">
                 <Title sx={{color: '#edf5e1', fontWeight: '400'}}>{this.state.userName}</Title>
@@ -148,13 +148,13 @@ componentWillUnmount() {
               </Group>
             }
           </Group>
-          {this.props.user.userId === this.state.profileID &&
+          {this.props.user.id === this.state.profileID &&
             <Center>
               <Button className="formButton" radius='md' mt='md' component={Link} to={`/user/${this.state.profileOwner}`} compact>Edit My Profile</Button>
             </Center>
           }
         </Card>
-        {(this.props.mapInfo.listings.length < 1 && this.props.user.userId === this.state.profileOwner) ? 
+        {(this.props.mapInfo.listings.length < 1 && this.props.user.id === this.state.profileOwner) ? 
           <Paper sx={{background: '#05386b', padding: '40px 50px', margin: '0 auto'}} radius='lg' mt={50}>
             <Center>
               <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't created any listings, yet!&#128577;</Title>

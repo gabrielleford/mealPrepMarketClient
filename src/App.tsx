@@ -19,7 +19,7 @@ import Footer from './components/footer/Footer';
 export type AppProps = {
   sessionToken: string | null,
   user: {
-    userId: string,
+    id: string,
     firstName: string,
     lastName: string,
     email: string,
@@ -43,7 +43,7 @@ export type AppProps = {
   setSessionToken: (sessionToken: string | null) => void,
   fetchData: () => Promise<void>,
   setUser: (user: {
-    userId: string,
+    id: string,
     firstName: string,
     lastName: string,
     email: string,
@@ -76,14 +76,14 @@ const App: React.FunctionComponent = () => {
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const [windowPath, setWindowPath] = useState<string>('/');
   const [user, setUser] = useState<{
-    userId: string,
+    id: string,
     firstName: string,
     lastName: string,
     email: string,
     profilePicture: string,
     profileDescription: string,
     role: string,}>({
-      userId: '',
+      id: '',
       firstName: '', 
       lastName: '', 
       email: '', 
@@ -106,7 +106,7 @@ const App: React.FunctionComponent = () => {
     setEndpointID('');
     setPrevPath('/');
     setUser({
-      userId: '',
+      id: '',
       firstName: '', 
       lastName: '', 
       email: '', 
@@ -120,7 +120,7 @@ const App: React.FunctionComponent = () => {
     setSessionToken(localStorage.getItem('Authorization')); 
 
       const fetchData = async ():Promise<void> => {
-        if (sessionToken !== '' && user.userId === '') {
+        if (sessionToken !== '' && user.id === '') {
           await fetch(`${APIURL}/user/checkToken`, {
             method: 'POST',
             headers: {
@@ -149,9 +149,9 @@ const App: React.FunctionComponent = () => {
             console.log(res)
             setMapInfo(res);
           })
-        } else if (user.userId !== '' && sessionToken === '') {
+        } else if (user.id !== '' && sessionToken === '') {
           setUser({
-            userId: '',
+            id: '',
             firstName: '', 
             lastName: '', 
             email: '', 
@@ -166,7 +166,7 @@ const App: React.FunctionComponent = () => {
   }, [user, sessionToken])
 
   console.log(user)
-  console.log(user.userId)
+  console.log(user.id)
 
   return (
     <MantineProvider theme={{

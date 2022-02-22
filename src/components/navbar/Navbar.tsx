@@ -56,10 +56,10 @@ class Navbar extends React.Component<NavbarProps> {
           {localStorage.getItem('Authorization') &&
             <Menu sx={{cursor: 'pointer'}} control={<Image src={AccountIcon} height={35} />}>
               <Menu.Label>My Account</Menu.Label>
-              <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/user/${this.props.user.userId}`} icon={<BsGear/>}>Settings</Menu.Item>
-              <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/orders/${this.props.user.userId}`} icon={<BsReceipt/>}>My Orders</Menu.Item>
-              {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/fulfillment/${this.props.user.userId}`} icon={<BsCardChecklist/>}>Fulfillment</Menu.Item>}
-              {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/profile/${this.props.user.userId}`} icon={<CgProfile/>}>My Profile</Menu.Item>}
+              <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/user/${this.props.user.id}`} icon={<BsGear/>}>Settings</Menu.Item>
+              <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/orders/${this.props.user.id}`} icon={<BsReceipt/>}>My Orders</Menu.Item>
+              {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/fulfillment/${this.props.user.id}`} icon={<BsCardChecklist/>}>Fulfillment</Menu.Item>}
+              {this.props.user.role !== 'secondary' && <Menu.Item sx={{color: '#05386b'}} component={Link} to={`/profile/${this.props.user.id}`} icon={<CgProfile/>}>My Profile</Menu.Item>}
             </Menu>
           }
         </Group>

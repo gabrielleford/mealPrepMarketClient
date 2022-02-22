@@ -50,7 +50,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   }
 
   fetchOrders = async ():Promise<void> => {
-    if (this.state.profileID === this.props.user.userId) {
+    if (this.state.profileID === this.props.user.id) {
       await fetch(`${APIURL}/order/myOrders`, {
         method: 'GET',
         headers: new Headers({
@@ -97,7 +97,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {
-    if (this.props.user.userId !== prevProps.user.userId && this.props.mapInfo.orders.length > 0) {
+    if (this.props.user.id !== prevProps.user.id && this.props.mapInfo.orders.length > 0) {
       this.fetchMapInfo();
       this.fetchOrders();
     }

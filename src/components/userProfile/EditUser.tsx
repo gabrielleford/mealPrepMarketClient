@@ -208,7 +208,6 @@ class EditUser extends React.Component<EditProps, EditState> {
   }
 
   previewImgSrc = (prvwFile: any) => {
-  console.log(this.state.newProfilePic);
   if (prvwFile) {
     this.setState({
       stringPrvwSrc: Buffer.from(prvwFile).toString(),
@@ -349,7 +348,7 @@ updateUserInfo = async ():Promise<void> => {
     if(this.state.previewSrc !== prevState.previewSrc ) {
       this.previewImgSrc(this.state.previewSrc);
     }
-    if (this.props.app.user.userId !== prevProps.app.user.userId && this.props.userState.firstName !== prevProps.userState.firstName) {
+    if (this.props.app.user.id !== prevProps.app.user.id && this.props.userState.firstName !== prevProps.userState.firstName) {
       this.renderComponent();
     }
     if (this.state.inputVisible !== prevState.inputVisible) {
@@ -403,8 +402,8 @@ updateUserInfo = async ():Promise<void> => {
       <Grid.Col>
         <Group mt='lg' position="center">
           <Button className="formButton" size="lg" radius='md' compact onClick={() => this.props.app.setDlt(true)}>Delete</Button>
-          <Button component={Link} to={`/orders/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
-          {this.props.app.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
+          <Button component={Link} to={`/orders/${this.props.app.user.id}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
+          {this.props.app.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.app.user.id}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
         </Group>
       </Grid.Col>
       {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}

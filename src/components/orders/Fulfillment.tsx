@@ -62,8 +62,8 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
 
   fetchOrders = async ():Promise<void> => {
     console.log(`PROFILEID: ${this.state.profileID}`);
-    console.log(`USERID: ${this.props.user.userId}`)
-    if (this.state.profileID === this.props.user.userId) {
+    console.log(`USERID: ${this.props.user.id}`)
+    if (this.state.profileID === this.props.user.id) {
       await fetch(`${APIURL}/order/fulfillment/${this.state.profileID}`, {
         method: 'GET',
         headers: new Headers({
@@ -109,7 +109,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {
-    if (this.props.user.userId !== prevProps.user.userId) {
+    if (this.props.user.id !== prevProps.user.id) {
       this.fetchMapInfo();
       this.fetchOrders();
     }
