@@ -91,6 +91,7 @@ class Login extends React.Component<LoginProps, LoginState> {
     this.setState({
       _isMounted: true
     })
+    this.props.setWindowPath('');
   }
 
   // componentDidUpdate(prevProps:Readonly<LoginProps>, prevState:Readonly<LoginState>) {

@@ -11,6 +11,7 @@ export type FulfillProps = {
   user: AppProps['user'],
   sessionToken: AppProps['sessionToken'],
   mapInfo: AppProps['mapInfo'],
+  setWindowPath: AppProps['setWindowPath'],
 }
 
 export type FulfillState = {
@@ -86,6 +87,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     if (this.props.mapInfo.fulfillment.length > 0) {
       this.fetchOrders();
     }
+    this.props.setWindowPath('order')
   }
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {

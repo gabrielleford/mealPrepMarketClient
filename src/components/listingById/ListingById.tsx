@@ -249,6 +249,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     })
     this.fetchListing();
     this.props.setPrevPath(window.location.pathname);
+    this.props.setWindowPath('listing')
   }
 
   componentWillUnmount() {

@@ -13,6 +13,7 @@ export type OrderProps = {
   dlt: AppProps['dlt'],
   endpointID: AppProps['endpointID'],
   mapInfo: AppProps['mapInfo'],
+  setWindowPath: AppProps['setWindowPath'],
   setDlt: AppProps['setDlt'],
   setWhat: AppProps['setWhat'],
   clearToken: AppProps['clearToken'],
@@ -74,6 +75,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
       this.fetchOrders();
     }
     this.props.setWhat('order');
+    this.props.setWindowPath('order')
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {

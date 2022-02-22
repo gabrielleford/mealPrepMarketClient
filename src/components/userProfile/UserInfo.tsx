@@ -11,6 +11,7 @@ export type UserProps = {
   sessionToken: AppProps['sessionToken'],
   response: AppProps['response'],
   endpointID: AppProps['endpointID'],
+  setWindowPath: AppProps['setWindowPath'],
   setEndpointID: AppProps['setEndpointID'],
   setWhat: AppProps['setWhat'],
   clearToken: AppProps['clearToken'],
@@ -109,6 +110,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
       _isMounted: true,
     });
     this.props.setWhat('user');
+    this.props.setWindowPath('user')
   }
 
   componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>) {

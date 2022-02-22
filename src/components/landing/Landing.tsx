@@ -80,6 +80,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
     this.setState({
       _isMounted: true
     });
+    this.props.setWindowPath('/');
     this.props.setPrevPath('/');
     this.fetchListings();
     this.props.setDlt(false);

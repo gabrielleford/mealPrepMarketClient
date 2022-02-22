@@ -44,6 +44,7 @@ export type CreateState = {
 
 type CreateProps = {
   sessionToken: AppProps['sessionToken'],
+  setWindowPath: AppProps['setWindowPath'],
 }
 
 class CreateListing extends React.Component<CreateProps, CreateState> {
@@ -237,6 +238,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     this.setState({
       _isMounted: true,
     })
+    this.props.setWindowPath('create')
   }
 
   componentDidUpdate(prevProps:Readonly<CreateProps>, prevState:Readonly<CreateState>){

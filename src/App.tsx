@@ -74,7 +74,7 @@ const App: React.FunctionComponent = () => {
   const [mapInfo, setMapInfo] = useState<{orders: {}[], listings: {}[], fulfillment: {}[]}> ({orders: [], listings: [], fulfillment: []})
   const [response, setResponse] = useState<number>(0);
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
-  const [windowPath, setWindowPath] = useState<string>('');
+  const [windowPath, setWindowPath] = useState<string>('/');
   const [user, setUser] = useState<{
     userId: string,
     firstName: string,
@@ -165,6 +165,8 @@ const App: React.FunctionComponent = () => {
 
   }, [user, sessionToken])
 
+  console.log(windowPath)
+
   return (
     <MantineProvider theme={{
       fontFamily: 'Open Sans, sans-serif',
@@ -213,11 +215,11 @@ const App: React.FunctionComponent = () => {
                 />
                 <Route path='/register' element={
                   <Signup
-                  sessionToken={sessionToken}
-                  prevPath={prevPath}
-                  popoverOpen={popoverOpen}
-                  setWindowPath={setWindowPath}
-                  updateToken={updateToken}
+                    sessionToken={sessionToken}
+                    prevPath={prevPath}
+                    popoverOpen={popoverOpen}
+                    setWindowPath={setWindowPath}
+                    updateToken={updateToken}
                     setSessionToken={setSessionToken}
                     setPopoverOpen={setPopoverOpen}
                   />} 
@@ -239,6 +241,7 @@ const App: React.FunctionComponent = () => {
                     sessionToken={sessionToken}
                     response={response}
                     endpointID={endpointID}
+                    setWindowPath={setWindowPath}
                     setEndpointID={setEndpointID}
                     setDlt={setDlt}
                     setWhat={setWhat}
@@ -250,6 +253,7 @@ const App: React.FunctionComponent = () => {
                 <Route path='/create' element={
                   <CreateListing 
                     sessionToken={sessionToken}
+                    setWindowPath={setWindowPath}
                   />} 
                 />
                 <Route path='/listing/:id' element={
@@ -273,6 +277,7 @@ const App: React.FunctionComponent = () => {
                   <UserProfile
                     user={user}
                     mapInfo={mapInfo}
+                    setWindowPath={setWindowPath}
                     setEndpointID={setEndpointID}
                     setDlt={setDlt}
                     setWhat={setWhat}
@@ -288,6 +293,7 @@ const App: React.FunctionComponent = () => {
                     dlt={dlt}
                     response={response}
                     mapInfo={mapInfo}
+                    setWindowPath={setWindowPath}
                     setDlt={setDlt}
                     setWhat={setWhat}
                     clearToken={clearToken}
@@ -300,6 +306,7 @@ const App: React.FunctionComponent = () => {
                     user={user}
                     sessionToken={sessionToken}
                     mapInfo={mapInfo}
+                    setWindowPath={setWindowPath}
                   />}
                 />
               </Routes>

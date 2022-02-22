@@ -24,6 +24,7 @@ export type UserState = {
 type UserProps = {
   user: AppProps['user'],
   mapInfo: AppProps['mapInfo'],
+  setWindowPath: AppProps['setWindowPath'],
   setDlt: AppProps['setDlt'],
   setEndpointID: AppProps['setEndpointID'],
   setResponse: AppProps['setResponse'],
@@ -82,6 +83,7 @@ componentDidMount() {
   this.props.setEndpointID('');
   this.props.setResponse(0);
   this.props.setWhat('');
+  this.props.setWindowPath('user')
 }
 
 componentWillUnmount() {

@@ -188,6 +188,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
     this.setState({
       _isMounted: true
     })
+    this.props.setWindowPath('')
   }
 
   componentDidUpdate(prevProps:Readonly<SignupProps>, prevState:Readonly<SignupState>) {
