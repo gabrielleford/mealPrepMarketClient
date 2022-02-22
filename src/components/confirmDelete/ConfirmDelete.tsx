@@ -1,7 +1,7 @@
 import React from "react";
 import APIURL from "../helpers/environments";
-import { Button, Center, Container, Group, Image, Modal, Text, Title } from '@mantine/core';
 import { AppProps } from "../../App";
+import { Button, Center, Container, Group, Image, Modal, Text, Title } from '@mantine/core';
 
 type DeleteProps = {
   sessionToken: AppProps['sessionToken'],

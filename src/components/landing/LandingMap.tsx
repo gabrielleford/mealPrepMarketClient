@@ -1,4 +1,5 @@
 import React from "react";
+import { Link} from "react-router-dom";
 import Keto from '../../assets/mealPrepMarketLightIconK.png';
 import LowCarb from '../../assets/mealPrepMarketLightIconLC.png';
 import Mediterranean from '../../assets/mealPrepMarketLightIconM.png';
@@ -13,7 +14,6 @@ import SoyFree from '../../assets/mealPrepMarketLightIconSoyF.png';
 import SugarFree from '../../assets/mealPrepMarketLightIconSF.png';
 import { LandingState } from "./Landing";
 import { Avatar, Badge, Card, CardSection, Center, Grid, Group, Image, MediaQuery, Title } from "@mantine/core";
-import { Link} from "react-router-dom";
 
 let fixedCheckedTags: string[] = [];
 const dashRegex: RegExp = /-/g;
