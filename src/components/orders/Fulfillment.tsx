@@ -100,6 +100,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     this.setState({
       _isMounted: true
     })
+    window.scrollTo(0, 0);
     this.fetchMapInfo();
     if (this.props.mapInfo.fulfillment.length > 0) {
       this.fetchOrders();
@@ -114,6 +115,7 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
     }
     if (this.props.mapInfo.fulfillment.length !== prevProps.mapInfo.fulfillment.length) {
       this.fetchMapInfo();
+      this.fetchOrders();
     }
   }
 

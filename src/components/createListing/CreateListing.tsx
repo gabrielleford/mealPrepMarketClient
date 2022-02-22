@@ -127,22 +127,13 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
 
   handleTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     let checkedTags:string[] = [...this.state.tags, e.target.id];
+    
     if (this.state.tags.includes(e.target.id)) {
       checkedTags = checkedTags.filter(tag => tag !== e.target.id)
     }
 
-  const fixedCheckedTags = checkedTags.map(tag => {
-      tag = tag.replaceAll(dashRegex, ' ')
-      tag = tag.charAt(0).toUpperCase() + tag.slice(1)
-      return (
-        tag
-      )
-    })
-
-    fixedCheckedTags.sort()
-
     this.setState({
-      tags: fixedCheckedTags
+      tags: checkedTags
     })
   }
 
@@ -184,6 +175,16 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   }
 
   postListing = async (encodedImg: string):Promise<void> => {
+    const fixedCheckedTags = this.state.tags.map(tag => {
+      tag = tag.replaceAll(dashRegex, ' ')
+      tag = tag.charAt(0).toUpperCase() + tag.slice(1)
+      return (
+        tag
+      )
+    })
+
+    fixedCheckedTags.sort();
+
     var formData = new FormData();
     formData.append('file', encodedImg);
     formData.append('upload_preset', 'MealPrepMarket');
@@ -202,7 +203,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
           description: this.state.description.replaceAll(lineBreakRegex, '\n'),
           image: cloudinary.url,
           price: this.state.price,
-          tag: this.state.tags,
+          tag: fixedCheckedTags,
         },
       }),
       headers: new Headers({
@@ -238,6 +239,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
     this.setState({
       _isMounted: true,
     })
+    window.scrollTo(0, 0);
     this.props.setWindowPath('create')
   }
 
@@ -254,6 +256,7 @@ class CreateListing extends React.Component<CreateProps, CreateState> {
   }
   
   render(): React.ReactNode {
+    console.log(this.state.tags);
     return (
       <Container className='formContainer' mt={-30} size={600} padding='lg'>
         <Paper className='form' sx={{paddingTop: 40, paddingBottom: 20, paddingLeft: 75, paddingRight: 75}} mt='xl' shadow='xl' radius='md'>

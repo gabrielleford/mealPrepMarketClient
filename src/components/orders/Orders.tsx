@@ -87,6 +87,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
     this.setState({
       _isMounted: true
     });
+    window.scrollTo(0, 0);
     this.fetchMapInfo();
     if (this.props.mapInfo.orders.length > 0) {
       this.fetchOrders();
@@ -102,6 +103,12 @@ class Orders extends React.Component<OrderProps, OrderState> {
     }
     if (this.props.mapInfo.orders.length !== prevProps.mapInfo.orders.length) {
       this.fetchMapInfo();
+      this.fetchOrders();
+    }
+    if (this.props.response !== prevProps.response && this.props.response === 200) {
+      this.fetchMapInfo();
+      this.fetchOrders();
+      this.props.setResponse(0);
     }
   }
 

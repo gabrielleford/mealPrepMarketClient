@@ -188,6 +188,7 @@ class Signup extends React.Component<SignupProps, SignupState> {
     this.setState({
       _isMounted: true
     })
+    window.scrollTo(0, 0);
     this.props.setWindowPath('')
   }
 

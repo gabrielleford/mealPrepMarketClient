@@ -91,6 +91,7 @@ class Login extends React.Component<LoginProps, LoginState> {
     this.setState({
       _isMounted: true
     })
+    window.scrollTo(0, 0);
     this.props.setWindowPath('');
   }
 

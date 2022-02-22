@@ -109,6 +109,7 @@ class UserInfo extends React.Component<UserProps, UserState> {
     this.setState({
       _isMounted: true,
     });
+    window.scrollTo(0, 0);
     this.props.setWhat('user');
     this.props.setWindowPath('user')
   }

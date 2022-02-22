@@ -90,6 +90,7 @@ componentDidMount() {
   this.setState({
     _isMounted: true
   });
+  window.scrollTo(0, 0);
   if (this.props.user.userId === this.state.profileID) {
     this.fetchMapInfo();
   }
@@ -112,6 +113,7 @@ componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>)
   }
   if (this.props.mapInfo.listings.length !== prevProps.mapInfo.listings.length) {
     this.fetchMapInfo();
+    this.fetchUserProfile();
   }
 }
 

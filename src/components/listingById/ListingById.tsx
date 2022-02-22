@@ -247,6 +247,7 @@ class ListingById extends React.Component<ListingProps, ListingState> {
     this.setState({
       _isMounted: true
     })
+    window.scrollTo(0, 0);
     this.fetchListing();
     this.props.setPrevPath(window.location.pathname);
     this.props.setWindowPath('listing')
