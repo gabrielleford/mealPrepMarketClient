@@ -165,7 +165,8 @@ const App: React.FunctionComponent = () => {
 
   }, [user, sessionToken])
 
-  console.log(windowPath)
+  console.log(user)
+  console.log(user.userId)
 
   return (
     <MantineProvider theme={{

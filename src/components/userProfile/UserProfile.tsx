@@ -107,7 +107,7 @@ componentDidMount() {
 }
 
 componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>) {
-  if (this.props.user.userId !== prevProps.user.userId) {
+  if (this.props.user.userId !== prevProps.user.userId && this.props.user.userId !== undefined) {
     this.fetchMapInfo();
     this.fetchUserProfile();
   }
