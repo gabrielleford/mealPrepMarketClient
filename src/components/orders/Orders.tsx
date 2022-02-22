@@ -96,8 +96,12 @@ class Orders extends React.Component<OrderProps, OrderState> {
   }
 
   componentDidUpdate(prevProps:Readonly<OrderProps>, prevState:Readonly<OrderState>) {
-    if (this.props.user.userId !== prevProps.user.userId) {
+    if (this.props.user.userId !== prevProps.user.userId && this.props.mapInfo.orders.length > 0) {
+      this.fetchMapInfo();
       this.fetchOrders();
+    }
+    if (this.props.mapInfo.orders.length !== prevProps.mapInfo.orders.length) {
+      this.fetchMapInfo();
     }
   }
 
@@ -110,7 +114,7 @@ class Orders extends React.Component<OrderProps, OrderState> {
   render(): React.ReactNode {
     return (
       <Container>
-          {this.props.mapInfo.orders.length < 1 ?
+          {this.props.mapInfo.orders.length === 0 ?
             <Paper sx={{background: '#05386b', padding: '40px 50px'}} radius='lg' mt={200}>
               <Center>
                 <Title order={1} sx={{fontWeight: '500', color: '#edf5e1'}}>You haven't placed any orders, yet!&#128577;</Title>

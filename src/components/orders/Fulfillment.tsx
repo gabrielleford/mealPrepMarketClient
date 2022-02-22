@@ -109,7 +109,11 @@ class Fulfillment extends React.Component<FulfillProps, FulfillState> {
 
   componentDidUpdate(prevProps:Readonly<FulfillProps>, prevState:Readonly<FulfillState>) {
     if (this.props.user.userId !== prevProps.user.userId) {
+      this.fetchMapInfo();
       this.fetchOrders();
+    }
+    if (this.props.mapInfo.fulfillment.length !== prevProps.mapInfo.fulfillment.length) {
+      this.fetchMapInfo();
     }
   }
 

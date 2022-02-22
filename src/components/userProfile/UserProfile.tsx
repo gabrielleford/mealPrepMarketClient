@@ -105,6 +105,16 @@ componentDidMount() {
   this.props.setWindowPath('user')
 }
 
+componentDidUpdate(prevProps:Readonly<UserProps>, prevState:Readonly<UserState>) {
+  if (this.props.user.userId !== prevProps.user.userId) {
+    this.fetchMapInfo();
+    this.fetchUserProfile();
+  }
+  if (this.props.mapInfo.listings.length !== prevProps.mapInfo.listings.length) {
+    this.fetchMapInfo();
+  }
+}
+
 componentWillUnmount() {
   this.setState({
     _isMounted: false
