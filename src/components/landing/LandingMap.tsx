@@ -108,8 +108,8 @@ class LandingMap extends React.Component<MapProps, MapState> {
         this.fixCheckedTags();
         if (fixedCheckedTags.every(filter => listing.tag.includes(filter))) {
           return (
-            <MediaQuery query="(min-width: 1201px) and (max-width: 1400px)" styles={{maxWidth: '375px', transition: 'all 0.2s ease-in-out'}}>
-              <Grid.Col ml='auto' mr='auto' className='landingGrid' span={4} md={4} lg={3} xl={2} key={listing.id}>
+            <MediaQuery key={listing.id} query="(min-width: 1201px) and (max-width: 1400px)" styles={{maxWidth: '375px', transition: 'all 0.2s ease-in-out'}}>
+              <Grid.Col ml='auto' mr='auto' className='landingGrid' span={4} md={4} lg={3} xl={2}>
                   <Card component={Link} to={`/listing/${listing.id}`} replace={true} radius='lg' sx={{background: '#edf5e1', cursor: 'pointer'}} >
                     <Center>
                       <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
