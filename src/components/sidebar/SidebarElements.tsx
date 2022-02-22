@@ -40,15 +40,16 @@ export const SidebarMenu = styled.ul`
   justify-content: center;
   margin-right: 8vw;
   text-align: center;
-  grid-gap: 4rem;
+  grid-gap: 2.5rem;
 `
 
 export const SidebarLink = styled(Link)`
   color: #5cdb95;
   width: fit-content;
   margin: 0 auto;
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   text-decoration: none;
+  border-bottom: solid 3px transparent;
   transition: font-size 0.3s ease-in-out;
   transition: border-bottom 0.1s ease-in-out;
 
@@ -68,11 +69,12 @@ export const SidebarLink = styled(Link)`
 export const Logout = styled.button`
   font-family: 'Open Sans', sans-serif;
   color: #5cdb95;
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   width: fit-content;
   margin: 0 auto;
   border: none;
   background: none;
+  border-bottom: solid 3px transparent;
   cursor: pointer;
   transition: font-size 0.3s ease-in-out;
   transition: border-bottom 0.1s ease-in-out;

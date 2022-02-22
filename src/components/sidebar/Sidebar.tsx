@@ -25,24 +25,21 @@ class Sidebar extends React.Component<SidebarProps> {
             <SidebarLink to='/' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
               Home
             </SidebarLink>
-            {this.props.user.role === 'primary' && 
-              <SidebarLink to='/create' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
-                Create Listing
-              </SidebarLink>
-            }
-            {this.props.user.role === 'admin' &&
-              <SidebarLink to='/create' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
-                Create Listing
-              </SidebarLink>
-            }
-            {this.props.user.role === 'main admin' &&
+            {this.props.user.role !== 'secondary' && 
               <SidebarLink to='/create' onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
                 Create Listing
               </SidebarLink>
             }
             <SidebarLink to={`/user/${this.props.user.userId}`} onClick={() => this.props.setIsOpen(!this.props.isOpen)}>
-              My Account
+              Account
             </SidebarLink>
+            <SidebarLink to={`/orders/${this.props.user.userId}`}>Orders</SidebarLink>
+            {this.props.user.role !== 'secondary' &&
+              <>
+                <SidebarLink to={`/fulfillment/${this.props.user.userId}`}>Fulfillment</SidebarLink>
+                <SidebarLink to={`/profile/${this.props.user.userId}`}>Profile</SidebarLink>
+              </>
+            }
             <Logout onClick={() => {
                 this.props.setIsOpen(!this.props.isOpen);
                 this.props.clearToken();}}>

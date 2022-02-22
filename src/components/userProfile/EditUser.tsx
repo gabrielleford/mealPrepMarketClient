@@ -3,7 +3,7 @@ import APIURL from "../helpers/environments";
 import { Buffer } from "buffer";
 import { Link, Navigate } from "react-router-dom";
 import ConfirmDelete from '../confirmDelete/ConfirmDelete';
-import { Avatar, Button, Center, Grid, Group, Input, Text, Textarea } from "@mantine/core";
+import { Avatar, Button, Center, Grid, Group, Input, Switch, Text, Textarea } from "@mantine/core";
 import { UserState, UserProps } from "./UserInfo";
 import UserInfo from "./UserInfo";
 
@@ -382,6 +382,16 @@ updateUserInfo = async ():Promise<void> => {
       }
       {this.renderName()}
       {this.renderEmail()}
+      {this.props.app.user.role === 'secondary' &&
+        <Grid.Col>
+          <Group position='center' spacing='xs'>
+            <Text size='sm' sx={{color: '#edf5e1', fontFamily: 'Open Sans, sans-serif'}}>Become a meal prepper</Text>
+            <Switch onChange={() => {
+              this.setState({inputVisible: true})
+              this.props.changeRole()}}/>
+          </Group>
+        </Grid.Col>
+      }
       {this.state.inputVisible && 
         <Grid.Col>
           <Group mt='sm' position="center">
@@ -396,11 +406,6 @@ updateUserInfo = async ():Promise<void> => {
           <Button component={Link} to={`/orders/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>My Orders</Button>
           {this.props.app.user.role !== 'secondary' && <Button component={Link} to={`/fulfillment/${this.props.app.user.userId}`} className="formButton" size="lg" radius='md' compact>Fulfillment</Button>}
         </Group>
-      </Grid.Col>
-      <Grid.Col>
-        <Center>
-
-        </Center>
       </Grid.Col>
       {this.props.app.dlt && <ConfirmDelete sessionToken={this.props.app.sessionToken} what={this.props.app.what} dlt={this.props.app.dlt} setDlt={this.props.app.setDlt} endpointID={this.props.app.endpointID} setEndpointID={this.props.app.setEndpointID} response={this.props.app.response} setResponse={this.props.app.setResponse} clearToken={this.props.app.clearToken}/>}
       {!localStorage.getItem('Authorization') && <Navigate to='/' replace={true} />}
