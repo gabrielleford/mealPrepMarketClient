@@ -114,9 +114,11 @@ class LandingMap extends React.Component<MapProps, MapState> {
                     <Center>
                       <Title sx={{fontWeight: '400', color: '#05386b'}} order={1}>{listing.title}</Title>
                     </Center>
-                    <CardSection sx={{margin: '0 auto'}}>
-                      <Image src={listing.image} alt={listing.title} width={400} height={250}/>
-                    </CardSection>
+                    <Center>
+                      <CardSection sx={{margin: '0 auto'}}>
+                        <Image src={listing.image} alt={listing.title} width={400} height={250}/>
+                      </CardSection>
+                    </Center>
                     <Center>
                       <Badge mt='sm' size="lg" variant="filled" color='secondary'>${listing.price} USD</Badge>
                     </Center>
