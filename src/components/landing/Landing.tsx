@@ -116,7 +116,7 @@ class Landing extends React.Component<LandingProps, LandingState> {
           </Group>
         </FilterBar>
         <Filter handleTag={this.handleTag} filterOpen={this.props.filterOpen} setFilterOpen={this.props.setFilterOpen}/>
-        {this.state.results[0].id !== '' && <LandingMap results={this.state.results} tags={this.state.tags} />}
+        {this.state.results.length > 0 ? <LandingMap results={this.state.results} tags={this.state.tags} /> : ''}
       </Container>
     )
   }
