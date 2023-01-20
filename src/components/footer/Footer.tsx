@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
     return (
       <Container mt={300}>
         <Banner>
-          <h3 id="footerText">© <a id='footerLink' href="https://gabrielleford.github.io/">Gabrielle Ford</a> 2022</h3>
+          <h3 id="footerText">© <a id='footerLink' href="https://gabrielleford.dev/">Gabrielle Ford</a> 2022</h3>
         </Banner>
       </Container>
     )
