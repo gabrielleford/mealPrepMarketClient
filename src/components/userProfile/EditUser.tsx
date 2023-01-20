@@ -218,7 +218,7 @@ class EditUser extends React.Component<EditProps, EditState> {
 
 handleUpdate = () => {
   console.log(this.props.userState.profilePicture);
-  if (this.props.userState.role === 'primary' && this.state.newProfilePic && this.state.stringPrvwSrc !== '') {
+  if (this.props.userState.role !== 'secondary' && this.state.newProfilePic && this.state.stringPrvwSrc !== '') {
     this.updateUserProfilePic(this.state.stringPrvwSrc)
   } else {
     this.updateUserInfo();
